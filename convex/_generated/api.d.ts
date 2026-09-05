@@ -10,6 +10,7 @@
 
 import type * as auth from "../auth.js";
 import type * as businesses from "../businesses.js";
+import type * as dates from "../dates.js";
 import type * as documents from "../documents.js";
 import type * as recurrence from "../recurrence.js";
 import type * as requirements from "../requirements.js";
@@ -26,6 +27,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   businesses: typeof businesses;
+  dates: typeof dates;
   documents: typeof documents;
   recurrence: typeof recurrence;
   requirements: typeof requirements;

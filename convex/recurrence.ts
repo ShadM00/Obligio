@@ -1,15 +1,13 @@
 import {mutation} from './_generated/server';
 import {v} from 'convex/values';
 import {requireBusinessOwner} from './auth';
+import {nextDueDate} from './dates';
 
-function nextDate(date: string, recurrence: string) {
-  const d = new Date(`${date}T00:00:00Z`);
-  if (recurrence === 'monthly') d.setUTCMonth(d.getUTCMonth() + 1);
-  else if (recurrence === 'quarterly') d.setUTCMonth(d.getUTCMonth() + 3);
-  else d.setUTCFullYear(d.getUTCFullYear() + 1);
-  return d.toISOString().slice(0, 10);
-}
-
+/**
+ * Marks a requirement satisfied and, when it repeats, opens the next cycle.
+ * Returns the id of the newly scheduled requirement, or null when the
+ * requirement was one-off.
+ */
 export const completeAndScheduleNext = mutation({
   args: {requirementId: v.id('requirements')},
   returns: v.union(v.id('requirements'), v.null()),
@@ -23,7 +21,7 @@ export const completeAndScheduleNext = mutation({
       businessId: current.businessId,
       title: current.title,
       category: current.category,
-      dueDate: nextDate(current.dueDate, current.recurrence),
+      dueDate: nextDueDate(current.dueDate, current.recurrence),
       recurrence: current.recurrence,
       status: 'upcoming',
       authorityUrl: current.authorityUrl,
