@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {s} from './theme';
-import {colors, radii, typography} from './designTokens';
+import {useAppTheme} from './theme';
+import {radii, typography} from './designTokens';
 import {formatDisplayDate, monthLabel} from './dates';
 import type {Locale} from './i18n';
 import {locales} from './i18n';
@@ -22,6 +22,7 @@ function statusLabel(copy: Copy, status: RequirementStatus): string {
 }
 
 export function ErrorBanner({message, onRetry, retryLabel}: {message: string; onRetry?: () => void; retryLabel: string}) {
+  const {s} = useAppTheme();
   return (
     <View style={s.errorBox}>
       <Text style={s.errorText}>{message}</Text>
@@ -45,6 +46,7 @@ export function SignIn({
   onSignIn: () => void;
   error: string | null;
 }) {
+  const {s, colors} = useAppTheme();
   const busy = status === 'checking';
   const unavailable = status === 'unavailable';
   return (
@@ -53,7 +55,7 @@ export function SignIn({
         <View
           accessibilityRole="image"
           accessibilityLabel="Obligio logo"
-          style={[s.logo, {backgroundColor: colors.forest800, borderRadius: radii.card}]}>
+          style={[s.logo, {backgroundColor: colors.brandDeep, borderRadius: radii.card}]}>
           <Text style={s.logoText}>✓</Text>
         </View>
         <Text style={s.eyebrow}>{copy.appName}</Text>
@@ -94,6 +96,7 @@ function OptionChips({
   value: string;
   onChange: (next: string) => void;
 }) {
+  const {s} = useAppTheme();
   return (
     <>
       <Text style={s.monthHeading}>{label.toUpperCase()}</Text>
@@ -129,6 +132,7 @@ export function Onboarding({
   error: string | null;
   onSignOut: () => void;
 }) {
+  const {s} = useAppTheme();
   const [name, setName] = useState('');
   const [country, setCountry] = useState<Country>('US');
   const [region, setRegion] = useState('');
@@ -184,6 +188,7 @@ export function Onboarding({
 }
 
 export function Stat({value, label, color}: {value: string; label: string; color: string}) {
+  const {s} = useAppTheme();
   return (
     <View style={s.stat}>
       <Text style={[s.statValue, {color}]}>{value}</Text>
@@ -203,6 +208,7 @@ export function ItemRow({
   locale: Locale;
   onPress?: () => void;
 }) {
+  const {s} = useAppTheme();
   const dotStyle =
     item.status === 'current' ? s.currentDot : item.status === 'upcoming' ? s.upcomingDot : s.overdueDot;
   const label = statusLabel(copy, item.status);
@@ -242,6 +248,7 @@ export function Home({
   /** Undefined until a business exists, since suggestions are jurisdictional. */
   onBrowseTemplates?: () => void;
 }) {
+  const {s, colors} = useAppTheme();
   const current = items.filter(x => x.status === 'current').length;
   const upcoming = items.filter(x => x.status === 'upcoming').length;
   const overdue = items.filter(x => x.status === 'overdue').length;
@@ -263,9 +270,9 @@ export function Home({
       </View>
 
       <View style={s.stats}>
-        <Stat value={String(current)} label={copy.current} color={colors.forest600} />
-        <Stat value={String(upcoming)} label={copy.upcoming} color={colors.amber700} />
-        <Stat value={String(overdue)} label={copy.overdue} color={colors.red700} />
+        <Stat value={String(current)} label={copy.current} color={colors.statusCurrent} />
+        <Stat value={String(upcoming)} label={copy.upcoming} color={colors.statusUpcoming} />
+        <Stat value={String(overdue)} label={copy.overdue} color={colors.statusOverdue} />
       </View>
 
       <View style={s.sectionHeader}>
@@ -309,6 +316,7 @@ export function CalendarScreen({
   items: Requirement[];
   onSelect: (item: Requirement) => void;
 }) {
+  const {s} = useAppTheme();
   const ordered = [...items].sort((a, b) => a.dueDate.localeCompare(b.dueDate));
   const months: {label: string; rows: Requirement[]}[] = [];
   for (const item of ordered) {
@@ -360,6 +368,7 @@ export function DocumentsScreen({
   items: Requirement[];
   onSelect: (item: Requirement) => void;
 }) {
+  const {s} = useAppTheme();
   const withEvidence = items.filter(x => x.hasDocument);
   const withoutEvidence = items.filter(x => !x.hasDocument);
 
@@ -414,6 +423,7 @@ export function SettingsScreen({
   onSignOut: () => void;
   signOutLabel: string;
 }) {
+  const {s} = useAppTheme();
   const rows: {label: string; hint?: string; onPress?: () => void}[] = [
     {label: 'Business profile'},
     {
@@ -456,5 +466,6 @@ export function SettingsScreen({
 }
 
 export function ScreenScroll({children}: {children: React.ReactNode}) {
+  const {s} = useAppTheme();
   return <ScrollView contentContainerStyle={s.container}>{children}</ScrollView>;
 }

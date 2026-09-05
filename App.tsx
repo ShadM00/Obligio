@@ -6,7 +6,7 @@ import {pick, types} from '@react-native-documents/picker';
 
 import {api} from './convex/_generated/api';
 import {locales, type Locale} from './src/i18n';
-import {s} from './src/theme';
+import {useAppTheme} from './src/theme';
 import {
   CalendarScreen,
   DocumentsScreen,
@@ -44,6 +44,7 @@ function message(error: unknown): string {
 }
 
 export default function App() {
+  const {s, isDark} = useAppTheme();
   const [locale, setLocale] = useState<Locale>('en-US');
   const [tab, setTab] = useState<Tab>('home');
   const [adding, setAdding] = useState(false);
@@ -274,7 +275,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={s.safe}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
       <ScreenScroll>
         <View style={s.top}>
           <View>

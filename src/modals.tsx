@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {ActivityIndicator, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import type {PurchasesPackage} from 'react-native-purchases';
-import {s} from './theme';
-import {colors} from './designTokens';
+import {useAppTheme} from './theme';
+
 import {formatDisplayDate, parseToIsoDate} from './dates';
 import {dueDatePlaceholder, locales, type Locale} from './i18n';
 import type {NewRequirement, Requirement, RuleTemplate} from './types';
@@ -22,6 +22,7 @@ function message(error: unknown): string {
 }
 
 function ModalShell({title, copy, onClose, children}: {title: string; copy: Copy; onClose: () => void; children: React.ReactNode}) {
+  const {s} = useAppTheme();
   return (
     <View style={s.modal}>
       <View style={s.modalCard}>
@@ -51,6 +52,7 @@ export function AddRequirement({
   /** Present when editing an existing requirement rather than creating one. */
   initial?: Requirement;
 }) {
+  const {s} = useAppTheme();
   const [title, setTitle] = useState(initial?.title ?? '');
   const [category, setCategory] = useState(initial?.category ?? '');
   const [due, setDue] = useState(initial ? formatDisplayDate(initial.dueDate, locale) : '');
@@ -149,6 +151,7 @@ export function RequirementDetail({
   onEdit: (item: Requirement) => void;
   onViewEvidence: (item: Requirement) => Promise<void>;
 }) {
+  const {s} = useAppTheme();
   const [busy, setBusy] = useState<null | 'complete' | 'attach' | 'delete' | 'evidence'>(null);
   const [error, setError] = useState<string | null>(null);
   const persisted = item._id !== null;
@@ -247,6 +250,7 @@ export function RequirementDetail({
 }
 
 export function Paywall({copy, onClose}: {copy: Copy; onClose: () => void}) {
+  const {s, colors} = useAppTheme();
   const available = isBillingAvailable();
   const [packages, setPackages] = useState<PurchasesPackage[] | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
@@ -313,7 +317,7 @@ export function Paywall({copy, onClose}: {copy: Copy; onClose: () => void}) {
           </Text>
         </View>
       ) : packages === null ? (
-        <ActivityIndicator color={colors.forest600} />
+        <ActivityIndicator color={colors.brand} />
       ) : packages.length === 0 ? (
         <View style={s.banner}>
           <Text style={s.bannerText}>No subscription plans are currently offered for your store account.</Text>
@@ -379,6 +383,7 @@ export function TemplatePicker({
   onClose: () => void;
   onAdopt: (rule: RuleTemplate, dueDate: string) => Promise<void>;
 }) {
+  const {s, colors} = useAppTheme();
   const [openId, setOpenId] = useState<string | null>(null);
   const [due, setDue] = useState('');
   const [busy, setBusy] = useState(false);
@@ -407,7 +412,7 @@ export function TemplatePicker({
       <Text style={s.helper}>{copy.suggestedBody}</Text>
 
       {templates === undefined ? (
-        <ActivityIndicator color={colors.forest600} />
+        <ActivityIndicator color={colors.brand} />
       ) : templates.length === 0 ? (
         <View style={s.banner}>
           <Text style={s.bannerText}>{copy.suggestedEmpty}</Text>
