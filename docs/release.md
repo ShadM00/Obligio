@@ -75,10 +75,36 @@ Both keys are in `src/config.ts`, so billing is enabled on both platforms.
 The identifiers match `src/billing.ts`, and `getAvailablePackages` reads
 `offerings.current`, which resolves to `default`.
 
-Both products still show **Missing Metadata** until RevenueCat finishes
-syncing price and duration from App Store Connect. The paywall renders
-`product.title`, `product.description`, and `product.priceString`, so verify
-those populate before relying on a build.
+#### Android is keyed but not yet transacting
+
+The Play Store app configuration has a public SDK key but **no service-account
+credentials**, so RevenueCat cannot reach Google Play. Until the JSON key is
+uploaded to that configuration:
+
+- RevenueCat cannot fetch Play product metadata, so `offerings.current`
+  returns no packages on Android;
+- the paywall therefore renders "No subscription plans are currently offered",
+  which is the safe degraded state — a purchase cannot be started, so nobody
+  can be charged for an entitlement RevenueCat could not then validate.
+
+Shipping an Android build before that JSON lands gives users a paywall with
+nothing in it. It does not give them a broken purchase, but it is not
+sellable either.
+
+#### Both iOS products show Missing Metadata
+
+RevenueCat reports this when it cannot fetch price and duration from App Store
+Connect, which happens while the ASC product itself is incomplete. The paywall
+renders `product.title`, `product.description`, and `product.priceString`, so
+those stay blank until ASC is satisfied.
+
+With pricing and localizations already set, the remaining ASC requirement is
+the per-product **review screenshot**. That creates a circular dependency
+worth naming: the screenshot should show the paywall, the paywall shows
+nothing until metadata syncs, and metadata will not sync until the screenshot
+is uploaded. Break it by capturing the paywall against representative package
+data rather than live store data — the same component and styling a reviewer
+will see.
 
 ### App Store Connect
 
