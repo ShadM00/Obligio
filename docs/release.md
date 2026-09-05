@@ -60,13 +60,23 @@ Never upload a bundle signed with anything but the real upload key — the first
 
 Neither store can accept a build until these are done, and none of them can be done from this repository.
 
-### RevenueCat — blocking for the paywall
+### RevenueCat
 
-There is **no Obligio project in RevenueCat**. Until there is, `src/config.ts` keeps null keys and the paywall reports that plans are unavailable.
+The **Obligio** project exists (`388c935c`) and the App Store app configuration is done:
 
-1. Create an Obligio project; add the iOS app (`com.obligio.app`, App Store Connect API key) and the Android app (`com.obligio.app`, Play service account).
-2. Copy each app's **public SDK key** into `REVENUECAT_KEYS` in `src/config.ts` — `appl_…` for iOS, `goog_…` for Android. These are publishable and safe to commit.
-3. Create the entitlement `obligio_plus` and attach the products `obligio_plus_monthly` and `obligio_plus_annual`, then add them to the current offering. The identifiers are already referenced in `src/billing.ts`.
+| Field | Value |
+| --- | --- |
+| App | Obligio (App Store), `app3b3ac2cefb` |
+| Bundle ID | `com.obligio.app` |
+| Public SDK key | `appl_SIBIzGDFokrIPHVzuFUEEaDSbLl` — already in `src/config.ts` |
+| In-app purchase key | `UD463F4JM7` ("RevenueCat IAP Key") |
+
+App Store in-app purchase keys are **team-scoped**, not per-app: all six keys under this team share the issuer, so the existing generically-named key is valid for Obligio. Swap it in the app configuration if you would rather Obligio had a dedicated key.
+
+Still outstanding:
+
+1. **Play Store app configuration.** It cannot be created until the Play service account exists, because RevenueCat requires its credentials JSON. Until then `REVENUECAT_KEYS.android` stays null and Android runs with billing disabled.
+2. **Products, entitlement, and offering.** Create the entitlement `obligio_plus`, attach the products `obligio_plus_monthly` and `obligio_plus_annual`, and add them to the current offering. The identifiers are already referenced in `src/billing.ts`. These cannot be created before the App Store subscription products exist (below).
 
 ### App Store Connect
 

@@ -6,17 +6,18 @@ export const CONVEX_URL = 'https://greedy-parakeet-883.convex.cloud';
 /**
  * RevenueCat public SDK keys, one per store.
  *
- * These are publishable keys and are safe to ship and to commit, but they are
- * account specific. They are still null because no Obligio project exists in
- * RevenueCat yet — create one, add the iOS and Android apps, then copy each
- * app's public SDK key from Project settings > Apps. See docs/release.md.
+ * These are publishable keys, meant to ship inside the app binary, so they are
+ * safe to commit. They are per-store and per-project.
  *
- * While a key is null the app runs with billing disabled: the paywall reports
- * that plans are unavailable rather than configuring the SDK with a bad key
- * and crashing on first use.
+ * Android is still null: a Play Store app configuration in RevenueCat requires
+ * Play service-account credentials, which do not exist yet. Until it is set,
+ * Android runs with billing disabled — the paywall reports that plans are
+ * unavailable rather than configuring the SDK with a bad key and crashing on
+ * first use. See docs/release.md.
  */
 const REVENUECAT_KEYS: {ios: string | null; android: string | null} = {
-  ios: null,
+  // RevenueCat project Obligio, app "Obligio (App Store)" (app3b3ac2cefb).
+  ios: 'appl_SIBIzGDFokrIPHVzuFUEEaDSbLl',
   android: null,
 };
 
