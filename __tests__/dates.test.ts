@@ -104,3 +104,28 @@ describe('reminderTimestampFor', () => {
     expect(reminderTimestampFor('not-a-date', now)).toBeNull();
   });
 });
+
+describe('server-side statusForDueDate', () => {
+  const {statusForDueDate: serverStatus, todayIso: serverToday} =
+    require('../convex/dates') as typeof import('../convex/dates');
+
+  test('a date already past is overdue', () => {
+    expect(serverStatus('2026-01-01', '2026-06-01')).toBe('overdue');
+  });
+
+  test('today is not yet overdue', () => {
+    expect(serverStatus('2026-06-01', '2026-06-01')).toBe('upcoming');
+  });
+
+  test('a future date is upcoming', () => {
+    expect(serverStatus('2026-12-01', '2026-06-01')).toBe('upcoming');
+  });
+
+  test('refuses a display-formatted date rather than mis-classifying it', () => {
+    expect(() => serverStatus('Jun 1, 2026')).toThrow(/ISO calendar date/);
+  });
+
+  test('todayIso returns a valid ISO date', () => {
+    expect(serverToday()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+});

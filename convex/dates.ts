@@ -56,3 +56,17 @@ export function nextDueDate(date: string, recurrence: string): string {
 
   return `${String(targetYear).padStart(4, '0')}-${String(targetMonth).padStart(2, '0')}-${String(targetDay).padStart(2, '0')}`;
 }
+
+/** Today in UTC as an ISO calendar date. */
+export function todayIso(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+/**
+ * The status a requirement should carry for a given due date. A date already
+ * past is overdue the moment it is recorded; nothing else is assumed.
+ */
+export function statusForDueDate(dueDate: string, today = todayIso()): 'upcoming' | 'overdue' {
+  assertIsoDate(dueDate);
+  return dueDate < today ? 'overdue' : 'upcoming';
+}

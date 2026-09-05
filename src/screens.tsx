@@ -232,12 +232,15 @@ export function Home({
   items,
   onAdd,
   onSelect,
+  onBrowseTemplates,
 }: {
   copy: Copy;
   locale: Locale;
   items: Requirement[];
   onAdd: () => void;
   onSelect: (item: Requirement) => void;
+  /** Undefined until a business exists, since suggestions are jurisdictional. */
+  onBrowseTemplates?: () => void;
 }) {
   const current = items.filter(x => x.status === 'current').length;
   const upcoming = items.filter(x => x.status === 'upcoming').length;
@@ -285,6 +288,12 @@ export function Home({
       <TouchableOpacity accessibilityRole="button" style={s.primary} onPress={onAdd}>
         <Text style={s.primaryText}>+ {copy.addRequirement}</Text>
       </TouchableOpacity>
+
+      {onBrowseTemplates && (
+        <TouchableOpacity accessibilityRole="button" style={s.secondary} onPress={onBrowseTemplates}>
+          <Text style={s.secondaryText}>{copy.suggested}</Text>
+        </TouchableOpacity>
+      )}
     </>
   );
 }

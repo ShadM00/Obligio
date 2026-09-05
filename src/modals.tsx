@@ -5,7 +5,7 @@ import {s} from './theme';
 import {colors} from './designTokens';
 import {formatDisplayDate, parseToIsoDate} from './dates';
 import {dueDatePlaceholder, locales, type Locale} from './i18n';
-import type {NewRequirement, Requirement} from './types';
+import type {NewRequirement, Requirement, RuleTemplate} from './types';
 import {getAvailablePackages, hasPlusEntitlement, isBillingAvailable, purchasePackage, restorePurchases} from './billing';
 
 type Copy = (typeof locales)[Locale];
@@ -335,6 +335,110 @@ export function Paywall({copy, onClose}: {copy: Copy; onClose: () => void}) {
       <Text style={s.disclaimer}>
         Subscriptions are managed through the App Store or Google Play. See Privacy and Terms.
       </Text>
+    </ModalShell>
+  );
+}
+
+export function TemplatePicker({
+  copy,
+  locale,
+  templates,
+  onClose,
+  onAdopt,
+}: {
+  copy: Copy;
+  locale: Locale;
+  templates: RuleTemplate[] | undefined;
+  onClose: () => void;
+  onAdopt: (rule: RuleTemplate, dueDate: string) => Promise<void>;
+}) {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [due, setDue] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const dueIso = parseToIsoDate(due, locale);
+  const dueTouched = due.trim().length > 0;
+
+  const adopt = async (rule: RuleTemplate) => {
+    if (!dueIso) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await onAdopt(rule, dueIso);
+      setOpenId(null);
+      setDue('');
+    } catch (err) {
+      setError(message(err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <ModalShell title={copy.suggestedTitle} copy={copy} onClose={onClose}>
+      <Text style={s.helper}>{copy.suggestedBody}</Text>
+
+      {templates === undefined ? (
+        <ActivityIndicator color={colors.forest600} />
+      ) : templates.length === 0 ? (
+        <View style={s.banner}>
+          <Text style={s.bannerText}>{copy.suggestedEmpty}</Text>
+        </View>
+      ) : (
+        templates.map(rule => {
+          const open = openId === rule._id;
+          return (
+            <View key={rule._id} style={s.detailCard}>
+              <Text style={s.itemTitle}>{rule.title}</Text>
+              <Text style={s.muted}>
+                {rule.category}
+                {rule.recurrence ? ` · Repeats ${rule.recurrence}` : ' · One-off'}
+              </Text>
+              <Text style={s.helper}>{rule.description}</Text>
+              <Text style={s.sourceLine}>
+                {copy.source}: {rule.sourceName} · {copy.reviewed} {formatDisplayDate(rule.reviewedAt, locale)}
+              </Text>
+
+              {open ? (
+                <>
+                  <TextInput
+                    style={[s.input, dueTouched && !dueIso && s.inputInvalid]}
+                    placeholder={dueDatePlaceholder(locale)}
+                    accessibilityLabel={dueDatePlaceholder(locale)}
+                    value={due}
+                    onChangeText={setDue}
+                    autoCapitalize="none"
+                  />
+                  <Text style={s.muted}>{copy.suggestedDateHint}</Text>
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityState={{disabled: !dueIso || busy}}
+                    disabled={!dueIso || busy}
+                    style={[s.primary, (!dueIso || busy) && s.primaryDisabled]}
+                    onPress={() => adopt(rule)}>
+                    <Text style={s.primaryText}>{busy ? copy.creatingBusiness : copy.trackThis}</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <TouchableOpacity
+                  accessibilityRole="button"
+                  style={s.secondary}
+                  onPress={() => {
+                    setOpenId(rule._id);
+                    setDue('');
+                    setError(null);
+                  }}>
+                  <Text style={s.secondaryText}>{copy.trackThis}</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          );
+        })
+      )}
+
+      {error && <Text style={s.destructiveText}>{error}</Text>}
+      <Text style={s.disclaimer}>{copy.disclaimer}</Text>
     </ModalShell>
   );
 }

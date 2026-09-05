@@ -62,6 +62,7 @@ export const s = StyleSheet.create({
   secondaryText: {color: colors.forest600, fontSize: 16, fontWeight: '800'},
   destructiveText: {color: colors.red700, fontSize: 15, fontWeight: '700', textAlign: 'center', marginTop: 16},
   signOutText: {color: colors.red700},
+  sourceLine: {fontSize: 12, color: colors.sage500, marginBottom: 10},
   centeredLink: {fontSize: 14, fontWeight: '700', color: colors.forest600, textAlign: 'center', marginTop: 18},
   helperSpaced: {fontSize: 15, color: '#6C7D74', lineHeight: 23, marginBottom: 18, marginTop: 12},
 

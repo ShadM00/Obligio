@@ -39,6 +39,14 @@ type Copy = {
   industry: string;
   createBusiness: string;
   creatingBusiness: string;
+  suggested: string;
+  suggestedTitle: string;
+  suggestedBody: string;
+  suggestedEmpty: string;
+  suggestedDateHint: string;
+  trackThis: string;
+  source: string;
+  reviewed: string;
 };
 
 const shared = {
@@ -81,6 +89,16 @@ const shared = {
   industry: 'Industry',
   createBusiness: 'Create my business',
   creatingBusiness: 'Creating…',
+  suggested: 'Suggested for you',
+  suggestedTitle: 'Suggested obligations',
+  suggestedBody:
+    'Common obligations for your location and industry. Each links to the authority it comes from — check that source before you rely on it.',
+  suggestedEmpty:
+    'No suggestions are published for your location and industry yet. You can still add obligations yourself.',
+  suggestedDateHint: 'Deadlines vary by entity type and filing history, so you set the date that applies to you.',
+  trackThis: 'Track this',
+  source: 'Source',
+  reviewed: 'reviewed',
 } as const;
 
 export const locales: Record<Locale, Copy> = {

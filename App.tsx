@@ -17,8 +17,8 @@ import {
   SettingsScreen,
   SignIn,
 } from './src/screens';
-import {AddRequirement, Paywall, RequirementDetail} from './src/modals';
-import {SAMPLE_REQUIREMENTS, type NewRequirement, type Requirement} from './src/types';
+import {AddRequirement, Paywall, RequirementDetail, TemplatePicker} from './src/modals';
+import {SAMPLE_REQUIREMENTS, type NewRequirement, type Requirement, type RuleTemplate} from './src/types';
 import {notificationsAllowed, prepareNotifications, scheduleReminderForDueDate} from './src/notifications';
 import {uploadPickedDocument} from './src/documentUpload';
 import {isBillingAvailable} from './src/billing';
@@ -44,6 +44,7 @@ export default function App() {
   const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState<Requirement | null>(null);
   const [paywall, setPaywall] = useState(false);
+  const [templatesOpen, setTemplatesOpen] = useState(false);
   const [onboardingBusy, setOnboardingBusy] = useState(false);
   const [onboardingError, setOnboardingError] = useState<string | null>(null);
   const session = useSession();
@@ -55,11 +56,17 @@ export default function App() {
   const business = useQuery(api.businesses.getByOwner, {});
   const liveRequirements = useQuery(api.requirements.list, business ? {businessId: business._id} : 'skip');
 
+  const templates = useQuery(
+    api.rules.listTemplates,
+    business ? {country: business.country, region: business.region, industry: business.industry} : 'skip',
+  );
+
   const createBusiness = useMutation(api.businesses.create);
   const createRequirement = useMutation(api.requirementsMutations.create);
   const updateStatus = useMutation(api.requirementsMutations.updateStatus);
   const removeRequirement = useMutation(api.requirementsMutations.remove);
   const completeAndScheduleNext = useMutation(api.recurrence.completeAndScheduleNext);
+  const createFromTemplate = useMutation(api.requirementsMutations.createFromTemplate);
   const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
   const attachDocument = useMutation(api.documents.attach);
 
@@ -110,6 +117,19 @@ export default function App() {
       setAdding(false);
     },
     [business, copy.signInRequired, createRequirement],
+  );
+
+  const adoptTemplate = useCallback(
+    async (rule: RuleTemplate, dueDate: string) => {
+      if (!business) throw new Error(copy.signInRequired);
+      await createFromTemplate({businessId: business._id, ruleId: rule._id, dueDate});
+      try {
+        await scheduleReminderForDueDate(rule.title, dueDate);
+      } catch {
+        // Reminder scheduling is best-effort.
+      }
+    },
+    [business, copy.signInRequired, createFromTemplate],
   );
 
   const completeRequirement = useCallback(
@@ -224,7 +244,14 @@ export default function App() {
         )}
 
         {tab === 'home' && (
-          <Home copy={copy} locale={locale} items={items} onAdd={() => setAdding(true)} onSelect={setSelected} />
+          <Home
+            copy={copy}
+            locale={locale}
+            items={items}
+            onAdd={() => setAdding(true)}
+            onSelect={setSelected}
+            onBrowseTemplates={business ? () => setTemplatesOpen(true) : undefined}
+          />
         )}
         {tab === 'calendar' && <CalendarScreen copy={copy} locale={locale} items={items} onSelect={setSelected} />}
         {tab === 'documents' && <DocumentsScreen copy={copy} locale={locale} items={items} onSelect={setSelected} />}
@@ -252,6 +279,15 @@ export default function App() {
           onComplete={selected.recurrence ? completeRequirement : markStatusCurrent}
           onAttach={attachEvidence}
           onDelete={deleteRequirement}
+        />
+      )}
+      {templatesOpen && (
+        <TemplatePicker
+          copy={copy}
+          locale={locale}
+          templates={templates}
+          onClose={() => setTemplatesOpen(false)}
+          onAdopt={adoptTemplate}
         />
       )}
       {paywall && <Paywall copy={copy} onClose={() => setPaywall(false)} />}

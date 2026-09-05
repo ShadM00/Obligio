@@ -1,5 +1,17 @@
 import type {Id} from '../convex/_generated/dataModel';
 
+export type RuleTemplate = {
+  _id: Id<'rules'>;
+  category: string;
+  title: string;
+  description: string;
+  sourceName: string;
+  sourceUrl: string;
+  /** ISO date on which an operator last checked this entry against its source. */
+  reviewedAt: string;
+  recurrence?: string;
+};
+
 export type RequirementStatus = 'current' | 'upcoming' | 'overdue';
 
 export type Requirement = {

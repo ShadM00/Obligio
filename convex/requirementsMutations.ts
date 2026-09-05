@@ -1,7 +1,7 @@
 import {mutation} from './_generated/server';
 import {v} from 'convex/values';
 import {requireBusinessOwner} from './auth';
-import {assertIsoDate, assertRecurrence} from './dates';
+import {assertIsoDate, assertRecurrence, statusForDueDate} from './dates';
 
 const status = v.union(v.literal('current'), v.literal('upcoming'), v.literal('overdue'));
 
@@ -45,5 +45,39 @@ export const remove = mutation({
     if (row.documentStorageId) await ctx.storage.delete(row.documentStorageId);
     await ctx.db.delete(args.requirementId);
     return null;
+  },
+});
+
+/**
+ * Adopts a catalogue template as a tracked obligation.
+ *
+ * The template supplies the wording, category, cadence, and authority link;
+ * the owner supplies the due date, because a template deliberately never
+ * asserts one. The authority URL is carried across so the obligation keeps
+ * pointing at the source it came from.
+ */
+export const createFromTemplate = mutation({
+  args: {
+    businessId: v.id('businesses'),
+    ruleId: v.id('rules'),
+    dueDate: v.string(),
+  },
+  returns: v.id('requirements'),
+  handler: async (ctx, args) => {
+    await requireBusinessOwner(ctx, args.businessId);
+    assertIsoDate(args.dueDate);
+
+    const rule = await ctx.db.get(args.ruleId);
+    if (!rule) throw new Error('Template not found');
+
+    return ctx.db.insert('requirements', {
+      businessId: args.businessId,
+      title: rule.title,
+      category: rule.category,
+      dueDate: args.dueDate,
+      recurrence: rule.recurrence,
+      status: statusForDueDate(args.dueDate),
+      authorityUrl: rule.sourceUrl,
+    });
   },
 });
