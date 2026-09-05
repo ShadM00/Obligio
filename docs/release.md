@@ -75,8 +75,20 @@ Neither store can accept a build until these are done, and none of them can be d
 | App Store app | `app3b3ac2cefb` — key `appl_SIBIzGDFokrIPHVzuFUEEaDSbLl` |
 | Play Store app | `app6413bd9f3e` — key `goog_joeqthkYcqpkIIwTHgTAPyWmFPT` |
 | In-app purchase key | `UD463F4JM7` ("RevenueCat IAP Key"), team-scoped |
-| Entitlement | `obligio_plus`, 2 products |
+| Entitlement | `obligio_plus`, 4 products |
 | Offering | `default` ("Obligio Plus"), 2 packages, marked current |
+
+#### Product identifiers differ by store
+
+| Package | App Store | Google Play |
+| --- | --- | --- |
+| `$rc_monthly` | `obligio_plus_monthly` | `obligio_plus_monthly:monthly` |
+| `$rc_annual` | `obligio_plus_annual` | `obligio_plus_annual:annual` |
+
+Play identifies a purchasable thing as `<product>:<base_plan>`, so the
+identifiers are not comparable across platforms. Select by **package** —
+`$rc_monthly` and `$rc_annual` are identical on both stores. `src/billing.ts`
+deliberately declares no product-id constants for this reason.
 
 Both keys are in `src/config.ts`, so billing is enabled on both platforms.
 The identifiers match `src/billing.ts`, and `getAvailablePackages` reads

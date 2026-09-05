@@ -2,10 +2,21 @@ import Purchases, {LOG_LEVEL, type CustomerInfo, type PurchasesPackage} from 're
 import {revenueCatApiKey} from './config';
 
 export const ENTITLEMENT_ID = 'obligio_plus';
-export const PRODUCT_IDS = {
-  monthly: 'obligio_plus_monthly',
-  annual: 'obligio_plus_annual',
-} as const;
+
+/**
+ * Store product identifiers are deliberately not declared here.
+ *
+ * They are not the same across platforms: App Store products are
+ * `obligio_plus_monthly` and `obligio_plus_annual`, while Google Play
+ * identifies a purchasable thing as `<product>:<base_plan>`, giving
+ * `obligio_plus_monthly:monthly` and `obligio_plus_annual:annual`. Any code
+ * that compared a product id as a string would therefore work on iOS and fail
+ * on Android.
+ *
+ * Select by package instead — `$rc_monthly` and `$rc_annual` are the same on
+ * both stores, and RevenueCat resolves each to the right product. The paywall
+ * does this through `PurchasesPackage.identifier`.
+ */
 
 let configured = false;
 

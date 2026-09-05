@@ -1,12 +1,61 @@
-# Local release setup
+fastlane documentation
+----
 
-Configure App Store Connect API credentials, iOS provisioning/signing in Xcode, and `android/fastlane/google-play-service-account.json` locally. Run `bundle exec fastlane ios release` and `bundle exec fastlane android release`. Release completion requires verifying uploaded builds in both store consoles. No GitHub Actions are used.
+# Installation
 
-Android release signing reads these environment variables (or private user Gradle properties):
+Make sure you have the latest version of the Xcode command line tools installed:
 
-- `OBLIGIO_UPLOAD_STORE_FILE`: absolute path to the existing upload keystore.
-- `OBLIGIO_UPLOAD_STORE_PASSWORD`: keystore password.
-- `OBLIGIO_UPLOAD_KEY_ALIAS`: release upload key alias.
-- `OBLIGIO_UPLOAD_KEY_PASSWORD`: key password.
+```sh
+xcode-select --install
+```
 
-Do not put passwords in the repository or replace a registered upload key without checking Play Console. Run `cd android && ./gradlew :app:validateObligioUploadSigning` to check configuration before building. Missing configuration fails release builds; debug builds continue to use the development key. This check does not prove that the key matches Play Console or that a release was uploaded.
+For _fastlane_ installation instructions, see [Installing _fastlane_](https://docs.fastlane.tools/#installing-fastlane)
+
+# Available Actions
+
+## iOS
+
+### ios release
+
+```sh
+[bundle exec] fastlane ios release
+```
+
+Build a signed App Store archive and upload it to TestFlight
+
+### ios metadata
+
+```sh
+[bundle exec] fastlane ios metadata
+```
+
+Push App Store listing metadata from fastlane/metadata without uploading a build
+
+----
+
+
+## Android
+
+### android release
+
+```sh
+[bundle exec] fastlane android release
+```
+
+Build a signed Android App Bundle and upload it to the chosen Play track
+
+### android metadata
+
+```sh
+[bundle exec] fastlane android metadata
+```
+
+Push Play listing metadata from fastlane/metadata/android without uploading a build
+
+----
+
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
+
+More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).
+
+The documentation of _fastlane_ can be found on [docs.fastlane.tools](https://docs.fastlane.tools).
