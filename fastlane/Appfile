@@ -1,0 +1,2 @@
+app_identifier(ENV.fetch('IOS_BUNDLE_ID', 'com.obligio.app'))
+apple_id(ENV['APPLE_ID']) if ENV['APPLE_ID']
