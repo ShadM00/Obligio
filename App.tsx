@@ -88,7 +88,14 @@ export default function App() {
   // Requirements come from Convex once a business is signed in. The sample rows
   // are only ever shown to an unauthenticated visitor, and are labelled as such.
   // Sample rows only ever appear to a visitor this build cannot authenticate.
-  const usingSampleData = session.status === 'unavailable' || !business || liveRequirements === undefined;
+  // A build with no native auth module cannot ever sign in, so walling it
+  // behind a sign-in button it can never satisfy would leave nothing to look
+  // at. It falls through to a clearly-labelled sample view instead. Every
+  // sample row has a null id, so each action stays disabled and nothing can be
+  // mistaken for real data.
+  const previewOnly = session.status === 'unavailable';
+
+  const usingSampleData = previewOnly || !business || liveRequirements === undefined;
   const items: Requirement[] = usingSampleData ? SAMPLE_REQUIREMENTS : liveRequirements;
 
   // Keep the open detail sheet in step with the server after a mutation.
@@ -241,7 +248,7 @@ export default function App() {
     [updateStatus],
   );
 
-  if (session.status !== 'signed-in') {
+  if (!previewOnly && session.status !== 'signed-in') {
     return (
       <SignIn
         copy={copy}
@@ -256,7 +263,7 @@ export default function App() {
 
   // Signed in, but the owner has not created their business yet. `undefined`
   // means the query is still loading, which is not the same as "no business".
-  if (business === null) {
+  if (!previewOnly && business === null) {
     return (
       <Onboarding
         copy={copy}
