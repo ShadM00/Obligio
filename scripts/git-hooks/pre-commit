@@ -22,7 +22,18 @@ for file in $(git diff --cached --name-only --diff-filter=ACM); do
     esac
     if git show ":$file" 2>/dev/null | LC_ALL=C grep -qE -e "$patterns"; then
         offenders="$offenders $file"
+        continue
     fi
+    # Keystores are binary, so the text patterns above never match them. A JKS
+    # begins with the magic FEEDFEED; a PKCS12 carries the pkcs-12 OID
+    # (1.2.840.113549.1.12). Checked by content so a renamed keystore cannot
+    # slip past the *.jks / *.keystore ignore rules.
+    magic=$(git show ":$file" 2>/dev/null | head -c 4096 | xxd -p 2>/dev/null | tr -d '\n')
+    case "$magic" in
+        feedfeed*|*2a864886f70d010c*)
+            offenders="$offenders $file"
+            ;;
+    esac
 done
 
 if [ -n "$offenders" ]; then
