@@ -12,15 +12,18 @@ import {
   DocumentsScreen,
   ErrorBanner,
   Home,
+  Onboarding,
   ScreenScroll,
   SettingsScreen,
-  Welcome,
+  SignIn,
 } from './src/screens';
 import {AddRequirement, Paywall, RequirementDetail} from './src/modals';
 import {SAMPLE_REQUIREMENTS, type NewRequirement, type Requirement} from './src/types';
 import {notificationsAllowed, prepareNotifications, scheduleReminderForDueDate} from './src/notifications';
 import {uploadPickedDocument} from './src/documentUpload';
 import {isBillingAvailable} from './src/billing';
+import {useSession} from './src/session';
+import type {Country} from './src/jurisdictions';
 
 type Tab = 'home' | 'calendar' | 'documents' | 'settings';
 
@@ -37,13 +40,13 @@ function message(error: unknown): string {
 
 export default function App() {
   const [locale, setLocale] = useState<Locale>('en-US');
-  const [onboarded, setOnboarded] = useState(false);
   const [tab, setTab] = useState<Tab>('home');
   const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState<Requirement | null>(null);
   const [paywall, setPaywall] = useState(false);
   const [onboardingBusy, setOnboardingBusy] = useState(false);
   const [onboardingError, setOnboardingError] = useState<string | null>(null);
+  const session = useSession();
   const [actionError, setActionError] = useState<string | null>(null);
   const [notificationsOn, setNotificationsOn] = useState(false);
 
@@ -68,7 +71,8 @@ export default function App() {
 
   // Requirements come from Convex once a business is signed in. The sample rows
   // are only ever shown to an unauthenticated visitor, and are labelled as such.
-  const usingSampleData = business === null || liveRequirements === undefined;
+  // Sample rows only ever appear to a visitor this build cannot authenticate.
+  const usingSampleData = session.status === 'unavailable' || !business || liveRequirements === undefined;
   const items: Requirement[] = usingSampleData ? SAMPLE_REQUIREMENTS : liveRequirements;
 
   // Keep the open detail sheet in step with the server after a mutation.
@@ -78,20 +82,20 @@ export default function App() {
     if (fresh !== selected) setSelected(fresh ?? null);
   }, [items, selected]);
 
-  const startOnboarding = useCallback(async () => {
-    setOnboardingBusy(true);
-    setOnboardingError(null);
-    try {
-      if (!business) {
-        await createBusiness({name: 'My business', country: 'US', region: '', industry: 'General'});
+  const createProfile = useCallback(
+    async (profile: {name: string; country: Country; region: string; industry: string}) => {
+      setOnboardingBusy(true);
+      setOnboardingError(null);
+      try {
+        await createBusiness(profile);
+      } catch (error) {
+        setOnboardingError(message(error));
+      } finally {
+        setOnboardingBusy(false);
       }
-      setOnboarded(true);
-    } catch (error) {
-      setOnboardingError(message(error));
-    } finally {
-      setOnboardingBusy(false);
-    }
-  }, [business, createBusiness]);
+    },
+    [createBusiness],
+  );
 
   const saveRequirement = useCallback(
     async (item: NewRequirement) => {
@@ -160,8 +164,33 @@ export default function App() {
     [updateStatus],
   );
 
-  if (!onboarded) {
-    return <Welcome copy={copy} onStart={startOnboarding} busy={onboardingBusy} error={onboardingError} />;
+  if (session.status !== 'signed-in') {
+    return (
+      <SignIn
+        copy={copy}
+        status={session.status}
+        onSignIn={() => {
+          session.signIn();
+        }}
+        error={session.error}
+      />
+    );
+  }
+
+  // Signed in, but the owner has not created their business yet. `undefined`
+  // means the query is still loading, which is not the same as "no business".
+  if (business === null) {
+    return (
+      <Onboarding
+        copy={copy}
+        onCreate={createProfile}
+        busy={onboardingBusy}
+        error={onboardingError}
+        onSignOut={() => {
+          session.signOut();
+        }}
+      />
+    );
   }
 
   const title =
@@ -205,6 +234,10 @@ export default function App() {
             onEnableNotifications={enableNotifications}
             notificationsEnabled={notificationsOn}
             billingAvailable={isBillingAvailable()}
+            onSignOut={() => {
+          session.signOut();
+        }}
+            signOutLabel={copy.signOut}
           />
         )}
       </ScreenScroll>

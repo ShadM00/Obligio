@@ -23,6 +23,22 @@ type Copy = {
   close: string;
   noRequirements: string;
   organisational: string;
+  signInTitle: string;
+  signInBody: string;
+  signInCta: string;
+  signingIn: string;
+  authUnavailable: string;
+  authUnavailableBody: string;
+  signOut: string;
+  checkingSession: string;
+  onboardingTitle: string;
+  onboardingBody: string;
+  businessName: string;
+  country: string;
+  region: string;
+  industry: string;
+  createBusiness: string;
+  creatingBusiness: string;
 };
 
 const shared = {
@@ -47,6 +63,24 @@ const shared = {
   tryAgain: 'Try again',
   close: 'Close',
   noRequirements: 'No obligations tracked yet. Add your first one to get started.',
+  signInTitle: 'Your business obligations, under control.',
+  signInBody: 'Track licences, insurance, filings, inspections, and documents in one calm place.',
+  signInCta: 'Sign in to get started',
+  signingIn: 'Opening sign-in…',
+  authUnavailable: 'Sign-in is unavailable in this build',
+  authUnavailableBody:
+    'This build has no authentication module, so it cannot reach your data. Everything below is sample data.',
+  signOut: 'Sign out',
+  checkingSession: 'Checking your session…',
+  onboardingTitle: 'Tell us about your business',
+  onboardingBody:
+    'Your location and industry decide which obligations Obligio suggests, so these can be changed later.',
+  businessName: 'Business name',
+  country: 'Country',
+  region: 'State or region',
+  industry: 'Industry',
+  createBusiness: 'Create my business',
+  creatingBusiness: 'Creating…',
 } as const;
 
 export const locales: Record<Locale, Copy> = {

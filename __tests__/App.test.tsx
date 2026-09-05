@@ -7,6 +7,11 @@ import ReactTestRenderer from 'react-test-renderer';
 
 jest.mock('convex/react', () => ({
   ConvexProvider: ({children}: {children: React.ReactNode}) => children,
+  // src/session.ts pulls in the client singleton to refresh Convex auth.
+  ConvexReactClient: class {
+    setAuth() {}
+    close() {}
+  },
   useQuery: () => undefined,
   useMutation: () => jest.fn(),
 }));

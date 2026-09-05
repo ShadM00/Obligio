@@ -61,6 +61,9 @@ export const s = StyleSheet.create({
   secondary: {borderWidth: 1, borderColor: colors.forest600, borderRadius: 16, alignItems: 'center', padding: 16, marginTop: 10},
   secondaryText: {color: colors.forest600, fontSize: 16, fontWeight: '800'},
   destructiveText: {color: colors.red700, fontSize: 15, fontWeight: '700', textAlign: 'center', marginTop: 16},
+  signOutText: {color: colors.red700},
+  centeredLink: {fontSize: 14, fontWeight: '700', color: colors.forest600, textAlign: 'center', marginTop: 18},
+  helperSpaced: {fontSize: 15, color: '#6C7D74', lineHeight: 23, marginBottom: 18, marginTop: 12},
 
   disclaimer: {fontSize: 11, color: '#829088', textAlign: 'center', lineHeight: 16, marginTop: 22},
   banner: {backgroundColor: '#FFF4E0', borderRadius: 12, padding: 12, marginBottom: 16},

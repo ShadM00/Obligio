@@ -1,5 +1,5 @@
-import React from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {s} from './theme';
 import {colors, radii, typography} from './designTokens';
@@ -7,6 +7,7 @@ import {formatDisplayDate, monthLabel} from './dates';
 import type {Locale} from './i18n';
 import {locales} from './i18n';
 import type {Requirement, RequirementStatus} from './types';
+import {COUNTRIES, INDUSTRIES, regionsFor, type Country} from './jurisdictions';
 
 type Copy = (typeof locales)[Locale];
 
@@ -33,17 +34,19 @@ export function ErrorBanner({message, onRetry, retryLabel}: {message: string; on
   );
 }
 
-export function Welcome({
+export function SignIn({
   copy,
-  onStart,
-  busy,
+  status,
+  onSignIn,
   error,
 }: {
   copy: Copy;
-  onStart: () => void;
-  busy: boolean;
+  status: 'checking' | 'unavailable' | 'signed-out';
+  onSignIn: () => void;
   error: string | null;
 }) {
+  const busy = status === 'checking';
+  const unavailable = status === 'unavailable';
   return (
     <SafeAreaView style={s.safe}>
       <View style={s.welcome}>
@@ -54,22 +57,128 @@ export function Welcome({
           <Text style={s.logoText}>✓</Text>
         </View>
         <Text style={s.eyebrow}>{copy.appName}</Text>
-        <Text style={[s.welcomeTitle, typography.display]}>Your business obligations, under control.</Text>
-        <Text style={[s.welcomeBody, typography.body]}>
-          Track licences, insurance, filings, inspections, and documents in one calm place.
-        </Text>
-        <TouchableOpacity
-          accessibilityRole="button"
-          accessibilityLabel="Set up my business"
-          accessibilityState={{disabled: busy}}
-          disabled={busy}
-          style={[s.primary, busy && s.primaryDisabled]}
-          onPress={onStart}>
-          <Text style={s.primaryText}>{busy ? 'Setting up…' : 'Set up my business'}</Text>
-        </TouchableOpacity>
-        {error && <ErrorBanner message={error} onRetry={onStart} retryLabel={copy.tryAgain} />}
+        <Text style={[s.welcomeTitle, typography.display]}>{copy.signInTitle}</Text>
+        <Text style={[s.welcomeBody, typography.body]}>{copy.signInBody}</Text>
+
+        {unavailable ? (
+          <View style={s.banner}>
+            <Text style={s.bannerText}>{copy.authUnavailableBody}</Text>
+          </View>
+        ) : (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel={copy.signInCta}
+            accessibilityState={{disabled: busy}}
+            disabled={busy}
+            style={[s.primary, busy && s.primaryDisabled]}
+            onPress={onSignIn}>
+            <Text style={s.primaryText}>{busy ? copy.checkingSession : copy.signInCta}</Text>
+          </TouchableOpacity>
+        )}
+
+        {error && <ErrorBanner message={error} onRetry={onSignIn} retryLabel={copy.tryAgain} />}
         <Text style={s.disclaimer}>{copy.disclaimer}</Text>
       </View>
+    </SafeAreaView>
+  );
+}
+
+function OptionChips({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: {value: string; label: string}[];
+  value: string;
+  onChange: (next: string) => void;
+}) {
+  return (
+    <>
+      <Text style={s.monthHeading}>{label.toUpperCase()}</Text>
+      <View style={s.row}>
+        {options.map(option => {
+          const selected = option.value === value;
+          return (
+            <TouchableOpacity
+              accessibilityRole="button"
+              accessibilityState={{selected}}
+              key={option.value || 'any'}
+              style={[s.chip, selected && s.chipSelected]}
+              onPress={() => onChange(option.value)}>
+              <Text style={s.chipText}>{option.label}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </>
+  );
+}
+
+export function Onboarding({
+  copy,
+  onCreate,
+  busy,
+  error,
+  onSignOut,
+}: {
+  copy: Copy;
+  onCreate: (profile: {name: string; country: Country; region: string; industry: string}) => void;
+  busy: boolean;
+  error: string | null;
+  onSignOut: () => void;
+}) {
+  const [name, setName] = useState('');
+  const [country, setCountry] = useState<Country>('US');
+  const [region, setRegion] = useState('');
+  const [industry, setIndustry] = useState('General');
+
+  const canCreate = name.trim().length > 0 && !busy;
+
+  return (
+    <SafeAreaView style={s.safe}>
+      <ScrollView contentContainerStyle={s.container} keyboardShouldPersistTaps="handled">
+        <Text style={s.eyebrow}>{copy.appName}</Text>
+        <Text style={s.title}>{copy.onboardingTitle}</Text>
+        <Text style={s.helperSpaced}>{copy.onboardingBody}</Text>
+
+        <TextInput
+          style={s.input}
+          placeholder={copy.businessName}
+          accessibilityLabel={copy.businessName}
+          value={name}
+          onChangeText={setName}
+        />
+
+        <OptionChips
+          label={copy.country}
+          options={COUNTRIES}
+          value={country}
+          onChange={next => {
+            setCountry(next as Country);
+            // Regions are country specific; keep the pair coherent.
+            setRegion('');
+          }}
+        />
+        <OptionChips label={copy.region} options={regionsFor(country)} value={region} onChange={setRegion} />
+        <OptionChips label={copy.industry} options={INDUSTRIES} value={industry} onChange={setIndustry} />
+
+        {error && <Text style={s.destructiveText}>{error}</Text>}
+
+        <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityState={{disabled: !canCreate}}
+          disabled={!canCreate}
+          style={[s.primary, !canCreate && s.primaryDisabled]}
+          onPress={() => onCreate({name: name.trim(), country, region, industry})}>
+          <Text style={s.primaryText}>{busy ? copy.creatingBusiness : copy.createBusiness}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity accessibilityRole="button" onPress={onSignOut}>
+          <Text style={s.centeredLink}>{copy.signOut}</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -286,11 +395,15 @@ export function SettingsScreen({
   onEnableNotifications,
   notificationsEnabled,
   billingAvailable,
+  onSignOut,
+  signOutLabel,
 }: {
   onSubscribe: () => void;
   onEnableNotifications: () => void;
   notificationsEnabled: boolean;
   billingAvailable: boolean;
+  onSignOut: () => void;
+  signOutLabel: string;
 }) {
   const rows: {label: string; hint?: string; onPress?: () => void}[] = [
     {label: 'Business profile'},
@@ -325,6 +438,10 @@ export function SettingsScreen({
           <Text style={s.chevron}>›</Text>
         </TouchableOpacity>
       ))}
+
+      <TouchableOpacity accessibilityRole="button" onPress={onSignOut} style={s.setting}>
+        <Text style={[s.itemTitle, s.signOutText]}>{signOutLabel}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
