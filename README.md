@@ -12,10 +12,10 @@ Two things need owner credentials and are **not** complete:
 
 | Area | State |
 | --- | --- |
-| **Subscriptions** | The paywall loads offerings, purchases, and restores through RevenueCat, but the store keys in `src/config.ts` are `null`. Until they are set, the paywall reports that plans are unavailable. |
+| **Subscriptions** | No Obligio project exists in RevenueCat yet, so the store keys in `src/config.ts` are `null` and the paywall reports that plans are unavailable. No subscription products exist in App Store Connect either. |
 | **Authentication** | The native `ObligioAuth` Clerk bridge exists on both platforms, but the native applications are not registered in Clerk production. Without a session the app shows clearly-labelled sample data and Convex returns nothing. See [docs/native-auth-bridge.md](docs/native-auth-bridge.md). |
 
-Signed store binaries still require local signing assets. Deployment is not claimed complete.
+Store records exist on both platforms — App Store Connect app `6808265621` at *Prepare for Submission*, and a Play Console entry with nothing released. Signing and upload are configured (see [docs/release.md](docs/release.md)), but no build has been submitted and several console-side declarations are still outstanding. Deployment is not claimed complete.
 
 ## Getting started
 
@@ -68,9 +68,9 @@ All three are expected to pass with zero errors and zero warnings.
 | `src/nativeAuth.ts` | JS side of the Clerk native bridge |
 | `src/billing.ts`, `src/notifications.ts`, `src/documentUpload.ts` | Platform integrations |
 | `convex/` | Schema, queries, mutations, authorization helpers |
-| `docs/` | Architecture, rules layer, auth bridge, RevenueCat, design strategy |
+| `docs/` | Architecture, release runbook, rules layer, auth bridge, RevenueCat, design strategy |
 | `web/` | Privacy, terms, and support pages (deployed to Netlify) |
-| `fastlane/` | Local build and release lanes |
+| `fastlane/` | Build and release lanes, plus store listing metadata for both platforms |
 
 ## Conventions worth knowing
 
@@ -79,6 +79,16 @@ All three are expected to pass with zero errors and zero warnings.
 **Every public Convex function is gated.** Tenant data requires business ownership via `requireBusinessOwner`. The shared rules catalogue requires a session. `seedRules.addTemplate` is an *internal* mutation — seeding is operator tooling, so run it from the Convex dashboard or another Convex function, never from a client. The one deliberate exception is `businesses.getByOwner`, which returns `null` rather than throwing when there is no identity: it is the query the app subscribes to on launch, before the auth bridge has a token. It still fails closed.
 
 **The client never sees a storage URL.** Evidence is uploaded to a Convex-generated upload URL and attached to the owning requirement by id.
+
+## Releasing
+
+```sh
+cp fastlane/.env.example fastlane/.env   # fill in the API key ids and paths
+bundle exec fastlane ios release
+bundle exec fastlane android release
+```
+
+Authentication uses an App Store Connect API key, so the lanes are non-interactive and 2FA-proof. Secrets stay outside the repository — see [docs/release.md](docs/release.md) for the full runbook and the pre-submission checklist.
 
 ## Localization
 

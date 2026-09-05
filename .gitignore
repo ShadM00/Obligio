@@ -52,6 +52,14 @@ yarn-error.log
 # For more information about the recommended setup visit:
 # https://docs.fastlane.tools/best-practices/source-control/
 
+# fastlane local environment — may contain key ids and paths to private keys
+fastlane/.env
+fastlane/.env.*
+!fastlane/.env.example
+
+# App Store Connect API private keys
+**/AuthKey_*.p8
+
 **/fastlane/report.xml
 **/fastlane/Preview.html
 **/fastlane/screenshots

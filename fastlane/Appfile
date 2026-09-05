@@ -1,2 +1,14 @@
+# Identifiers are shared by both platforms. Secrets are never stored here —
+# see fastlane/.env.example for the values a release run needs.
 app_identifier(ENV.fetch('IOS_BUNDLE_ID', 'com.obligio.app'))
-apple_id(ENV['APPLE_ID']) if ENV['APPLE_ID']
+
+# App Store Connect app: Obligio (SKU obligio-ios-001).
+apple_id(ENV['ASC_APP_ID'] || '6808265621')
+
+# Apple Developer team: Royal Nation LLC.
+team_id(ENV.fetch('APPLE_TEAM_ID', '2KBXMW6U9N'))
+
+for_platform :android do
+  package_name(ENV.fetch('ANDROID_PACKAGE_NAME', 'com.obligio.app'))
+  json_key_file(ENV['PLAY_JSON_KEY_FILE']) if ENV['PLAY_JSON_KEY_FILE']
+end

@@ -1,14 +1,83 @@
 default_platform(:ios)
+
+# Authentication uses an App Store Connect API key rather than an Apple ID and
+# password: it is 2FA-proof and non-interactive. The .p8 stays outside the
+# repository — point ASC_KEY_FILEPATH at it. See fastlane/.env.example.
+def app_store_connect_api_key!
+  app_store_connect_api_key(
+    key_id: ENV.fetch('ASC_KEY_ID'),
+    issuer_id: ENV.fetch('ASC_ISSUER_ID'),
+    key_filepath: File.expand_path(ENV.fetch('ASC_KEY_FILEPATH')),
+    in_house: false,
+  )
+end
+
 platform :ios do
+  desc 'Build a signed App Store archive and upload it to TestFlight'
   lane :release do
-    increment_build_number(build_number: ENV.fetch('BUILD_NUMBER', Time.now.strftime('%Y%m%d%H%M')))
-    build_app(scheme: 'ComplianceCalendar', export_method: 'app-store')
-    upload_to_app_store(skip_waiting_for_build_processing: true)
+    api_key = app_store_connect_api_key!
+
+    increment_build_number(
+      xcodeproj: 'ios/ComplianceCalendar.xcodeproj',
+      build_number: ENV.fetch('BUILD_NUMBER', Time.now.strftime('%Y%m%d%H%M')),
+    )
+
+    build_app(
+      workspace: 'ios/ComplianceCalendar.xcworkspace',
+      scheme: 'ComplianceCalendar',
+      configuration: 'Release',
+      export_method: 'app-store',
+      output_directory: 'build/ios',
+      clean: true,
+    )
+
+    upload_to_app_store(
+      api_key: api_key,
+      skip_waiting_for_build_processing: true,
+      # Metadata and screenshots are managed deliberately, not on every build.
+      skip_metadata: true,
+      skip_screenshots: true,
+      precheck_include_in_app_purchases: false,
+    )
+  end
+
+  desc 'Push App Store listing metadata from fastlane/metadata without uploading a build'
+  lane :metadata do
+    upload_to_app_store(
+      api_key: app_store_connect_api_key!,
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      overwrite_screenshots: false,
+      precheck_include_in_app_purchases: false,
+    )
   end
 end
+
 platform :android do
+  desc 'Build a signed Android App Bundle and upload it to the chosen Play track'
   lane :release do
-    gradle(task: 'bundle', flavor: 'Release', project_dir: 'android')
-    upload_to_play_store(track: ENV.fetch('PLAY_TRACK', 'internal'), aab: 'android/app/build/outputs/bundle/release/app-release.aab')
+    gradle(task: 'clean', project_dir: 'android')
+    # `bundleRelease` is the release *build type*. An earlier version passed
+    # `flavor: 'Release'`, which Gradle resolves as a product flavour — this
+    # project has none, so that task never existed.
+    gradle(task: 'bundleRelease', project_dir: 'android')
+
+    upload_to_play_store(
+      track: ENV.fetch('PLAY_TRACK', 'internal'),
+      aab: 'android/app/build/outputs/bundle/release/app-release.aab',
+      release_status: ENV.fetch('PLAY_RELEASE_STATUS', 'draft'),
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+    )
+  end
+
+  desc 'Push Play listing metadata from fastlane/metadata/android without uploading a build'
+  lane :metadata do
+    upload_to_play_store(
+      skip_upload_aab: true,
+      skip_upload_apk: true,
+      skip_upload_changelogs: false,
+    )
   end
 end
