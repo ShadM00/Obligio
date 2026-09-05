@@ -33,6 +33,29 @@ Both release lanes skip metadata and screenshots so a build upload never silentl
 
 Listing text lives in `fastlane/metadata/` (App Store, `en-US`) and `fastlane/metadata/android/en-US/` (Play). These are the only source of truth; the former `store/metadata/` directory was merged into them because `supply` never read it.
 
+## After moving the project directory
+
+Android and iOS build state records **absolute** paths, so a moved checkout keeps building against the old location until the derived directories are purged. This bit the project twice already — `android/build/generated/autolinking/autolinking.json` still pointed at a `SBA_Compliance` path from two moves ago and made every Gradle task fail at configuration time.
+
+```sh
+(cd android && ./gradlew --stop)
+rm -rf android/build android/app/build android/app/.cxx android/.gradle android/.kotlin ios/build
+rm -rf node_modules/*/android/build node_modules/@*/*/android/build \
+       node_modules/@react-native/gradle-plugin/.gradle
+```
+
+Auditing for leftovers needs care: `grep` on a developer machine is often a wrapper that honours `.gitignore`, and every one of these files is gitignored. Use the real binary:
+
+```sh
+/usr/bin/grep -rla "<old/path>" --exclude-dir=.git .
+```
+
+## Build verification
+
+The Android release pipeline has been run end to end against a disposable throwaway key: `bundleRelease` completes in about two minutes and produces a ~43 MB bundle for `com.obligio.app` containing the Hermes JS bundle and 44 native libraries. ProGuard and the native release build are therefore known-good; the only thing between here and an internal-track upload is real key material.
+
+Never upload a bundle signed with anything but the real upload key — the first upload permanently binds the signing certificate for the package.
+
 ## Before the first submission
 
 Neither store can accept a build until these are done, and none of them can be done from this repository.
@@ -63,7 +86,24 @@ The app entry exists with nothing released.
 
 - The package name binds on the **first bundle upload**, so `com.obligio.app` is not reserved until then. Upload the first internal-track build before anyone else can claim it.
 - Create the Play **service account** (Setup → API access → grant Release manager) and point `PLAY_JSON_KEY_FILE` at its JSON.
-- Create an upload keystore and wire `android/app/build.gradle` signing configs; the release lane currently produces an unsigned-for-upload bundle without one. Keystores are gitignored (`*.jks`, `*.keystore`).
+- Create an upload keystore. The signing config in `android/app/build.gradle` is already wired and validated — `validateObligioUploadSigning` fails the build with a named list of anything missing, and refuses debug credentials for a release. Only the key material is absent:
+
+  ```sh
+  keytool -genkeypair -v -storetype PKCS12 \
+    -keystore ~/keys/obligio-upload.jks -alias obligio-upload \
+    -keyalg RSA -keysize 2048 -validity 10000
+  ```
+
+  Then export the four values it reads, from the environment or from `~/.gradle/gradle.properties` (never from a file in this repository):
+
+  | Variable | Value |
+  | --- | --- |
+  | `OBLIGIO_UPLOAD_STORE_FILE` | absolute path to the `.jks` |
+  | `OBLIGIO_UPLOAD_STORE_PASSWORD` | keystore password |
+  | `OBLIGIO_UPLOAD_KEY_ALIAS` | `obligio-upload` |
+  | `OBLIGIO_UPLOAD_KEY_PASSWORD` | key password |
+
+  Keep the keystore backed up and outside the repository; `*.jks` and `*.keystore` are gitignored. Losing it means losing the ability to update the app unless Play App Signing is enabled.
 - Complete the Play Console content declarations (data safety, content rating, target audience).
 
 ### Authentication

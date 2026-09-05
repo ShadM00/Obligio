@@ -45,6 +45,10 @@ Convex functions run against the deployment named in `.env.local` (not committed
 npx convex dev
 ```
 
+## Moved the checkout?
+
+Gradle, CMake, and React Native autolinking all record **absolute** paths in their build output. After moving or copying this directory, purge the derived state or every Gradle task will fail while still pointing at the old location — see [docs/release.md](docs/release.md#after-moving-the-project-directory).
+
 ## Checks
 
 ```sh
