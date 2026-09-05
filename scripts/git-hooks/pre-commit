@@ -12,6 +12,11 @@
 # grep would otherwise parse as options.
 patterns='-----BEGIN [A-Z ]*PRIVATE KEY-----|"private_key":|"type": *"service_account"'
 
+# Signing passwords are plain text in a .properties file: no PEM header, no
+# JSON marker, no binary magic. They have to be matched by name, and only when
+# they carry a value — build.gradle legitimately mentions the names.
+secret_assignments='^[A-Z_]*(PASSWORD|SECRET|TOKEN|API_KEY)[A-Z_]*=.+'
+
 offenders=""
 for file in $(git diff --cached --name-only --diff-filter=ACM); do
     # This hook holds the patterns as literals, so skip its own directory.
@@ -28,6 +33,10 @@ for file in $(git diff --cached --name-only --diff-filter=ACM); do
     # begins with the magic FEEDFEED; a PKCS12 carries the pkcs-12 OID
     # (1.2.840.113549.1.12). Checked by content so a renamed keystore cannot
     # slip past the *.jks / *.keystore ignore rules.
+    if git show ":$file" 2>/dev/null | LC_ALL=C grep -qE -e "$secret_assignments"; then
+        offenders="$offenders $file"
+        continue
+    fi
     magic=$(git show ":$file" 2>/dev/null | head -c 4096 | xxd -p 2>/dev/null | tr -d '\n')
     case "$magic" in
         feedfeed*|*2a864886f70d010c*)
