@@ -66,7 +66,10 @@ All three are expected to pass with zero errors and zero warnings.
 | `App.tsx` | Composition root — tabs, top-level state, mutation wiring |
 | `src/screens.tsx` | Welcome, Home, Calendar, Documents, Settings |
 | `src/modals.tsx` | Add requirement, obligation detail, paywall |
-| `src/theme.ts`, `src/designTokens.ts` | Shared styles and design tokens |
+| `src/theme.ts`, `src/designTokens.ts` | Themed stylesheets and semantic colour tokens (light and dark) |
+| `src/session.ts` | Native Clerk session state, and keeping Convex auth in step |
+| `src/jurisdictions.ts` | Countries, regions, and industries the rules catalogue is keyed on |
+| `scripts/generate-icons.py` | Renders the app icon into both platforms' icon sets |
 | `src/dates.ts` | Date parsing, validation, locale-aware formatting |
 | `src/config.ts` | Convex URL and RevenueCat store keys |
 | `src/nativeAuth.ts` | JS side of the Clerk native bridge |
@@ -93,6 +96,18 @@ bundle exec fastlane android release
 ```
 
 Authentication uses an App Store Connect API key, so the lanes are non-interactive and 2FA-proof. Secrets stay outside the repository — see [docs/release.md](docs/release.md) for the full runbook and the pre-submission checklist.
+
+## Theming and accessibility
+
+The app follows the OS light/dark setting. Colour tokens are semantic
+(`surface`, `textMuted`, `brand`) rather than literal, because each role takes
+a different value per scheme.
+
+`__tests__/theme.test.ts` asserts WCAG AA contrast — 4.5:1 for body text, 3:1
+for indicators — across every documented colour pair in both schemes, and that
+the two palettes define the same tokens. Adding a token to one scheme and
+forgetting it in the other renders as undefined, which React Native ignores
+silently, so the parity check is load-bearing.
 
 ## Localization
 
