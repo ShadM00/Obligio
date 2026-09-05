@@ -60,23 +60,25 @@ Never upload a bundle signed with anything but the real upload key — the first
 
 Neither store can accept a build until these are done, and none of them can be done from this repository.
 
-### RevenueCat
-
-The **Obligio** project exists (`388c935c`) and the App Store app configuration is done:
+### RevenueCat — complete
 
 | Field | Value |
 | --- | --- |
-| App | Obligio (App Store), `app3b3ac2cefb` |
-| Bundle ID | `com.obligio.app` |
-| Public SDK key | `appl_SIBIzGDFokrIPHVzuFUEEaDSbLl` — already in `src/config.ts` |
-| In-app purchase key | `UD463F4JM7` ("RevenueCat IAP Key") |
+| Project | Obligio, `388c935c` |
+| App Store app | `app3b3ac2cefb` — key `appl_SIBIzGDFokrIPHVzuFUEEaDSbLl` |
+| Play Store app | `app6413bd9f3e` — key `goog_joeqthkYcqpkIIwTHgTAPyWmFPT` |
+| In-app purchase key | `UD463F4JM7` ("RevenueCat IAP Key"), team-scoped |
+| Entitlement | `obligio_plus`, 2 products |
+| Offering | `default` ("Obligio Plus"), 2 packages, marked current |
 
-App Store in-app purchase keys are **team-scoped**, not per-app: all six keys under this team share the issuer, so the existing generically-named key is valid for Obligio. Swap it in the app configuration if you would rather Obligio had a dedicated key.
+Both keys are in `src/config.ts`, so billing is enabled on both platforms.
+The identifiers match `src/billing.ts`, and `getAvailablePackages` reads
+`offerings.current`, which resolves to `default`.
 
-Still outstanding:
-
-1. **Play Store app configuration.** It cannot be created until the Play service account exists, because RevenueCat requires its credentials JSON. Until then `REVENUECAT_KEYS.android` stays null and Android runs with billing disabled.
-2. **Products, entitlement, and offering.** Create the entitlement `obligio_plus`, attach the products `obligio_plus_monthly` and `obligio_plus_annual`, and add them to the current offering. The identifiers are already referenced in `src/billing.ts`. These cannot be created before the App Store subscription products exist (below).
+Both products still show **Missing Metadata** until RevenueCat finishes
+syncing price and duration from App Store Connect. The paywall renders
+`product.title`, `product.description`, and `product.priceString`, so verify
+those populate before relying on a build.
 
 ### App Store Connect
 
