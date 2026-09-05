@@ -1,0 +1,38 @@
+#!/bin/sh
+# Refuse to commit private key material.
+#
+# This repository is public, and filename-based ignore rules are not enough: a
+# Google Cloud service-account key downloads as <project>-<keyid>.json and an
+# App Store Connect key as AuthKey_<id>.p8, but either can be renamed to
+# anything. This inspects staged *content*, so the filename does not matter.
+#
+# Install:  git config core.hooksPath scripts/git-hooks
+
+# Introduced with -e because the first alternative begins with "-----", which
+# grep would otherwise parse as options.
+patterns='-----BEGIN [A-Z ]*PRIVATE KEY-----|"private_key":|"type": *"service_account"'
+
+offenders=""
+for file in $(git diff --cached --name-only --diff-filter=ACM); do
+    # This hook holds the patterns as literals, so skip its own directory.
+    case "$file" in
+        scripts/git-hooks/*)
+            continue
+            ;;
+    esac
+    if git show ":$file" 2>/dev/null | LC_ALL=C grep -qE -e "$patterns"; then
+        offenders="$offenders $file"
+    fi
+done
+
+if [ -n "$offenders" ]; then
+    echo "pre-commit: refusing to commit private key material in:" >&2
+    for f in $offenders; do
+        echo "  $f" >&2
+    done
+    echo "" >&2
+    echo "Move the credential outside the repository, or into secrets/ which is" >&2
+    echo "ignored, then stage again. Override only if you are certain:" >&2
+    echo "  git commit --no-verify" >&2
+    exit 1
+fi

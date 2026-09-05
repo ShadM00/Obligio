@@ -16,7 +16,14 @@ The bundle identifier matches on both platforms and matches the App Store Connec
 
 ```sh
 cp fastlane/.env.example fastlane/.env
+git config core.hooksPath scripts/git-hooks   # refuses to commit private keys
 ```
+
+Keep every credential outside the repository, or in `secrets/`, which is
+ignored wholesale. Filename rules alone are not enough — a Google Cloud
+service-account key downloads as `<project>-<keyid>.json`, which no pattern
+predicts — so `scripts/git-hooks/pre-commit` scans staged *content* for private
+key material and refuses the commit regardless of filename.
 
 Fill in `ASC_ISSUER_ID` (Users and Access → Integrations → App Store Connect API, shown once at the top of the page and shared by every key), then `ASC_KEY_ID` and `ASC_KEY_FILEPATH` for a key with **App Manager** or **Admin** access, and `PLAY_JSON_KEY_FILE` for a Play service account with **Release manager**. `fastlane/.env` is gitignored, and `**/AuthKey_*.p8` is ignored too. **This repository is public — no private key or service-account JSON may ever be committed.**
 

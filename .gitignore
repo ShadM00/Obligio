@@ -36,6 +36,12 @@ local.properties
 *.p12
 *.p8
 **/google-play-service-account.json
+# Google Cloud service-account keys download as <project>-<keyid>.json, so the
+# filename alone is not predictable. Keep credentials in secrets/, ignored
+# wholesale, and rely on the pre-commit hook for anything that escapes.
+**/*service-account*.json
+**/*serviceaccount*.json
+/secrets/
 !debug.keystore
 .kotlin/
 

@@ -49,6 +49,16 @@ npx convex dev
 
 Gradle, CMake, and React Native autolinking all record **absolute** paths in their build output. After moving or copying this directory, purge the derived state or every Gradle task will fail while still pointing at the old location — see [docs/release.md](docs/release.md#after-moving-the-project-directory).
 
+## Before your first commit
+
+```sh
+git config core.hooksPath scripts/git-hooks
+```
+
+This repository is public. The hook refuses to commit private key material by
+inspecting staged content, so a renamed credential cannot slip past the
+filename-based ignore rules.
+
 ## Checks
 
 ```sh
