@@ -147,3 +147,31 @@ The app entry exists with nothing released.
 ### Authentication
 
 The native Clerk applications are still not registered in Clerk production; see [native-auth-bridge.md](native-auth-bridge.md). Without that, a signed build has no session and the app shows only its labelled sample data.
+
+## Capturing screenshots
+
+`src/screenshots/` renders the real screens against fixture data, for store
+listings and the per-product review screenshot App Store Connect requires.
+
+```sh
+# 1. flip SCREENSHOT_MODE to true in src/screenshots/config.ts
+# 2. run Metro and the app on a simulator
+npx react-native start --port 8088
+# 3. point the app at that bundler, if 8081 is taken by another project
+xcrun simctl spawn <udid> defaults write com.obligio.app RCT_jsLocation -string "localhost:8088"
+# 4. launch, then tap anywhere to cycle:
+#    dashboard, calendar, documents, suggested obligations, paywall
+xcrun simctl io <udid> screenshot shot.png
+# 5. set SCREENSHOT_MODE back to false
+```
+
+`index.js` only consults the flag behind `__DEV__`, so Metro strips the
+harness and its fixtures from release bundles whatever the flag says. That is
+verified by bundling with `--dev false` and grepping for fixture strings.
+
+The fixture prices mirror App Store Connect ($9.99 monthly, $79.99 annual) so
+a review screenshot shows a reviewer the same figures as the product.
+
+Note that App Store listing screenshots need a 6.9" device — 1290x2796 or
+1320x2868. An iPhone 17 Pro captures at 1206x2622, which suits the
+subscription review screenshot but not the listing.

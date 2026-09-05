@@ -14,4 +14,12 @@ function Root() {
   return <SafeAreaProvider><ConvexProvider client={convexClient}><App /></ConvexProvider></SafeAreaProvider>;
 }
 
-AppRegistry.registerComponent(appName, () => Root);
+// The screenshot harness renders real screens against fixture data for store
+// listings and the App Store per-product review screenshot. It lives behind
+// __DEV__, so Metro strips it and its fixtures from release bundles.
+let Entry = Root;
+if (__DEV__ && require('./src/screenshots/config').SCREENSHOT_MODE) {
+  Entry = require('./src/screenshots/ScreenshotRoot').default;
+}
+
+AppRegistry.registerComponent(appName, () => Entry);

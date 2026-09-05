@@ -249,16 +249,26 @@ export function RequirementDetail({
   );
 }
 
-export function Paywall({copy, onClose}: {copy: Copy; onClose: () => void}) {
+export function Paywall({
+  copy,
+  onClose,
+  packagesOverride,
+}: {
+  copy: Copy;
+  onClose: () => void;
+  /** Bypasses the RevenueCat fetch. Used for screenshots and tests. */
+  packagesOverride?: PurchasesPackage[];
+}) {
   const {s, colors} = useAppTheme();
-  const available = isBillingAvailable();
-  const [packages, setPackages] = useState<PurchasesPackage[] | null>(null);
-  const [selected, setSelected] = useState<string | null>(null);
+  const available = isBillingAvailable() || packagesOverride !== undefined;
+  const [packages, setPackages] = useState<PurchasesPackage[] | null>(packagesOverride ?? null);
+  const [selected, setSelected] = useState<string | null>(packagesOverride?.[0]?.identifier ?? null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
   const load = useCallback(async () => {
+    if (packagesOverride) return;
     if (!available) return;
     setError(null);
     try {
@@ -269,7 +279,7 @@ export function Paywall({copy, onClose}: {copy: Copy; onClose: () => void}) {
       setError(message(err));
       setPackages([]);
     }
-  }, [available]);
+  }, [available, packagesOverride]);
 
   useEffect(() => {
     load();
