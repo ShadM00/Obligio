@@ -35,10 +35,27 @@ export function reminderTimestampFor(dueDateIso: string, now = Date.now()): numb
   return timestamp > now ? timestamp : null;
 }
 
-export async function scheduleDeadlineReminder(title: string, timestamp: number): Promise<string> {
+/**
+ * The notification id for a requirement.
+ *
+ * Reminder ids are derived from the requirement id rather than stored. Notifee
+ * ids are local to a device, so a stored id would be meaningless on the
+ * owner's other devices; deriving it means any device can cancel or replace
+ * its own reminder for a requirement, and rescheduling overwrites in place
+ * instead of stacking duplicates.
+ */
+export function reminderIdFor(requirementId: string): string {
+  return `obligio-req-${requirementId}`;
+}
+
+export async function scheduleDeadlineReminder(
+  title: string,
+  timestamp: number,
+  id?: string,
+): Promise<string> {
   const channelId = await prepareNotifications();
   return notifee.createTriggerNotification(
-    {title: 'Obligio reminder', body: title, android: {channelId}},
+    {id, title: 'Obligio reminder', body: title, android: {channelId}},
     {type: TriggerType.TIMESTAMP, timestamp, alarmManager: {allowWhileIdle: true}},
   );
 }
@@ -48,11 +65,27 @@ export async function scheduleDeadlineReminder(title: string, timestamp: number)
  * id, or null when the reminder window has already passed or the user has not
  * granted permission — neither is an error worth interrupting a save for.
  */
-export async function scheduleReminderForDueDate(title: string, dueDateIso: string): Promise<string | null> {
+export async function scheduleReminderForDueDate(
+  title: string,
+  dueDateIso: string,
+  requirementId?: string,
+): Promise<string | null> {
+  const id = requirementId ? reminderIdFor(requirementId) : undefined;
   const timestamp = reminderTimestampFor(dueDateIso);
-  if (timestamp === null) return null;
+  if (timestamp === null) {
+    // The window has passed. Any reminder from a previous due date must still
+    // be cleared, or an edit that moves a deadline earlier leaves the old one
+    // armed.
+    if (id) await cancelDeadlineReminder(id).catch(() => undefined);
+    return null;
+  }
   if (!(await notificationsAllowed())) return null;
-  return scheduleDeadlineReminder(title, timestamp);
+  return scheduleDeadlineReminder(title, timestamp, id);
+}
+
+/** Clears the reminder for a requirement, if this device has one armed. */
+export async function cancelReminderForRequirement(requirementId: string): Promise<void> {
+  await cancelDeadlineReminder(reminderIdFor(requirementId)).catch(() => undefined);
 }
 
 export async function cancelDeadlineReminder(notificationId: string) {

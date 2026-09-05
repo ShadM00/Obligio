@@ -14,6 +14,7 @@ jest.mock('convex/react', () => ({
   },
   useQuery: () => undefined,
   useMutation: () => jest.fn(),
+  useConvex: () => ({query: jest.fn()}),
 }));
 jest.mock('@react-native-documents/picker', () => ({
   pick: jest.fn(),

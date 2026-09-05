@@ -42,16 +42,19 @@ export function AddRequirement({
   locale,
   onClose,
   onSave,
+  initial,
 }: {
   copy: Copy;
   locale: Locale;
   onClose: () => void;
   onSave: (item: NewRequirement) => Promise<void>;
+  /** Present when editing an existing requirement rather than creating one. */
+  initial?: Requirement;
 }) {
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [due, setDue] = useState('');
-  const [recurrence, setRecurrence] = useState<string | undefined>(undefined);
+  const [title, setTitle] = useState(initial?.title ?? '');
+  const [category, setCategory] = useState(initial?.category ?? '');
+  const [due, setDue] = useState(initial ? formatDisplayDate(initial.dueDate, locale) : '');
+  const [recurrence, setRecurrence] = useState<string | undefined>(initial?.recurrence);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -69,7 +72,7 @@ export function AddRequirement({
         category: category.trim() || 'Other',
         dueDate: dueIso,
         recurrence,
-        status: 'upcoming',
+        status: initial?.status ?? 'upcoming',
       });
     } catch (err) {
       setError(message(err));
@@ -78,7 +81,7 @@ export function AddRequirement({
   };
 
   return (
-    <ModalShell title={copy.addRequirement} copy={copy} onClose={onClose}>
+    <ModalShell title={initial ? copy.editRequirement : copy.addRequirement} copy={copy} onClose={onClose}>
       <TextInput style={s.input} placeholder="Requirement name" value={title} onChangeText={setTitle} />
       <TextInput style={s.input} placeholder="Category (e.g. Insurance)" value={category} onChangeText={setCategory} />
       <TextInput
@@ -119,7 +122,7 @@ export function AddRequirement({
         style={[s.primary, !canSave && s.primaryDisabled]}
         disabled={!canSave}
         onPress={save}>
-        <Text style={s.primaryText}>{busy ? 'Saving…' : 'Save requirement'}</Text>
+        <Text style={s.primaryText}>{busy ? copy.saving : copy.saveRequirement}</Text>
       </TouchableOpacity>
     </ModalShell>
   );
@@ -133,6 +136,8 @@ export function RequirementDetail({
   onComplete,
   onAttach,
   onDelete,
+  onEdit,
+  onViewEvidence,
 }: {
   item: Requirement;
   copy: Copy;
@@ -141,12 +146,14 @@ export function RequirementDetail({
   onComplete: (item: Requirement) => Promise<void>;
   onAttach: (item: Requirement) => Promise<void>;
   onDelete: (item: Requirement) => Promise<void>;
+  onEdit: (item: Requirement) => void;
+  onViewEvidence: (item: Requirement) => Promise<void>;
 }) {
-  const [busy, setBusy] = useState<null | 'complete' | 'attach' | 'delete'>(null);
+  const [busy, setBusy] = useState<null | 'complete' | 'attach' | 'delete' | 'evidence'>(null);
   const [error, setError] = useState<string | null>(null);
   const persisted = item._id !== null;
 
-  const run = (kind: 'complete' | 'attach' | 'delete', action: () => Promise<void>) => async () => {
+  const run = (kind: 'complete' | 'attach' | 'delete' | 'evidence', action: () => Promise<void>) => async () => {
     setBusy(kind);
     setError(null);
     try {
@@ -186,15 +193,35 @@ export function RequirementDetail({
       {!persisted && <Text style={s.muted}>{copy.sampleData}</Text>}
       {error && <Text style={s.destructiveText}>{error}</Text>}
 
+      {item.hasDocument && (
+        <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityState={{disabled: !persisted || busy !== null}}
+          disabled={!persisted || busy !== null}
+          style={[s.primary, (!persisted || busy !== null) && s.primaryDisabled]}
+          onPress={run('evidence', () => onViewEvidence(item))}>
+          <Text style={s.primaryText}>{busy === 'evidence' ? copy.opening : copy.viewEvidence}</Text>
+        </TouchableOpacity>
+      )}
+
       <TouchableOpacity
         accessibilityRole="button"
         accessibilityState={{disabled: !persisted || busy !== null}}
         disabled={!persisted || busy !== null}
-        style={[s.primary, (!persisted || busy !== null) && s.primaryDisabled]}
+        style={[item.hasDocument ? s.secondary : s.primary, (!persisted || busy !== null) && s.primaryDisabled]}
         onPress={run('attach', () => onAttach(item))}>
-        <Text style={s.primaryText}>
-          {busy === 'attach' ? 'Uploading…' : item.hasDocument ? 'Replace evidence' : 'Attach evidence'}
+        <Text style={item.hasDocument ? s.secondaryText : s.primaryText}>
+          {busy === 'attach' ? copy.uploading : item.hasDocument ? copy.replaceEvidence : copy.attachEvidence}
         </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityState={{disabled: !persisted || busy !== null}}
+        disabled={!persisted || busy !== null}
+        style={[s.secondary, (!persisted || busy !== null) && s.primaryDisabled]}
+        onPress={() => onEdit(item)}>
+        <Text style={s.secondaryText}>{copy.editRequirement}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -204,7 +231,7 @@ export function RequirementDetail({
         style={[s.secondary, (!persisted || busy !== null) && s.primaryDisabled]}
         onPress={run('complete', () => onComplete(item))}>
         <Text style={s.secondaryText}>
-          {busy === 'complete' ? 'Saving…' : item.recurrence ? 'Mark done & schedule next' : 'Mark as current'}
+          {busy === 'complete' ? copy.saving : item.recurrence ? copy.markDoneNext : copy.markCurrent}
         </Text>
       </TouchableOpacity>
 
@@ -213,7 +240,7 @@ export function RequirementDetail({
         accessibilityState={{disabled: !persisted || busy !== null}}
         disabled={!persisted || busy !== null}
         onPress={run('delete', () => onDelete(item))}>
-        <Text style={s.destructiveText}>{busy === 'delete' ? 'Removing…' : 'Delete obligation'}</Text>
+        <Text style={s.destructiveText}>{busy === 'delete' ? copy.removing : copy.deleteObligation}</Text>
       </TouchableOpacity>
     </ModalShell>
   );

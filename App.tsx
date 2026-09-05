@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import {Linking, StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useMutation, useQuery} from 'convex/react';
+import {useConvex, useMutation, useQuery} from 'convex/react';
 import {pick, types} from '@react-native-documents/picker';
 
 import {api} from './convex/_generated/api';
@@ -19,7 +19,12 @@ import {
 } from './src/screens';
 import {AddRequirement, Paywall, RequirementDetail, TemplatePicker} from './src/modals';
 import {SAMPLE_REQUIREMENTS, type NewRequirement, type Requirement, type RuleTemplate} from './src/types';
-import {notificationsAllowed, prepareNotifications, scheduleReminderForDueDate} from './src/notifications';
+import {
+  cancelReminderForRequirement,
+  notificationsAllowed,
+  prepareNotifications,
+  scheduleReminderForDueDate,
+} from './src/notifications';
 import {uploadPickedDocument} from './src/documentUpload';
 import {isBillingAvailable} from './src/billing';
 import {useSession} from './src/session';
@@ -45,6 +50,7 @@ export default function App() {
   const [selected, setSelected] = useState<Requirement | null>(null);
   const [paywall, setPaywall] = useState(false);
   const [templatesOpen, setTemplatesOpen] = useState(false);
+  const [editing, setEditing] = useState<Requirement | null>(null);
   const [onboardingBusy, setOnboardingBusy] = useState(false);
   const [onboardingError, setOnboardingError] = useState<string | null>(null);
   const session = useSession();
@@ -65,10 +71,12 @@ export default function App() {
   const createRequirement = useMutation(api.requirementsMutations.create);
   const updateStatus = useMutation(api.requirementsMutations.updateStatus);
   const removeRequirement = useMutation(api.requirementsMutations.remove);
+  const updateRequirement = useMutation(api.requirementsMutations.update);
   const completeAndScheduleNext = useMutation(api.recurrence.completeAndScheduleNext);
   const createFromTemplate = useMutation(api.requirementsMutations.createFromTemplate);
   const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
   const attachDocument = useMutation(api.documents.attach);
+  const convex = useConvex();
 
   useEffect(() => {
     notificationsAllowed()
@@ -107,10 +115,10 @@ export default function App() {
   const saveRequirement = useCallback(
     async (item: NewRequirement) => {
       if (!business) throw new Error(copy.signInRequired);
-      await createRequirement({businessId: business._id, ...item});
+      const requirementId = await createRequirement({businessId: business._id, ...item});
       // A missed reminder should never fail the save the user just made.
       try {
-        await scheduleReminderForDueDate(item.title, item.dueDate);
+        await scheduleReminderForDueDate(item.title, item.dueDate, requirementId);
       } catch {
         // Reminder scheduling is best-effort.
       }
@@ -122,9 +130,9 @@ export default function App() {
   const adoptTemplate = useCallback(
     async (rule: RuleTemplate, dueDate: string) => {
       if (!business) throw new Error(copy.signInRequired);
-      await createFromTemplate({businessId: business._id, ruleId: rule._id, dueDate});
+      const requirementId = await createFromTemplate({businessId: business._id, ruleId: rule._id, dueDate});
       try {
-        await scheduleReminderForDueDate(rule.title, dueDate);
+        await scheduleReminderForDueDate(rule.title, dueDate, requirementId);
       } catch {
         // Reminder scheduling is best-effort.
       }
@@ -135,15 +143,63 @@ export default function App() {
   const completeRequirement = useCallback(
     async (item: Requirement) => {
       if (!item._id) return;
-      await completeAndScheduleNext({requirementId: item._id});
+      const nextId = await completeAndScheduleNext({requirementId: item._id});
+      await cancelReminderForRequirement(item._id);
+      if (nextId && item.recurrence) {
+        const next = await convex.query(api.requirements.list, {businessId: business!._id});
+        const created = next.find(row => row._id === nextId);
+        if (created) {
+          try {
+            await scheduleReminderForDueDate(created.title, created.dueDate, nextId);
+          } catch {
+            // Reminder scheduling is best-effort.
+          }
+        }
+      }
     },
-    [completeAndScheduleNext],
+    [business, completeAndScheduleNext, convex],
+  );
+
+  const saveEdit = useCallback(
+    async (item: NewRequirement) => {
+      if (!editing?._id) return;
+      await updateRequirement({
+        requirementId: editing._id,
+        title: item.title,
+        category: item.category,
+        dueDate: item.dueDate,
+        recurrence: item.recurrence,
+      });
+      // Re-arm against the new date; a moved deadline must not keep the old one.
+      try {
+        await scheduleReminderForDueDate(item.title, item.dueDate, editing._id);
+      } catch {
+        // Reminder scheduling is best-effort.
+      }
+      setEditing(null);
+      setSelected(null);
+    },
+    [editing, updateRequirement],
+  );
+
+  const viewEvidence = useCallback(
+    async (item: Requirement) => {
+      if (!item._id) return;
+      const url = await convex.query(api.documents.getEvidenceUrl, {requirementId: item._id});
+      if (!url) throw new Error(copy.noEvidence);
+      const opened = await Linking.canOpenURL(url);
+      if (!opened) throw new Error('No app on this device can open that document.');
+      await Linking.openURL(url);
+    },
+    [convex, copy.noEvidence],
   );
 
   const deleteRequirement = useCallback(
     async (item: Requirement) => {
       if (!item._id) return;
       await removeRequirement({requirementId: item._id});
+      // Otherwise the reminder for a deleted obligation still fires.
+      await cancelReminderForRequirement(item._id);
       setSelected(null);
     },
     [removeRequirement],
@@ -270,6 +326,15 @@ export default function App() {
       </ScreenScroll>
 
       {adding && <AddRequirement copy={copy} locale={locale} onClose={() => setAdding(false)} onSave={saveRequirement} />}
+      {editing && (
+        <AddRequirement
+          copy={copy}
+          locale={locale}
+          initial={editing}
+          onClose={() => setEditing(null)}
+          onSave={saveEdit}
+        />
+      )}
       {selected && (
         <RequirementDetail
           item={selected}
@@ -279,6 +344,8 @@ export default function App() {
           onComplete={selected.recurrence ? completeRequirement : markStatusCurrent}
           onAttach={attachEvidence}
           onDelete={deleteRequirement}
+          onEdit={setEditing}
+          onViewEvidence={viewEvidence}
         />
       )}
       {templatesOpen && (

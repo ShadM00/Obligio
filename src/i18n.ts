@@ -47,6 +47,19 @@ type Copy = {
   trackThis: string;
   source: string;
   reviewed: string;
+  editRequirement: string;
+  saveRequirement: string;
+  saving: string;
+  removing: string;
+  uploading: string;
+  opening: string;
+  viewEvidence: string;
+  attachEvidence: string;
+  replaceEvidence: string;
+  markDoneNext: string;
+  markCurrent: string;
+  deleteObligation: string;
+  noEvidence: string;
 };
 
 const shared = {
@@ -99,6 +112,19 @@ const shared = {
   trackThis: 'Track this',
   source: 'Source',
   reviewed: 'reviewed',
+  editRequirement: 'Edit requirement',
+  saveRequirement: 'Save requirement',
+  saving: 'Saving…',
+  removing: 'Removing…',
+  uploading: 'Uploading…',
+  opening: 'Opening…',
+  viewEvidence: 'View evidence',
+  attachEvidence: 'Attach evidence',
+  replaceEvidence: 'Replace evidence',
+  markDoneNext: 'Mark done & schedule next',
+  markCurrent: 'Mark as current',
+  deleteObligation: 'Delete obligation',
+  noEvidence: 'This obligation has no evidence attached.',
 } as const;
 
 export const locales: Record<Locale, Copy> = {

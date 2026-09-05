@@ -35,6 +35,37 @@ export const updateStatus = mutation({
   },
 });
 
+/**
+ * Edits a requirement in place.
+ *
+ * Status is not editable here: it is either derived from the due date on read
+ * or set deliberately through `updateStatus` / `completeAndScheduleNext`.
+ */
+export const update = mutation({
+  args: {
+    requirementId: v.id('requirements'),
+    title: v.string(),
+    category: v.string(),
+    dueDate: v.string(),
+    recurrence: v.optional(v.string()),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const row = await ctx.db.get(args.requirementId);
+    if (!row) throw new Error('Requirement not found');
+    await requireBusinessOwner(ctx, row.businessId);
+    assertIsoDate(args.dueDate);
+    if (args.recurrence !== undefined) assertRecurrence(args.recurrence);
+    await ctx.db.patch(args.requirementId, {
+      title: args.title,
+      category: args.category,
+      dueDate: args.dueDate,
+      recurrence: args.recurrence,
+    });
+    return null;
+  },
+});
+
 export const remove = mutation({
   args: {requirementId: v.id('requirements')},
   returns: v.null(),
