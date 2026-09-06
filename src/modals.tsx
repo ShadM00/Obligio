@@ -44,6 +44,7 @@ export function AddRequirement({
   onClose,
   onSave,
   initial,
+  allowRecurrence,
 }: {
   copy: Copy;
   locale: Locale;
@@ -51,6 +52,8 @@ export function AddRequirement({
   onSave: (item: NewRequirement) => Promise<void>;
   /** Present when editing an existing requirement rather than creating one. */
   initial?: Requirement;
+  /** Recurring obligations are part of Obligio Plus. */
+  allowRecurrence?: boolean;
 }) {
   const {s} = useAppTheme();
   const [title, setTitle] = useState(initial?.title ?? '');
@@ -103,18 +106,22 @@ export function AddRequirement({
       <View style={s.row}>
         {RECURRENCE_OPTIONS.map(option => {
           const selected = recurrence === option.value;
+          // One-off stays available to everyone; repeating is Plus.
+          const locked = allowRecurrence === false && option.value !== undefined;
           return (
             <TouchableOpacity
               accessibilityRole="button"
-              accessibilityState={{selected}}
+              accessibilityState={{selected, disabled: locked}}
+              disabled={locked}
               key={option.label}
-              style={[s.chip, selected && s.chipSelected]}
+              style={[s.chip, selected && s.chipSelected, locked && s.primaryDisabled]}
               onPress={() => setRecurrence(option.value)}>
               <Text style={s.chipText}>{option.label}</Text>
             </TouchableOpacity>
           );
         })}
       </View>
+      {allowRecurrence === false && <Text style={s.muted}>{copy.recurrenceIsPlus}</Text>}
 
       {error && <Text style={s.destructiveText}>{error}</Text>}
 

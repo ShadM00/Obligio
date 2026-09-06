@@ -70,6 +70,32 @@ The Android release pipeline has been run end to end against a disposable throwa
 
 Never upload a bundle signed with anything but the real upload key — the first upload permanently binds the signing certificate for the package.
 
+## What the subscription unlocks
+
+Obligio Plus gates three things, defined in `src/entitlements.ts`:
+
+| | Free | Plus |
+| --- | --- | --- |
+| Obligations tracked | 3 | unlimited |
+| Document evidence | — | ✓ |
+| Recurring obligations | — | ✓ |
+
+`FREE_REQUIREMENT_LIMIT` is a pricing decision expressed as one constant.
+Competitors give one or two items free; three is slightly more generous
+because a compliance tracker only looks useful once it holds a real picture.
+
+Two things to know about how this is enforced:
+
+- **The check is client-side.** It decides what the UI offers, not what the
+  backend permits. Convex does not know the entitlement state, so a modified
+  client could exceed the limit. That is normal for this class of app, but if
+  the limit ever needs to be real, RevenueCat webhooks into Convex are the
+  route.
+- **A build with no store key is not gated.** It cannot sell anything, so
+  gating would leave features permanently unreachable with no way to buy
+  them. Production always carries a key, so this never relaxes a real
+  customer's limits.
+
 ## Export compliance
 
 `ITSAppUsesNonExemptEncryption` is declared `false` in `ios/ComplianceCalendar/Info.plist`.

@@ -27,6 +27,7 @@ import {
 } from './src/notifications';
 import {uploadPickedDocument} from './src/documentUpload';
 import {isBillingAvailable} from './src/billing';
+import {canAddRequirement, FREE_REQUIREMENT_LIMIT, useSubscription} from './src/subscription';
 import {useSession} from './src/session';
 import type {Country} from './src/jurisdictions';
 
@@ -55,6 +56,7 @@ export default function App() {
   const [onboardingBusy, setOnboardingBusy] = useState(false);
   const [onboardingError, setOnboardingError] = useState<string | null>(null);
   const session = useSession();
+  const subscription = useSubscription();
   const [actionError, setActionError] = useState<string | null>(null);
   const [notificationsOn, setNotificationsOn] = useState(false);
 
@@ -216,6 +218,10 @@ export default function App() {
   const attachEvidence = useCallback(
     async (item: Requirement) => {
       if (!item._id) return;
+      if (!subscription.isPlus) {
+        setPaywall(true);
+        throw new Error(copy.evidenceIsPlus);
+      }
       let picked;
       try {
         [picked] = await pick({type: [types.allFiles]});
@@ -227,7 +233,7 @@ export default function App() {
       const storageId = await uploadPickedDocument(uploadUrl, picked);
       await attachDocument({requirementId: item._id, documentStorageId: storageId});
     },
-    [attachDocument, generateUploadUrl],
+    [attachDocument, copy.evidenceIsPlus, generateUploadUrl, subscription.isPlus],
   );
 
   const enableNotifications = useCallback(async () => {
@@ -306,13 +312,21 @@ export default function App() {
         {actionError && (
           <ErrorBanner message={actionError} onRetry={() => setActionError(null)} retryLabel={copy.close} />
         )}
+        {!subscription.isPlus && !usingSampleData && items.length >= FREE_REQUIREMENT_LIMIT && (
+          <TouchableOpacity accessibilityRole="button" style={s.banner} onPress={() => setPaywall(true)}>
+            <Text style={s.bannerText}>{copy.freeLimitReached(FREE_REQUIREMENT_LIMIT)}</Text>
+          </TouchableOpacity>
+        )}
 
         {tab === 'home' && (
           <Home
             copy={copy}
             locale={locale}
             items={items}
-            onAdd={() => setAdding(true)}
+            onAdd={() => {
+              if (canAddRequirement(subscription.isPlus, items.length)) setAdding(true);
+              else setPaywall(true);
+            }}
             onSelect={setSelected}
             onBrowseTemplates={business ? () => setTemplatesOpen(true) : undefined}
           />
@@ -325,6 +339,7 @@ export default function App() {
             onEnableNotifications={enableNotifications}
             notificationsEnabled={notificationsOn}
             billingAvailable={isBillingAvailable()}
+            isPlus={subscription.isPlus}
             onSignOut={() => {
           session.signOut();
         }}
@@ -333,7 +348,15 @@ export default function App() {
         )}
       </ScreenScroll>
 
-      {adding && <AddRequirement copy={copy} locale={locale} onClose={() => setAdding(false)} onSave={saveRequirement} />}
+      {adding && (
+        <AddRequirement
+          copy={copy}
+          locale={locale}
+          onClose={() => setAdding(false)}
+          onSave={saveRequirement}
+          allowRecurrence={subscription.isPlus}
+        />
+      )}
       {editing && (
         <AddRequirement
           copy={copy}
@@ -341,6 +364,7 @@ export default function App() {
           initial={editing}
           onClose={() => setEditing(null)}
           onSave={saveEdit}
+          allowRecurrence={subscription.isPlus}
         />
       )}
       {selected && (

@@ -60,6 +60,12 @@ type Copy = {
   markCurrent: string;
   deleteObligation: string;
   noEvidence: string;
+  plusRequired: string;
+  freeLimitReached: (limit: number) => string;
+  evidenceIsPlus: string;
+  recurrenceIsPlus: string;
+  plusActive: string;
+  upgrade: string;
 };
 
 const shared = {
@@ -125,6 +131,13 @@ const shared = {
   markCurrent: 'Mark as current',
   deleteObligation: 'Delete obligation',
   noEvidence: 'This obligation has no evidence attached.',
+  plusRequired: 'Obligio Plus',
+  freeLimitReached: (limit: number) =>
+    `Free accounts track up to ${limit} obligations. Upgrade for unlimited.`,
+  evidenceIsPlus: 'Attaching evidence is part of Obligio Plus.',
+  recurrenceIsPlus: 'Recurring obligations are part of Obligio Plus.',
+  plusActive: 'Obligio Plus is active',
+  upgrade: 'Upgrade',
 } as const;
 
 export const locales: Record<Locale, Copy> = {

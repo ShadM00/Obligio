@@ -413,6 +413,7 @@ export function SettingsScreen({
   onEnableNotifications,
   notificationsEnabled,
   billingAvailable,
+  isPlus,
   onSignOut,
   signOutLabel,
 }: {
@@ -420,6 +421,7 @@ export function SettingsScreen({
   onEnableNotifications: () => void;
   notificationsEnabled: boolean;
   billingAvailable: boolean;
+  isPlus: boolean;
   onSignOut: () => void;
   signOutLabel: string;
 }) {
@@ -433,7 +435,11 @@ export function SettingsScreen({
     },
     {
       label: 'Subscription',
-      hint: billingAvailable ? undefined : 'Plans are not available in this build',
+      hint: isPlus
+        ? 'Obligio Plus is active'
+        : billingAvailable
+          ? 'Free plan — tap to see Obligio Plus'
+          : 'Plans are not available in this build',
       onPress: onSubscribe,
     },
     {label: 'Privacy & data'},
