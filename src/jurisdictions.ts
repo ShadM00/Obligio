@@ -48,6 +48,9 @@ export function regionsFor(country: Country) {
   return country === 'GB' ? GB_REGIONS : US_STATES;
 }
 
+/** Industry value for rules that apply whatever trade a business is in. */
+export const GENERAL_INDUSTRY = 'General';
+
 export const INDUSTRIES: {value: string; label: string}[] = [
   {value: 'General', label: 'General business'},
   {value: 'FoodService', label: 'Food & beverage'},
@@ -63,4 +66,30 @@ export const INDUSTRIES: {value: string; label: string}[] = [
 
 export function labelFor(list: {value: string; label: string}[], value: string): string {
   return list.find(entry => entry.value === value)?.label ?? value;
+}
+
+/**
+ * Every catalogue scope that covers a business.
+ *
+ * A rule is stored as narrowly as it applies: federal rules under an empty
+ * region, rules for any trade under industry 'General'. `rules.listTemplates`
+ * matches country, region and industry exactly, so a business must be looked
+ * up under all four combinations or it sees only rules written for its exact
+ * state and trade -- and none of the federal ones that apply to everyone.
+ *
+ * Ordered widest-last so the most specific rules come first, and deduplicated
+ * by the caller, since the scopes collapse into each other for a business that
+ * is itself country-wide or general.
+ */
+export function coveringScopes(region: string, industry: string): {region: string; industry: string}[] {
+  const scopes = [
+    {region, industry},
+    {region: '', industry},
+    {region, industry: GENERAL_INDUSTRY},
+    {region: '', industry: GENERAL_INDUSTRY},
+  ];
+  return scopes.filter(
+    (scope, index) =>
+      index === scopes.findIndex(other => other.region === scope.region && other.industry === scope.industry),
+  );
 }
