@@ -80,8 +80,12 @@ platform :ios do
     upload_to_app_store(
       api_key: app_store_connect_api_key!,
       skip_binary_upload: true,
-      skip_screenshots: true,
-      overwrite_screenshots: false,
+      # Screenshots live in fastlane/screenshots/<locale>, built by
+      # scripts/capture-screenshots.py and scripts/build-store-screenshots.py.
+      # Overwriting is what makes a re-push replace the set rather than
+      # append to it.
+      skip_screenshots: false,
+      overwrite_screenshots: true,
       precheck_include_in_app_purchases: false,
       # Skips deliver's interactive "does this preview look okay?" step. The
       # metadata under fastlane/metadata is the reviewed artefact.

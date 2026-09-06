@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable, StatusBar, Text, View} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
+import {AUTO_ADVANCE_MS} from './config';
 import {locales, type Locale} from '../i18n';
 import {useAppTheme} from '../theme';
 import {CalendarScreen, DocumentsScreen, Home, ScreenScroll} from '../screens';
@@ -12,6 +13,10 @@ import {screenshotPackages, screenshotRequirements, screenshotTemplates} from '.
  * A gallery of the real screens against fixture data, for capturing App Store
  * and Play listing images plus the per-product review screenshot Apple
  * requires.
+ *
+ * The two modal frames render over the dashboard, because that is where a
+ * user meets them. Presented against an empty root instead, their dimmed
+ * backdrop photographs as a grey void across the top of the screenshot.
  *
  * It renders the actual components, so what is captured is what ships. Tap
  * anywhere to advance; the frame counter is only visible during capture and
@@ -42,6 +47,27 @@ function Chrome({title, children}: {title: string; children: React.ReactNode}) {
 export default function ScreenshotRoot() {
   const [index, setIndex] = useState(0);
   const {s, isDark} = useAppTheme();
+
+  useEffect(() => {
+    if (AUTO_ADVANCE_MS <= 0) {
+      return;
+    }
+    // The first frame is held for two steps, not one. It is on screen from
+    // first paint rather than from mount, so on a cold bundle load a single
+    // step can shrink to almost nothing -- and being the longest frame is
+    // also what lets a capture run identify where the cycle starts, instead
+    // of assuming the first thing it sees is frame one.
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const settle = setTimeout(() => {
+      interval = setInterval(() => setIndex(i => i + 1), AUTO_ADVANCE_MS);
+      setIndex(i => i + 1);
+    }, AUTO_ADVANCE_MS * 2);
+    return () => {
+      clearTimeout(settle);
+      clearInterval(interval);
+    };
+  }, []);
+
   const copy = locales[LOCALE];
   const frame: Frame = FRAMES[index % FRAMES.length];
   const noop = () => undefined;
@@ -51,7 +77,7 @@ export default function ScreenshotRoot() {
       <SafeAreaView style={s.safe}>
         <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
         <Pressable style={s.safe} onPress={() => setIndex(i => i + 1)}>
-          {frame === 'dashboard' && (
+          {(frame === 'dashboard' || frame === 'suggested' || frame === 'paywall') && (
             <Chrome title={copy.dashboard}>
               <Home
                 copy={copy}
