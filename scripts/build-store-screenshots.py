@@ -19,8 +19,16 @@ import sys
 
 from PIL import Image, ImageDraw, ImageFont
 
-# 6.9" App Store requirement; also accepted by Play.
-CANVAS = (1320, 2868)
+# 6.7" (1290x2796). Apple accepts this for the 6.9" slot and scales it up,
+# and it is the largest iPhone size fastlane's deliver knows about -- deliver
+# rejects a 1320x2868 file outright as an invalid screen size. Play takes it
+# as a phone screenshot unchanged.
+CANVAS = (1290, 2796)
+
+# The layout below was drawn against this canvas; everything derives from it
+# so the composition holds if CANVAS changes again.
+DESIGN = (1320, 2868)
+SCALE = CANVAS[1] / DESIGN[1]
 
 FONT_BOLD = "/System/Library/Fonts/Helvetica.ttc"
 
@@ -38,12 +46,12 @@ CAPTIONS = {
     "paywall": ("Three free to start,", "unlimited with Plus"),
 }
 
-CAPTION_TOP = 150
-CAPTION_SIZE = 92
-CAPTION_GAP = 112
-DEVICE_INSET = 96      # side margin for the device
-DEVICE_TOP = 560       # where the device starts
-CORNER = 56
+CAPTION_TOP = round(150 * SCALE)
+CAPTION_SIZE = round(92 * SCALE)
+CAPTION_GAP = round(112 * SCALE)
+DEVICE_INSET = round(96 * SCALE)   # side margin for the device
+DEVICE_TOP = round(560 * SCALE)    # where the device starts
+CORNER = round(56 * SCALE)
 
 
 def rounded(image: Image.Image, radius: int) -> Image.Image:

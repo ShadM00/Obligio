@@ -39,6 +39,14 @@ Upload an already-built IPA to TestFlight, without rebuilding
 
 Push App Store listing metadata from fastlane/metadata without uploading a build
 
+### ios screenshots
+
+```sh
+[bundle exec] fastlane ios screenshots
+```
+
+Push App Store screenshots from fastlane/screenshots without uploading a build
+
 ----
 
 

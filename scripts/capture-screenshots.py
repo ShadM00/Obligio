@@ -6,6 +6,13 @@
 Requires src/screenshots/config.ts to have SCREENSHOT_MODE = true and
 AUTO_ADVANCE_MS set, because simctl cannot tap.
 
+If Metro is not on 8081 -- another project's dev server may already hold it --
+point the installed app at the right one before running this, or it will
+happily load the other project's bundle:
+
+    xcrun simctl spawn <udid> defaults write com.obligio.app \
+      RCT_jsLocation "localhost:8082"
+
 Bundle-load time varies by seconds, so this does not sleep a fixed amount and
 hope it lands on frame one. It samples the screen continuously for two full
 cycles, groups consecutive identical samples into runs -- one run per frame,

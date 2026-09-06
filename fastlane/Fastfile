@@ -84,11 +84,33 @@ platform :ios do
       # scripts/capture-screenshots.py and scripts/build-store-screenshots.py.
       # Overwriting is what makes a re-push replace the set rather than
       # append to it.
-      skip_screenshots: false,
-      overwrite_screenshots: true,
+      skip_screenshots: true,
       precheck_include_in_app_purchases: false,
       # Skips deliver's interactive "does this preview look okay?" step. The
       # metadata under fastlane/metadata is the reviewed artefact.
+      force: true,
+    )
+  end
+
+  desc 'Push App Store screenshots from fastlane/screenshots without uploading a build'
+  lane :screenshots do
+    # Separate from `metadata` on purpose. Uploading text for an app whose
+    # first version has never been submitted ends in spaceship raising
+    # "No data" -- after the text has landed, but before deliver reaches the
+    # screenshots. Run on its own, the screenshot upload never touches that
+    # path.
+    #
+    # deliver only knows iPhone sizes up to 6.7" (1290x2796) and rejects
+    # 1320x2868 as an invalid screen size, so that is what
+    # scripts/build-store-screenshots.py composes. Apple accepts it for the
+    # 6.9" slot.
+    upload_to_app_store(
+      api_key: app_store_connect_api_key!,
+      skip_binary_upload: true,
+      skip_metadata: true,
+      skip_screenshots: false,
+      overwrite_screenshots: true,
+      precheck_include_in_app_purchases: false,
       force: true,
     )
   end
