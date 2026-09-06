@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="220" fill="#163E31"/><path d="M260 520l160 160 344-344" fill="none" stroke="#D8F1E2" stroke-width="92" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" rx="220" fill="#163E31"/>
+  <!-- Binder rings -->
+  <rect x="322" y="200" width="30" height="112" rx="15" fill="#D8F1E2"/>
+  <rect x="497" y="200" width="30" height="112" rx="15" fill="#D8F1E2"/>
+  <rect x="672" y="200" width="30" height="112" rx="15" fill="#D8F1E2"/>
+  <!-- Calendar body -->
+  <rect x="240" y="272" width="544" height="512" rx="52" fill="none" stroke="#D8F1E2" stroke-width="34"/>
+  <rect x="240" y="272" width="544" height="104" rx="52" fill="#D8F1E2"/>
+  <rect x="240" y="324" width="544" height="52" fill="#D8F1E2"/>
+  <!-- Check -->
+  <path d="M356 566l84 84 190-190" fill="none" stroke="#5FD3A3" stroke-width="62"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
