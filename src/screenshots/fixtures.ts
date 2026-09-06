@@ -12,7 +12,7 @@ import type {Requirement, RuleTemplate} from '../types';
 export const screenshotRequirements: Requirement[] = [
   {_id: null, title: 'General liability insurance', category: 'Insurance', dueDate: '2026-10-14', status: 'upcoming', recurrence: 'annual', hasDocument: true},
   {_id: null, title: 'Estimated federal tax payment', category: 'Tax', dueDate: '2026-09-15', status: 'upcoming', recurrence: 'quarterly', hasDocument: false},
-  {_id: null, title: 'Business licence renewal', category: 'Licences', dueDate: '2026-12-31', status: 'current', recurrence: 'annual', hasDocument: true},
+  {_id: null, title: 'Business license renewal', category: 'Licenses', dueDate: '2026-12-31', status: 'current', recurrence: 'annual', hasDocument: true},
   {_id: null, title: 'Food handler certification', category: 'Safety', dueDate: '2026-08-28', status: 'overdue', recurrence: 'annual', hasDocument: false},
   {_id: null, title: 'Fire safety inspection', category: 'Safety', dueDate: '2026-11-09', status: 'upcoming', recurrence: 'annual', hasDocument: false},
   {_id: null, title: "Workers' compensation review", category: 'Insurance', dueDate: '2027-01-20', status: 'current', recurrence: 'annual', hasDocument: true},

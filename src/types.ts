@@ -38,6 +38,6 @@ export type NewRequirement = {
 export const SAMPLE_REQUIREMENTS: Requirement[] = [
   {_id: null, title: 'General liability insurance', category: 'Insurance', dueDate: '2026-10-14', status: 'upcoming', recurrence: 'annual', hasDocument: false},
   {_id: null, title: 'Estimated federal tax payment', category: 'Tax', dueDate: '2026-09-15', status: 'upcoming', recurrence: 'quarterly', hasDocument: false},
-  {_id: null, title: 'Business licence', category: 'Licences', dueDate: '2026-12-31', status: 'current', recurrence: 'annual', hasDocument: true},
+  {_id: null, title: 'Business license', category: 'Licenses', dueDate: '2026-12-31', status: 'current', recurrence: 'annual', hasDocument: true},
   {_id: null, title: 'First-aid certification', category: 'Safety', dueDate: '2026-08-28', status: 'overdue', recurrence: 'annual', hasDocument: false},
 ];

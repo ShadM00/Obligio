@@ -374,10 +374,7 @@ export function DocumentsScreen({
 
   return (
     <View>
-      <Text style={s.helper}>
-        Upload insurance certificates, licences, permits, and training records. They stay linked to the obligation they
-        support — open an obligation to attach its evidence.
-      </Text>
+      <Text style={s.helper}>{copy.documentsHelper}</Text>
 
       {withEvidence.length > 0 && (
         <>

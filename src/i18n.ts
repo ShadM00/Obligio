@@ -23,6 +23,7 @@ type Copy = {
   close: string;
   noRequirements: string;
   organisational: string;
+  documentsHelper: string;
   signInTitle: string;
   signInBody: string;
   signInCta: string;
@@ -91,7 +92,6 @@ const shared = {
   close: 'Close',
   noRequirements: 'No obligations tracked yet. Add your first one to get started.',
   signInTitle: 'Your business obligations, under control.',
-  signInBody: 'Track licences, insurance, filings, inspections, and documents in one calm place.',
   signInCta: 'Sign in to get started',
   signingIn: 'Opening sign-in…',
   authUnavailable: 'Sign-in is unavailable in this build',
@@ -145,11 +145,17 @@ export const locales: Record<Locale, Copy> = {
     ...shared,
     organisational: 'organizational',
     disclaimer: 'Obligio provides organizational tools, not legal or tax advice.',
+    signInBody: 'Track licenses, insurance, filings, inspections, and documents in one calm place.',
+    documentsHelper:
+      'Upload insurance certificates, licenses, permits, and training records. They stay linked to the obligation they support — open an obligation to attach its evidence.',
   },
   'en-GB': {
     ...shared,
     organisational: 'organisational',
     disclaimer: 'Obligio provides organisational tools, not legal or tax advice.',
+    signInBody: 'Track licences, insurance, filings, inspections, and documents in one calm place.',
+    documentsHelper:
+      'Upload insurance certificates, licences, permits, and training records. They stay linked to the obligation they support — open an obligation to attach its evidence.',
   },
 };
 
