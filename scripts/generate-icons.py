@@ -56,6 +56,9 @@ def render_round() -> Image.Image:
     return image.resize((SIZE, SIZE), Image.LANCZOS)
 
 
+# The project targets TARGETED_DEVICE_FAMILY "1,2", so iPad icons are
+# required as well as iPhone. Omitting them still builds and signs, and only
+# fails at App Store upload with "Missing required icon file ... 167x167".
 IOS_ICONS = {
     ("iphone", "20x20", "2x"): ("icon-20@2x.png", 40),
     ("iphone", "20x20", "3x"): ("icon-20@3x.png", 60),
@@ -65,6 +68,15 @@ IOS_ICONS = {
     ("iphone", "40x40", "3x"): ("icon-40@3x.png", 120),
     ("iphone", "60x60", "2x"): ("icon-60@2x.png", 120),
     ("iphone", "60x60", "3x"): ("icon-60@3x.png", 180),
+    ("ipad", "20x20", "1x"): ("icon-ipad-20.png", 20),
+    ("ipad", "20x20", "2x"): ("icon-ipad-20@2x.png", 40),
+    ("ipad", "29x29", "1x"): ("icon-ipad-29.png", 29),
+    ("ipad", "29x29", "2x"): ("icon-ipad-29@2x.png", 58),
+    ("ipad", "40x40", "1x"): ("icon-ipad-40.png", 40),
+    ("ipad", "40x40", "2x"): ("icon-ipad-40@2x.png", 80),
+    ("ipad", "76x76", "1x"): ("icon-ipad-76.png", 76),
+    ("ipad", "76x76", "2x"): ("icon-ipad-76@2x.png", 152),
+    ("ipad", "83.5x83.5", "2x"): ("icon-ipad-83.5@2x.png", 167),
     ("ios-marketing", "1024x1024", "1x"): ("icon-1024.png", 1024),
 }
 
@@ -80,9 +92,13 @@ def main() -> None:
     for (name, px) in IOS_ICONS.values():
         square.resize((px, px), Image.LANCZOS).save(appicon / name)
 
-    contents = json.loads((appicon / "Contents.json").read_text())
-    for image in contents["images"]:
-        image["filename"] = IOS_ICONS[(image["idiom"], image["size"], image["scale"])][0]
+    contents = {
+        "images": [
+            {"idiom": idiom, "size": size, "scale": scale, "filename": name}
+            for (idiom, size, scale), (name, _px) in IOS_ICONS.items()
+        ],
+        "info": {"author": "xcode", "version": 1},
+    }
     (appicon / "Contents.json").write_text(json.dumps(contents, indent=2) + "\n")
 
     # Android legacy icons are pre-shaped; adaptive icons (API 26+) are drawn

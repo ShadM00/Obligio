@@ -46,13 +46,32 @@ platform :ios do
       },
     )
 
-    upload_to_app_store(
+    # TestFlight, not App Store submission. upload_to_app_store (deliver) is
+    # for pushing a listing, and does not accept
+    # skip_waiting_for_build_processing; that belongs to this action. Listing
+    # metadata is pushed deliberately by the `metadata` lane instead.
+    upload_to_testflight(
       api_key: api_key,
       skip_waiting_for_build_processing: true,
-      # Metadata and screenshots are managed deliberately, not on every build.
-      skip_metadata: true,
-      skip_screenshots: true,
-      precheck_include_in_app_purchases: false,
+    )
+  end
+
+  desc 'Upload an already-built IPA to TestFlight, without rebuilding'
+  lane :upload do
+    # Apple's transporter fails with a bare "A server error occurred.
+    # (-19241)" often enough that rebuilding just to retry the upload is
+    # wasted time. This reuses the artefact build_app already produced.
+    # Anchored to the repository root via __dir__ (the fastlane/ directory):
+    # a lane's working directory is fastlane/, not the project root, so a bare
+    # relative path resolves to the wrong place.
+    default_ipa = File.expand_path('../build/ios/ComplianceCalendar.ipa', __dir__)
+    ipa = ENV.fetch('IPA_PATH', default_ipa)
+    UI.user_error!("No IPA at #{ipa}. Run `fastlane ios release` first.") unless File.exist?(ipa)
+
+    upload_to_testflight(
+      api_key: app_store_connect_api_key!,
+      ipa: ipa,
+      skip_waiting_for_build_processing: true,
     )
   end
 
