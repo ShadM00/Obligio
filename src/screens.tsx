@@ -155,16 +155,18 @@ export function Onboarding({
           onChangeText={setName}
         />
 
-        <OptionChips
-          label={copy.country}
-          options={COUNTRIES}
-          value={country}
-          onChange={next => {
-            setCountry(next as Country);
-            // Regions are country specific; keep the pair coherent.
-            setRegion('');
-          }}
-        />
+        {COUNTRIES.length > 1 && (
+          <OptionChips
+            label={copy.country}
+            options={COUNTRIES}
+            value={country}
+            onChange={next => {
+              setCountry(next as Country);
+              // Regions are country specific; keep the pair coherent.
+              setRegion('');
+            }}
+          />
+        )}
         <OptionChips label={copy.region} options={regionsFor(country)} value={region} onChange={setRegion} />
         <OptionChips label={copy.industry} options={INDUSTRIES} value={industry} onChange={setIndustry} />
 

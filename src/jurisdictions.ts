@@ -9,9 +9,21 @@
 
 export type Country = 'US' | 'GB';
 
+/**
+ * The countries onboarding offers.
+ *
+ * Only jurisdictions whose catalogue has actually been written and reviewed
+ * belong here: every entry is a promise that "Suggested for you" has something
+ * to say, and a compliance app that guesses is worse than one that stays
+ * quiet. GB keeps its type, regions and copy below so adding it back is the
+ * one-line change it should be -- what it lacks is a reviewed catalogue, not
+ * code.
+ *
+ * The en-US/en-GB toggle is separate and unaffected: it drives date format and
+ * spelling, not which rules apply.
+ */
 export const COUNTRIES: {value: Country; label: string}[] = [
   {value: 'US', label: 'United States'},
-  {value: 'GB', label: 'United Kingdom'},
 ];
 
 /** Empty region means "applies country-wide". */
