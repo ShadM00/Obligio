@@ -77,10 +77,10 @@ Seeded on 2026-09-06 with `reviewedAt: "2026-09-06"`: the 8 US federal
 entries, all at scope `US / (country-wide) / General`, which the widening above
 makes visible to a US business in any state and any industry.
 
-There are no GB rules, though onboarding offers United Kingdom and four
-regions. A UK business gets the `suggestedEmpty` copy rather than a broken
-screen, but it gets no suggestions at all until that catalogue is written and
-reviewed.
+There are no GB rules, so onboarding no longer offers the United Kingdom --
+`COUNTRIES` in `src/jurisdictions.ts` lists only the jurisdictions whose
+catalogue has been reviewed. The GB type, regions and copy all remain, so
+restoring it is a one-line change once a catalogue exists.
 
 ## Coverage today
 
