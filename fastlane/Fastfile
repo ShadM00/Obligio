@@ -83,6 +83,9 @@ platform :ios do
       skip_screenshots: true,
       overwrite_screenshots: false,
       precheck_include_in_app_purchases: false,
+      # Skips deliver's interactive "does this preview look okay?" step. The
+      # metadata under fastlane/metadata is the reviewed artefact.
+      force: true,
     )
   end
 end
@@ -108,10 +111,18 @@ platform :android do
 
   desc 'Push Play listing metadata from fastlane/metadata/android without uploading a build'
   lane :metadata do
+    # supply resolves a track even for a listing-only upload, so name one --
+    # the default is production, which has no release, and it dies on the nil
+    # release with "undefined method `size' for nil".
+    #
+    # Changelogs are release notes: they are keyed by version code and belong
+    # with the build, so `android release` carries them. Pushing them from here
+    # would need a version code this lane has no business knowing.
     upload_to_play_store(
+      track: ENV.fetch('PLAY_TRACK', 'internal'),
       skip_upload_aab: true,
       skip_upload_apk: true,
-      skip_upload_changelogs: false,
+      skip_upload_changelogs: true,
     )
   end
 end
