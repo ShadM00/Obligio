@@ -40,8 +40,18 @@ key authenticates fine.
 bundle exec fastlane ios release        # archive, sign, upload to TestFlight
 bundle exec fastlane android release    # bundleRelease, upload to the internal track as a draft
 bundle exec fastlane ios metadata       # push App Store listing text only
-bundle exec fastlane android metadata   # push Play listing text only
+bundle exec fastlane ios screenshots    # push App Store screenshots only
+bundle exec fastlane android metadata   # push Play listing text, images and screenshots
 ```
+
+`ios screenshots` is deliberately separate from `ios metadata`. Uploading
+listing text for an app whose first version has never been submitted ends in
+spaceship raising `No data` — after the text has landed, but before deliver
+reaches the screenshots. Bundled together, the screenshots would never upload
+at all. Run the text lane, ignore that crash, then run the screenshot lane.
+
+`supply` has no equivalent split, so `android metadata` carries the Play
+images and screenshots alongside the text.
 
 Both release lanes skip metadata and screenshots so a build upload never silently rewrites a live listing. Push listing changes deliberately with the `metadata` lanes.
 
@@ -178,10 +188,10 @@ The app sits at **1.0 Prepare for Submission**. Outstanding:
 - **Subscriptions** — no subscription group exists. Create one, then create `obligio_plus_monthly` and `obligio_plus_annual` inside it. RevenueCat cannot sell products that do not exist here.
 - **Age rating** — not set up.
 - **Content rights** — not declared.
-- **Category** — no primary category chosen; Business with a Productivity secondary matches the listing.
-- **Subtitle** — currently empty. `fastlane ios metadata` would set it to "Compliance calendar for SMBs". The app name stays "Obligio"; the longer "Obligio: Compliance Calendar" is the Play title only.
+- **Category** — primary is Productivity; no secondary is set. A secondary category is free ASO surface, and Business fits the listing.
+- **Subtitle** — set to "License, Permit & Filing Dates" (30/30). The app name is "Obligio: Compliance Tracker" (27/30) on both stores.
 - **App Privacy** — the questionnaire must be completed before review.
-- **Screenshots** — none are managed here yet; both `metadata` lanes leave screenshots untouched.
+- **Screenshots** — five 1290x2796 images are live, pushed by `ios screenshots`. The release lanes still leave them untouched.
 
 ### Google Play
 
@@ -219,16 +229,37 @@ The native Clerk applications are still not registered in Clerk production; see 
 listings and the per-product review screenshot App Store Connect requires.
 
 ```sh
-# 1. flip SCREENSHOT_MODE to true in src/screenshots/config.ts
-# 2. run Metro and the app on a simulator
-npx react-native start --port 8088
-# 3. point the app at that bundler, if 8081 is taken by another project
-xcrun simctl spawn <udid> defaults write com.obligio.app RCT_jsLocation -string "localhost:8088"
-# 4. launch, then tap anywhere to cycle:
-#    dashboard, calendar, documents, suggested obligations, paywall
-xcrun simctl io <udid> screenshot shot.png
-# 5. set SCREENSHOT_MODE back to false
+# 1. in src/screenshots/config.ts: SCREENSHOT_MODE = true, AUTO_ADVANCE_MS = 3500
+# 2. run this project's Metro and install the app on a booted simulator
+npx react-native start --port 8082
+RCT_METRO_PORT=8082 npx react-native run-ios --udid <udid> --port 8082 --no-packager
+# 3. if 8081 is taken by another project, point the app at the right bundler --
+#    otherwise it will happily load that project's bundle and fail on a native
+#    module this app has never depended on
+xcrun simctl spawn <udid> defaults write com.obligio.app RCT_jsLocation "localhost:8082"
+# 4. capture both appearances, then compose the listing images
+python3 scripts/capture-screenshots.py <udid> /tmp/captures
+python3 scripts/build-store-screenshots.py /tmp/captures /tmp/store
+cp /tmp/store/light-*.png fastlane/screenshots/en-US/
+cp /tmp/store/light-*.png fastlane/metadata/android/en-US/images/phoneScreenshots/
+# 5. set SCREENSHOT_MODE back to 0/false before committing
 ```
+
+`capture-screenshots.py` drives the gallery instead of anyone tapping it, so a
+re-capture after a copy change is reproducible. Three things about it are worth
+knowing before changing either script:
+
+- It relaunches with `--terminate-running-process`. A bare `simctl launch` on a
+  running app only foregrounds it, so the gallery keeps its frame index and
+  every caption ends up attached to the wrong screen.
+- It groups samples into runs and filters them by **elapsed time**, not by how
+  many samples a run collected. A `simctl` screenshot costs a few hundred
+  milliseconds more than the sample interval, so a count threshold drops a real
+  frame on a loaded machine and shifts the whole set by one.
+- The gallery holds its first frame for two steps. That frame is on screen from
+  first paint rather than from mount, so a cold bundle load can shrink it to
+  almost nothing; being the longest run is also how the script finds where the
+  cycle starts, rather than assuming the first thing it sees is frame one.
 
 `index.js` only consults the flag behind `__DEV__`, so Metro strips the
 harness and its fixtures from release bundles whatever the flag says. That is
@@ -237,6 +268,14 @@ verified by bundling with `--dev false` and grepping for fixture strings.
 The fixture prices mirror App Store Connect ($9.99 monthly, $79.99 annual) so
 a review screenshot shows a reviewer the same figures as the product.
 
-Note that App Store listing screenshots need a 6.9" device — 1290x2796 or
-1320x2868. An iPhone 17 Pro captures at 1206x2622, which suits the
-subscription review screenshot but not the listing.
+Listing images are composed at **1290x2796**. Apple accepts that for the 6.9"
+slot and scales it up, and it is the largest iPhone size fastlane 2.229 knows
+about — deliver rejects a 1320x2868 file outright as an invalid screen size,
+before it uploads anything. Play takes the same file as a phone screenshot.
+
+Captures come from an iPhone 17 Pro Max at 1320x2868 and are scaled into that
+canvas. An iPhone 17 Pro captures at 1206x2622, which suits the subscription
+review screenshot but is too small for the listing.
+
+Play additionally requires a 512x512 icon and a 1024x500 feature graphic, both
+built from the shipping icon and palette by `scripts/build-play-graphics.py`.
