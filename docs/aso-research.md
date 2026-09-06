@@ -79,6 +79,35 @@ Suggested captions, matched to the frames already captured:
 4. Documents — "Proof attached to the obligation"
 5. Paywall — "Unlimited obligations and reminders"
 
+## Store copy, by platform
+
+The two stores index differently, so the listings are not the same text.
+
+**Apple** weights the name, subtitle and the hidden keyword field. The
+description is *not* indexed, so it is written to convert rather than to rank.
+
+**Google Play** indexes the full description. `full_description.txt` therefore
+repeats the terms that matter — license, permit, renewal, deadline, filing,
+insurance — naturally through the body rather than in a keyword field Play
+does not have.
+
+Both en-US listings use American spelling. An earlier draft used "licence"
+throughout, which is wrong for the locale and costs the exact-match term.
+
+## Screenshots
+
+`scripts/build-store-screenshots.py` composites the listing images from real
+device captures: brand backdrop, two-line caption, rounded frame, 1320x2868.
+
+The capture underneath is never redrawn. Guideline 2.3.3 requires screenshots
+to show the app as it runs, so generated imagery is confined to the treatment
+around a genuine screenshot.
+
+One thing worth knowing if the backdrop is ever changed: the first version
+used a near-white background almost identical to the app's own canvas
+(#F7F8F6), which left the device with no visible edge on a store card. The
+backdrop needs to contrast with the app, not match it.
+
 ## Not yet researched
 
 - Search volume and difficulty per keyword. Requires a paid ASO data source;
