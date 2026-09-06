@@ -35,7 +35,7 @@ CAPTIONS = {
     "calendar": ("Grouped by month,", "never by surprise"),
     "documents": ("Proof attached", "to the obligation"),
     "suggested": ("Federal deadlines,", "with the source"),
-    "paywall": ("Unlimited obligations", "and reminders"),
+    "paywall": ("Three free to start,", "unlimited with Plus"),
 }
 
 CAPTION_TOP = 150
