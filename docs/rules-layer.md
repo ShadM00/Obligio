@@ -36,15 +36,28 @@ renders them, and `requirementsMutations.createFromTemplate` copies the
 template's wording, category, cadence, and source URL onto a new requirement
 with the date the owner chose.
 
+## How a rule reaches a business
+
+A rule is stored as narrowly as it applies: federal rules under an empty
+region, rules that hold for any trade under industry `General`. The index on
+(country, region, industry) matches all three exactly, so `listTemplates` asks
+for every scope that covers the business rather than only its own triple —
+`coveringScopes` in `src/jurisdictions.ts`, unit tested there.
+
+Without that widening a shop in (US, WA, FoodService) matches nothing, because
+the catalogue is broadest at the country-wide and general end. Anything seeded
+under a specific state or industry is additive on top.
+
 ## Seeding
 
 Seeding is operator tooling. `seedRules.addTemplate` and
 `seedRules.seedUnitedStatesFederal` are **internal** mutations, so they are
 unreachable from the app and from anyone holding the deployment URL. Run them
-from the Convex dashboard or another Convex function.
+from the Convex dashboard, from another Convex function, or from the CLI:
 
-```
-seedRules.seedUnitedStatesFederal({ reviewedAt: "YYYY-MM-DD" })
+```sh
+npx convex run seedRules:seedUnitedStatesFederal '{"reviewedAt":"YYYY-MM-DD"}' --prod
+npx convex run --prod --inline-query 'return (await ctx.db.query("rules").take(200)).length'
 ```
 
 `reviewedAt` is a required argument rather than a baked-in constant, because
@@ -57,6 +70,17 @@ and returns `{inserted, skipped}`.
 > links to its authority, but no one has yet verified it end to end. Read it,
 > correct it, and only then seed it with the date you reviewed it. Owners will
 > treat what this catalogue says as authoritative; it should earn that.
+
+### What production holds
+
+Seeded on 2026-09-06 with `reviewedAt: "2026-09-06"`: the 8 US federal
+entries, all at scope `US / (country-wide) / General`, which the widening above
+makes visible to a US business in any state and any industry.
+
+There are no GB rules, though onboarding offers United Kingdom and four
+regions. A UK business gets the `suggestedEmpty` copy rather than a broken
+screen, but it gets no suggestions at all until that catalogue is written and
+reviewed.
 
 ## Coverage today
 
