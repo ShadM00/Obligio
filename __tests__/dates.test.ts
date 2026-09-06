@@ -90,16 +90,26 @@ describe('statusForDueDate and monthLabel', () => {
 });
 
 describe('reminderTimestampFor', () => {
-  test('schedules ahead of the due date', () => {
+  test('returns the earliest lead time still ahead', () => {
+    // Six weeks out, so the 30-day reminder is the first one due: 14 Sept.
     const now = new Date(2026, 8, 1).getTime();
     const timestamp = reminderTimestampFor('2026-10-14', now);
     expect(timestamp).not.toBeNull();
-    expect(new Date(timestamp!).getDate()).toBe(7);
-    expect(new Date(timestamp!).getMonth()).toBe(9);
+    expect(new Date(timestamp!).getMonth()).toBe(8);
+    expect(new Date(timestamp!).getDate()).toBe(14);
   });
 
-  test('returns null when the reminder window has already passed', () => {
-    const now = new Date(2026, 9, 13).getTime();
+  test('falls through to a nearer lead time once the earlier ones pass', () => {
+    // Ten days out: 30 and 14 have gone, so the 7-day reminder is next.
+    const now = new Date(2026, 9, 4).getTime();
+    const timestamp = reminderTimestampFor('2026-10-14', now);
+    expect(timestamp).not.toBeNull();
+    expect(new Date(timestamp!).getDate()).toBe(7);
+  });
+
+  test('returns null once every lead time has passed', () => {
+    // On the due date itself, all four reminders are behind us.
+    const now = new Date(2026, 9, 14, 12).getTime();
     expect(reminderTimestampFor('2026-10-14', now)).toBeNull();
     expect(reminderTimestampFor('not-a-date', now)).toBeNull();
   });

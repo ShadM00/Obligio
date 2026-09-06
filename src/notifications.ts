@@ -2,8 +2,14 @@ import notifee, {AndroidImportance, AuthorizationStatus, TriggerType} from '@not
 import {isIsoDate} from './dates';
 
 const CHANNEL_ID = 'obligio-deadlines';
-/** Reminders fire at 09:00 local time, this many days before the due date. */
-const REMINDER_LEAD_DAYS = 7;
+/**
+ * Reminders fire at 09:00 local on each of these days before the due date.
+ *
+ * A single late reminder is not much use: gathering renewal paperwork takes
+ * longer than the notice it gives. A long-range warning gives time to act and
+ * a short-range one catches anyone who deferred it.
+ */
+const REMINDER_LEAD_DAYS = [30, 14, 7, 1] as const;
 const REMINDER_HOUR = 9;
 
 export async function prepareNotifications(): Promise<string> {
@@ -23,16 +29,21 @@ export async function notificationsAllowed(): Promise<boolean> {
   );
 }
 
+/** Every reminder moment for a due date that is still in the future. */
+export function reminderTimestampsFor(dueDateIso: string, now = Date.now()): number[] {
+  if (!isIsoDate(dueDateIso)) return [];
+  const [year, month, day] = dueDateIso.split('-').map(Number);
+  return REMINDER_LEAD_DAYS.map(lead =>
+    new Date(year, month - 1, day - lead, REMINDER_HOUR, 0, 0, 0).getTime(),
+  ).filter(timestamp => timestamp > now);
+}
+
 /**
- * The moment a reminder for an ISO due date should fire, or null when that
- * moment has already passed (notifee rejects triggers in the past).
+ * The soonest reminder still ahead of us, or null when every one has passed
+ * (notifee rejects triggers in the past).
  */
 export function reminderTimestampFor(dueDateIso: string, now = Date.now()): number | null {
-  if (!isIsoDate(dueDateIso)) return null;
-  const [year, month, day] = dueDateIso.split('-').map(Number);
-  const reminder = new Date(year, month - 1, day - REMINDER_LEAD_DAYS, REMINDER_HOUR, 0, 0, 0);
-  const timestamp = reminder.getTime();
-  return timestamp > now ? timestamp : null;
+  return reminderTimestampsFor(dueDateIso, now)[0] ?? null;
 }
 
 /**
@@ -44,8 +55,15 @@ export function reminderTimestampFor(dueDateIso: string, now = Date.now()): numb
  * its own reminder for a requirement, and rescheduling overwrites in place
  * instead of stacking duplicates.
  */
-export function reminderIdFor(requirementId: string): string {
-  return `obligio-req-${requirementId}`;
+export function reminderIdFor(requirementId: string, leadDays?: number): string {
+  return leadDays === undefined
+    ? `obligio-req-${requirementId}`
+    : `obligio-req-${requirementId}-${leadDays}`;
+}
+
+/** Every notification id this requirement may have armed, for cancellation. */
+export function reminderIdsFor(requirementId: string): string[] {
+  return [reminderIdFor(requirementId), ...REMINDER_LEAD_DAYS.map(d => reminderIdFor(requirementId, d))];
 }
 
 export async function scheduleDeadlineReminder(
@@ -65,27 +83,39 @@ export async function scheduleDeadlineReminder(
  * id, or null when the reminder window has already passed or the user has not
  * granted permission — neither is an error worth interrupting a save for.
  */
+/**
+ * Arms every future reminder for a due date, returning how many were set.
+ *
+ * Existing reminders are cleared first, so editing a date never leaves a
+ * reminder from the previous one armed — including when the new date is close
+ * enough that fewer reminders apply, or already past so none do.
+ */
 export async function scheduleReminderForDueDate(
   title: string,
   dueDateIso: string,
   requirementId?: string,
-): Promise<string | null> {
-  const id = requirementId ? reminderIdFor(requirementId) : undefined;
-  const timestamp = reminderTimestampFor(dueDateIso);
-  if (timestamp === null) {
-    // The window has passed. Any reminder from a previous due date must still
-    // be cleared, or an edit that moves a deadline earlier leaves the old one
-    // armed.
-    if (id) await cancelDeadlineReminder(id).catch(() => undefined);
-    return null;
+): Promise<number> {
+  if (requirementId) await cancelReminderForRequirement(requirementId);
+
+  const timestamps = reminderTimestampsFor(dueDateIso);
+  if (timestamps.length === 0) return 0;
+  if (!(await notificationsAllowed())) return 0;
+
+  let armed = 0;
+  for (const [index, timestamp] of timestamps.entries()) {
+    const lead = REMINDER_LEAD_DAYS[REMINDER_LEAD_DAYS.length - timestamps.length + index];
+    const id = requirementId ? reminderIdFor(requirementId, lead) : undefined;
+    await scheduleDeadlineReminder(title, timestamp, id);
+    armed += 1;
   }
-  if (!(await notificationsAllowed())) return null;
-  return scheduleDeadlineReminder(title, timestamp, id);
+  return armed;
 }
 
-/** Clears the reminder for a requirement, if this device has one armed. */
+/** Clears every reminder this device has armed for a requirement. */
 export async function cancelReminderForRequirement(requirementId: string): Promise<void> {
-  await cancelDeadlineReminder(reminderIdFor(requirementId)).catch(() => undefined);
+  await Promise.all(
+    reminderIdsFor(requirementId).map(id => cancelDeadlineReminder(id).catch(() => undefined)),
+  );
 }
 
 export async function cancelDeadlineReminder(notificationId: string) {

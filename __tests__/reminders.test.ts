@@ -19,6 +19,7 @@ jest.mock('@notifee/react-native', () => ({
 const {
   cancelReminderForRequirement,
   reminderIdFor,
+  reminderTimestampsFor,
   scheduleReminderForDueDate,
 }: typeof import('../src/notifications') = require('../src/notifications');
 
@@ -30,28 +31,45 @@ test('derives a stable id from the requirement id', () => {
   expect(reminderIdFor('abc123')).toBe(reminderIdFor('abc123'));
 });
 
-test('schedules against the requirement id so it can be replaced later', async () => {
+test('arms one reminder per lead time, each with its own id', async () => {
   const far = `${new Date().getFullYear() + 2}-10-14`;
-  await scheduleReminderForDueDate('Renew licence', far, 'req1');
-  expect(mockNotifee.createTriggerNotification).toHaveBeenCalledWith(
-    expect.objectContaining({id: 'obligio-req-req1'}),
-    expect.objectContaining({type: 0}),
-  );
+  const armed = await scheduleReminderForDueDate('Renew licence', far, 'req1');
+  expect(armed).toBe(4);
+  for (const lead of [30, 14, 7, 1]) {
+    expect(mockNotifee.createTriggerNotification).toHaveBeenCalledWith(
+      expect.objectContaining({id: `obligio-req-req1-${lead}`}),
+      expect.objectContaining({type: 0}),
+    );
+  }
+});
+
+test('only arms the lead times still in the future', async () => {
+  // Ten days out: the 30 and 14 day reminders have already passed.
+  const now = new Date(2026, 9, 4).getTime();
+  const stamps = reminderTimestampsFor('2026-10-14', now);
+  expect(stamps).toHaveLength(2);
+});
+
+test('clears previous reminders before arming new ones', async () => {
+  const far = `${new Date().getFullYear() + 2}-10-14`;
+  await scheduleReminderForDueDate('Renew licence', far, 'req9');
+  // An edit must not leave a reminder from the old date armed.
+  expect(mockNotifee.cancelNotification).toHaveBeenCalledWith('obligio-req-req9-30');
 });
 
 test('clears a stale reminder when the new date is already past', async () => {
   const result = await scheduleReminderForDueDate('Old thing', '2020-01-01', 'req2');
-  expect(result).toBeNull();
+  expect(result).toBe(0);
   // An edit that moves a deadline into the past must not leave the old
   // reminder armed.
-  expect(mockNotifee.cancelNotification).toHaveBeenCalledWith('obligio-req-req2');
+  expect(mockNotifee.cancelNotification).toHaveBeenCalledWith('obligio-req-req2-30');
   expect(mockNotifee.createTriggerNotification).not.toHaveBeenCalled();
 });
 
 test('does not schedule when notifications are not permitted', async () => {
   mockNotifee.getNotificationSettings.mockResolvedValueOnce({authorizationStatus: 0});
   const far = `${new Date().getFullYear() + 2}-10-14`;
-  await expect(scheduleReminderForDueDate('Renew licence', far, 'req3')).resolves.toBeNull();
+  await expect(scheduleReminderForDueDate('Renew licence', far, 'req3')).resolves.toBe(0);
   expect(mockNotifee.createTriggerNotification).not.toHaveBeenCalled();
 });
 
