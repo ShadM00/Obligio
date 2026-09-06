@@ -30,9 +30,17 @@ platform :ios do
       output_directory: 'build/ios',
       clean: true,
       # The project uses automatic signing and no distribution profile exists
-      # for com.obligio.app yet. This lets Xcode create and download one using
-      # the App Store Connect API key above, rather than failing the archive.
+      # for com.obligio.app yet, so Xcode has to create one.
+      #
+      # exportArchive authenticates separately from the archive step, and this
+      # machine has no Apple account signed into Xcode — without the key
+      # arguments below it fails with "No Accounts" and "No profiles for
+      # com.obligio.app were found" even though the archive itself succeeded.
       xcargs: '-allowProvisioningUpdates',
+      export_xcargs: "-allowProvisioningUpdates " \
+                     "-authenticationKeyPath #{File.expand_path(ENV.fetch('ASC_KEY_FILEPATH'))} " \
+                     "-authenticationKeyID #{ENV.fetch('ASC_KEY_ID')} " \
+                     "-authenticationKeyIssuerID #{ENV.fetch('ASC_ISSUER_ID')}",
       export_options: {
         signingStyle: 'automatic',
       },

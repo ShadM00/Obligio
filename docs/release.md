@@ -29,6 +29,13 @@ Fill in `ASC_ISSUER_ID` (Users and Access → Integrations → App Store Connect
 
 ## Lanes
 
+The iOS lane needs an App Store Connect API key with **Admin** access, not
+App Manager. Creating a distribution signing certificate and provisioning
+profile is "cloud signing", and App Manager cannot do it — the export fails
+with `Cloud signing permission error` followed by `No profiles for
+'com.obligio.app' were found`, even though the archive itself succeeds and the
+key authenticates fine.
+
 ```sh
 bundle exec fastlane ios release        # archive, sign, upload to TestFlight
 bundle exec fastlane android release    # bundleRelease, upload to the internal track as a draft
