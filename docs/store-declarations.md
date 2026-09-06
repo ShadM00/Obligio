@@ -9,6 +9,12 @@ The evidence for each claim is in `ios/ComplianceCalendar/PrivacyInfo.xcprivacy`
 and matches the App Privacy label already published in App Store Connect, so
 the two stores stay consistent.
 
+Re-checked against the code on 2026-09-06: no analytics, advertising or
+crash-reporting package is present; `PrivacyInfo.xcprivacy` is in place; the
+app opens source links with `Linking.openURL`, which hands off to the system
+browser rather than embedding one, so the content-rating answer below holds;
+and `obligio.com/privacy` and `/support` both return 200.
+
 ## Data safety
 
 **Does your app collect or share any of the required user data types?** Yes,
@@ -29,9 +35,12 @@ deleted?** Yes — `privacy@obligio.com`, stated on the privacy policy page.
 Notes on the ones people usually get wrong:
 
 - **Crash logs and diagnostics are "No".** The app has no analytics,
-  advertising, or crash-reporting SDK — the dependency set is notifee, the
-  document picker, Convex, RevenueCat, and safe-area-context. Declaring
-  collection you do not perform is as wrong as omitting collection you do.
+  advertising, or crash-reporting SDK. The npm dependency set is notifee, the
+  document picker, Convex, RevenueCat and safe-area-context; Clerk is a native
+  pod (ClerkKit) rather than an npm package, and it is the component that
+  actually handles the email address, so do not overlook it when reasoning
+  about who processes what. Declaring collection you do not perform is as
+  wrong as omitting collection you do.
 - **User IDs is "Yes".** `convex/businesses.ts` stores the Clerk subject as
   `businesses.ownerId`, and RevenueCat assigns its own app user id.
 - **Files and docs is optional**, because evidence upload is a feature the
@@ -71,6 +80,10 @@ Declare in-app purchases: **Yes** — `obligio_plus_monthly` and
 
 - **News app:** No.
 - **COVID-19 contact tracing or status:** No.
-- **Account deletion:** the app offers account deletion on request via
-  `privacy@obligio.com`. Play now expects an in-app or web route; the privacy
-  page documents the email route, which satisfies the web requirement.
+- **Account deletion:** give Play the **URL** `https://obligio.com/privacy`,
+  not just the address. The field asks for a web resource, and that page
+  documents the route ("Request access, correction, export, or deletion ... by
+  emailing privacy@obligio.com"). This is the weakest answer in this document:
+  a dedicated deletion page or form is what Google actually prefers, and an
+  email-only route is the one most likely to come back. A `/delete-account`
+  page would remove the doubt.
