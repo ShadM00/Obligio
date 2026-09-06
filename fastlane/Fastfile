@@ -29,6 +29,13 @@ platform :ios do
       export_method: 'app-store',
       output_directory: 'build/ios',
       clean: true,
+      # The project uses automatic signing and no distribution profile exists
+      # for com.obligio.app yet. This lets Xcode create and download one using
+      # the App Store Connect API key above, rather than failing the archive.
+      xcargs: '-allowProvisioningUpdates',
+      export_options: {
+        signingStyle: 'automatic',
+      },
     )
 
     upload_to_app_store(
