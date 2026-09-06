@@ -188,7 +188,7 @@ The app sits at **1.0 Prepare for Submission**. Outstanding:
 - **Subscriptions** — no subscription group exists. Create one, then create `obligio_plus_monthly` and `obligio_plus_annual` inside it. RevenueCat cannot sell products that do not exist here.
 - **Age rating** — not set up.
 - **Content rights** — not declared.
-- **Category** — primary is Productivity; no secondary is set. A secondary category is free ASO surface, and Business fits the listing.
+- **Category** — Productivity primary, Business secondary.
 - **Subtitle** — set to "License, Permit & Filing Dates" (30/30). The app name is "Obligio: Compliance Tracker" (27/30) on both stores.
 - **App Privacy** — the questionnaire must be completed before review.
 - **Screenshots** — five 1290x2796 images are live, pushed by `ios screenshots`. The release lanes still leave them untouched.
