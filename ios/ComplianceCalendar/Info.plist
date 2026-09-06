@@ -54,5 +54,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<!--
+		Export compliance. Obligio uses only encryption exempt under US export
+		regulations: HTTPS/TLS provided by the operating system, via Convex,
+		Clerk, and RevenueCat. It implements no proprietary cryptography and
+		bundles no crypto library of its own.
+
+		Declaring it here answers the question once. Without it App Store
+		Connect marks every uploaded build "Missing Compliance" and blocks it
+		from testers until answered by hand.
+	-->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

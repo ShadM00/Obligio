@@ -70,6 +70,19 @@ The Android release pipeline has been run end to end against a disposable throwa
 
 Never upload a bundle signed with anything but the real upload key — the first upload permanently binds the signing certificate for the package.
 
+## Export compliance
+
+`ITSAppUsesNonExemptEncryption` is declared `false` in `ios/ComplianceCalendar/Info.plist`.
+
+Obligio uses only encryption exempt under US export regulations — HTTPS/TLS
+provided by the operating system, through Convex, Clerk, and RevenueCat. It
+implements no proprietary cryptography and bundles no crypto library.
+
+Without that key, App Store Connect marks every uploaded build **Missing
+Compliance** and will not release it to testers until someone answers the
+question by hand. Builds uploaded before the key was added still need
+answering once in App Store Connect; later builds clear automatically.
+
 ## Before the first submission
 
 Neither store can accept a build until these are done, and none of them can be done from this repository.
