@@ -100,6 +100,12 @@ function createStyles(c: Palette) {
     helperSpaced: {fontSize: 15, color: c.textMuted, lineHeight: 23, marginBottom: 18, marginTop: 12},
     empty: {backgroundColor: c.surface, borderRadius: 20, padding: 24, alignItems: 'center'},
     emptyIcon: {fontSize: 42, color: c.brand, marginBottom: 10},
+    // Takes the free width so a long hint wraps instead of shoving the
+    // chevron off the row.
+    settingLabel: {flex: 1, paddingRight: 12},
+    // Row-level destructive text. `destructiveText` above is centred with a
+    // top margin for a standalone button, which is wrong inside a row.
+    settingDestructive: {color: c.danger},
     setting: {
       backgroundColor: c.surface,
       borderRadius: 16,

@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Linking, StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Linking, StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useConvex, useMutation, useQuery} from 'convex/react';
 import {pick, types} from '@react-native-documents/picker';
 
 import {api} from './convex/_generated/api';
+import {PRIVACY_URL, SUPPORT_URL} from './src/config';
 import {locales, type Locale} from './src/i18n';
 import {useAppTheme} from './src/theme';
 import {
@@ -79,6 +80,7 @@ export default function App() {
   const createFromTemplate = useMutation(api.requirementsMutations.createFromTemplate);
   const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
   const attachDocument = useMutation(api.documents.attach);
+  const deleteAccountData = useMutation(api.account.deleteAccount);
   const convex = useConvex();
 
   useEffect(() => {
@@ -215,6 +217,38 @@ export default function App() {
     [removeRequirement],
   );
 
+  const deleteAccount = useCallback(async () => {
+    // Platform confirm rather than an in-app sheet: this is irreversible, and
+    // the OS dialog is the affordance people already recognise as one they
+    // should read. The body explains that a store subscription outlives the
+    // account, because neither store lets an app cancel one.
+    Alert.alert(copy.deleteAccountTitle, copy.deleteAccountBody, [
+      {text: copy.deleteAccountCancel, style: 'cancel'},
+      {
+        text: copy.deleteAccountConfirm,
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            const removed = await deleteAccountData({});
+            // Reminders live on the device, so the server cannot clear them.
+            // Without this a phone keeps buzzing about obligations that no
+            // longer exist anywhere.
+            await Promise.all(removed.requirementIds.map(cancelReminderForRequirement));
+            session.signOut();
+          } catch {
+            Alert.alert(copy.deleteAccount, copy.deleteAccountFailed);
+          }
+        },
+      },
+    ]);
+  }, [copy, deleteAccountData, session]);
+
+  const openExternal = useCallback(async (url: string) => {
+    if (await Linking.canOpenURL(url)) {
+      await Linking.openURL(url);
+    }
+  }, []);
+
   const attachEvidence = useCallback(
     async (item: Requirement) => {
       if (!item._id) return;
@@ -335,14 +369,16 @@ export default function App() {
         {tab === 'documents' && <DocumentsScreen copy={copy} locale={locale} items={items} onSelect={setSelected} />}
         {tab === 'settings' && (
           <SettingsScreen
+            copy={copy}
             onSubscribe={() => setPaywall(true)}
             onEnableNotifications={enableNotifications}
+            onOpenPrivacy={() => openExternal(PRIVACY_URL)}
+            onOpenSupport={() => openExternal(SUPPORT_URL)}
+            onDeleteAccount={deleteAccount}
             notificationsEnabled={notificationsOn}
             billingAvailable={isBillingAvailable()}
             isPlus={subscription.isPlus}
-            onSignOut={() => {
-          session.signOut();
-        }}
+            onSignOut={() => session.signOut()}
             signOutLabel={copy.signOut}
           />
         )}

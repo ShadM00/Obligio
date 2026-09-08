@@ -408,16 +408,24 @@ export function DocumentsScreen({
 }
 
 export function SettingsScreen({
+  copy,
   onSubscribe,
   onEnableNotifications,
+  onOpenPrivacy,
+  onOpenSupport,
+  onDeleteAccount,
   notificationsEnabled,
   billingAvailable,
   isPlus,
   onSignOut,
   signOutLabel,
 }: {
+  copy: Copy;
   onSubscribe: () => void;
   onEnableNotifications: () => void;
+  onOpenPrivacy: () => void;
+  onOpenSupport: () => void;
+  onDeleteAccount: () => void;
   notificationsEnabled: boolean;
   billingAvailable: boolean;
   isPlus: boolean;
@@ -425,8 +433,8 @@ export function SettingsScreen({
   signOutLabel: string;
 }) {
   const {s} = useAppTheme();
-  const rows: {label: string; hint?: string; onPress?: () => void}[] = [
-    {label: 'Business profile'},
+  const rows: {label: string; hint?: string; onPress?: () => void; destructive?: boolean}[] = [
+    {label: copy.businessProfile},
     {
       label: 'Notification preferences',
       hint: notificationsEnabled ? 'Deadline reminders are on' : 'Tap to enable deadline reminders',
@@ -441,8 +449,14 @@ export function SettingsScreen({
           : 'Plans are not available in this build',
       onPress: onSubscribe,
     },
-    {label: 'Privacy & data'},
-    {label: 'Help & support'},
+    {label: copy.privacyAndData, onPress: onOpenPrivacy},
+    {label: copy.helpAndSupport, onPress: onOpenSupport},
+    {
+      label: copy.deleteAccount,
+      hint: copy.deleteAccountHint,
+      onPress: onDeleteAccount,
+      destructive: true,
+    },
   ];
 
   return (
@@ -455,11 +469,13 @@ export function SettingsScreen({
           onPress={row.onPress}
           style={s.setting}
           key={row.label}>
-          <View>
-            <Text style={s.itemTitle}>{row.label}</Text>
+          <View style={s.settingLabel}>
+            <Text style={row.destructive ? [s.itemTitle, s.settingDestructive] : s.itemTitle}>{row.label}</Text>
             {row.hint && <Text style={s.muted}>{row.hint}</Text>}
           </View>
-          <Text style={s.chevron}>›</Text>
+          {/* A chevron on a row that cannot be tapped promises a destination
+              that is not there. */}
+          {row.onPress && <Text style={s.chevron}>›</Text>}
         </TouchableOpacity>
       ))}
 

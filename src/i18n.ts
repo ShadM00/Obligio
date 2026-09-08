@@ -6,6 +6,16 @@ type Copy = {
   calendar: string;
   documents: string;
   settings: string;
+  businessProfile: string;
+  privacyAndData: string;
+  helpAndSupport: string;
+  deleteAccount: string;
+  deleteAccountHint: string;
+  deleteAccountTitle: string;
+  deleteAccountBody: string;
+  deleteAccountConfirm: string;
+  deleteAccountCancel: string;
+  deleteAccountFailed: string;
   complianceHealth: string;
   scoreHintClear: string;
   scoreHint: (outstanding: number) => string;
@@ -75,6 +85,17 @@ const shared = {
   calendar: 'Calendar',
   documents: 'Documents',
   settings: 'Settings',
+  businessProfile: 'Business profile',
+  privacyAndData: 'Privacy & data',
+  helpAndSupport: 'Help & support',
+  deleteAccount: 'Delete account',
+  deleteAccountHint: 'Permanently removes your businesses, obligations and documents',
+  deleteAccountTitle: 'Delete your account?',
+  deleteAccountBody:
+    'This permanently deletes your businesses, every obligation you track and every document you have attached. It cannot be undone.\n\nA paid subscription is billed by the App Store or Google Play, so cancel it there as well — deleting your account here does not stop it.',
+  deleteAccountConfirm: 'Delete everything',
+  deleteAccountCancel: 'Cancel',
+  deleteAccountFailed: 'Your account could not be deleted. Nothing has been removed — please try again.',
   complianceHealth: 'Compliance health',
   scoreHintClear: 'Everything is on track.',
   scoreHint: (outstanding: number) =>

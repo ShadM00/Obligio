@@ -90,8 +90,12 @@ and running a product.
   i18n and scoping. Nothing covers the paths that actually earn money or lose
   users: sign-in, upload, purchase, restore. A Detox simulator already exists
   on the build machine.
-- **In-app account deletion.** Play prefers a route that is not an email
-  address; a `/delete-account` page or an in-app action settles it.
+- ~~**In-app account deletion.**~~ Done: Settings → Delete account, backed by
+  `convex/account.ts`. It removes the owner's businesses, obligations and
+  stored documents, cancels the device reminders for them, and signs out. The
+  confirmation says plainly that a store subscription is not cancelled by it.
+  The privacy page still documents only the email route and should mention
+  this one.
 - **Android parity.** Screenshots, capture tooling and manual verification
   this far have been iOS-only. The Android build is signed and uploading, but
   it has had far less exercise.

@@ -80,10 +80,13 @@ Declare in-app purchases: **Yes** — `obligio_plus_monthly` and
 
 - **News app:** No.
 - **COVID-19 contact tracing or status:** No.
-- **Account deletion:** give Play the **URL** `https://obligio.com/privacy`,
-  not just the address. The field asks for a web resource, and that page
-  documents the route ("Request access, correction, export, or deletion ... by
-  emailing privacy@obligio.com"). This is the weakest answer in this document:
-  a dedicated deletion page or form is what Google actually prefers, and an
-  email-only route is the one most likely to come back. A `/delete-account`
-  page would remove the doubt.
+- **Account deletion:** the app now deletes accounts **in app** — Settings →
+  Delete account, backed by `convex/account.ts`, which removes the owner's
+  businesses, every obligation under them and every stored document, then
+  signs out. Answer that an in-app route exists, and give
+  `https://obligio.com/privacy` as the supporting web URL.
+
+  Two things the answer should reflect honestly: deletion does not cancel a
+  store subscription, because neither store lets an app do that, and the
+  confirmation dialog says so; and the privacy page still describes only the
+  email route, so it is worth updating to mention the in-app one.

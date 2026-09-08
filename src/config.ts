@@ -24,3 +24,12 @@ export const revenueCatApiKey: string | null =
     : Platform.OS === 'android'
       ? REVENUECAT_KEYS.android
       : null;
+
+/**
+ * Public pages the app links out to.
+ *
+ * These are the same URLs declared in `fastlane/metadata/en-US/*_url.txt`, so
+ * what the store listing promises and what Settings opens stay the same page.
+ */
+export const PRIVACY_URL = 'https://obligio.com/privacy';
+export const SUPPORT_URL = 'https://obligio.com/support';
