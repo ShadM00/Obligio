@@ -117,6 +117,5 @@ on; adding one is a one-line change once the rules exist.
 
 ## Known smaller items
 
-- `@react-native/new-app-screen` is template scaffolding nothing imports.
 - There is no export feature. It was wrongly described as one in a draft Play
   declaration; if it is wanted, it is Phase 3 work, not a correction.
