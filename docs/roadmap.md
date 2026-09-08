@@ -16,6 +16,47 @@ stores and the production backend on 2026-09-08.
 
 Neither store has been submitted.
 
+## Phase 0 — Nobody can sign in
+
+**Authentication is broken on both platforms, in the builds already on
+TestFlight and Play.** This is why `businesses` is empty: it is not that
+nobody has tried, it is that nobody can.
+
+Both apps are built against Clerk production, whose frontend API is
+`clerk.obligio.com` — the publishable key encodes that host, and Convex
+verifies tokens against the same URL. That hostname **does not resolve**:
+
+```
+clerk.obligio.com           NXDOMAIN
+accounts.obligio.com        NXDOMAIN
+clkmail.obligio.com         NXDOMAIN
+clk._domainkey.obligio.com  NXDOMAIN
+clk2._domainkey.obligio.com NXDOMAIN
+```
+
+On Android this surfaces as "Unable to load the authentication session" over
+four uncaught coroutine errors, with `ClerkLog: Failed to refresh client and
+environment` in logcat. iOS fails the same way for the same reason.
+
+The Clerk production instance itself is fine — it exists, and the key is
+correct for it. What is missing is five CNAME records on `obligio.com`, whose
+DNS is at Hostinger:
+
+| Host | Target |
+| --- | --- |
+| `clerk` | `frontend-api.clerk.services` |
+| `accounts` | `accounts.clerk.services` |
+| `clkmail` | `mail.o90g9fmf2i15.clerk.services` |
+| `clk._domainkey` | `dkim1.o90g9fmf2i15.clerk.services` |
+| `clk2._domainkey` | `dkim2.o90g9fmf2i15.clerk.services` |
+
+They are additive — every one of those subdomains is currently unused, and the
+zone holds no MX records, so nothing that exists today is affected. Values come
+from `clerk api /domains`; they validate against the Hostinger zone API.
+
+A store reviewer hits this on the first screen, so nothing below matters until
+it is fixed.
+
 ## Phase 1 — Submit
 
 Everything here blocks review. Most of it is console work under the owner's
@@ -96,9 +137,10 @@ and running a product.
   confirmation says plainly that a store subscription is not cancelled by it.
   The privacy page still documents only the email route and should mention
   this one.
-- **Android parity.** Screenshots, capture tooling and manual verification
-  this far have been iOS-only. The Android build is signed and uploading, but
-  it has had far less exercise.
+- **Android parity.** Partly done: the app now builds, installs and runs on a
+  dedicated `Obligio_API36` emulator, which is how Phase 0 was found. What is
+  still iOS-only is the screenshot tooling and any verification past the first
+  screen — which needs Phase 0 fixed before it can go further.
 
 ## Phase 4 — Expand
 
