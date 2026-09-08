@@ -74,7 +74,10 @@ function createStyles(c: Palette) {
 
     welcome: {flex: 1, padding: 28, justifyContent: 'center'},
     logo: {width: 72, height: 72, alignItems: 'center', justifyContent: 'center', marginBottom: 28},
-    logoText: {fontSize: 40, color: c.brandSoft},
+    // onBrandDeep, not brandSoft: the tile behind this is brandDeep, and
+    // brandSoft is a *surface* in the dark palette (#1F4A3A) that lands within
+    // 1.01:1 of it -- an invisible mark on the first screen of the app.
+    logoText: {fontSize: 40, color: c.onBrandDeep},
     welcomeTitle: {letterSpacing: -2, color: c.textPrimary, marginTop: 14},
     welcomeBody: {color: c.textSecondary, lineHeight: 28, marginTop: 24, marginBottom: 28},
 
@@ -138,6 +141,14 @@ export type AppTheme = {s: ReturnType<typeof createStyles>; colors: Palette; isD
 // Both sheets are built once at module load rather than per render.
 const lightTheme: AppTheme = {s: createStyles(lightColors), colors: lightColors, isDark: false};
 const darkTheme: AppTheme = {s: createStyles(darkColors), colors: darkColors, isDark: true};
+
+/**
+ * The resolved themes, for tests that need to check a real style value.
+ *
+ * Contrast tests over the palette alone only prove the tokens are sound; they
+ * cannot catch a component reaching for the wrong one.
+ */
+export const themes = {light: lightTheme, dark: darkTheme} as const;
 
 /**
  * Resolves the theme from the OS setting.

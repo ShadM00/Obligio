@@ -1,4 +1,5 @@
 import {darkColors, lightColors, type Palette} from '../src/designTokens';
+import {themes} from '../src/theme';
 
 function channel(v: number): number {
   const s = v / 255;
@@ -60,5 +61,23 @@ describe.each(schemes)('%s scheme contrast', (_name, c) => {
     ['destructive text', c.danger, c.background],
   ])('%s meets AA for large text and indicators', (_label, fg, bg) => {
     expect(contrast(fg, bg)).toBeGreaterThanOrEqual(3);
+  });
+});
+
+/**
+ * Contrast as components actually pair it.
+ *
+ * The palette checks above prove the tokens are sound. They cannot catch a
+ * component reaching for the wrong one -- the welcome logo drew its mark in
+ * `brandSoft`, which is a foreground in the light palette and a *surface* in
+ * the dark one, putting a #1F4A3A tick on a #1B4B3B tile at 1.01:1.
+ */
+describe.each([
+  ['light', themes.light],
+  ['dark', themes.dark],
+])('%s scheme, as rendered', (_name, theme) => {
+  it('draws the welcome logo mark legibly on its tile', () => {
+    const mark = (theme.s.logoText as {color: string}).color;
+    expect(contrast(mark, theme.colors.brandDeep)).toBeGreaterThanOrEqual(4.5);
   });
 });

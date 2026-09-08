@@ -137,10 +137,15 @@ and running a product.
   confirmation says plainly that a store subscription is not cancelled by it.
   The privacy page still documents only the email route and should mention
   this one.
-- **Android parity.** Partly done: the app now builds, installs and runs on a
-  dedicated `Obligio_API36` emulator, which is how Phase 0 was found. What is
-  still iOS-only is the screenshot tooling and any verification past the first
-  screen — which needs Phase 0 fixed before it can go further.
+- **Android parity.** Partly done: the app builds, installs and runs on a
+  dedicated `Obligio_API36` emulator, which is how Phase 0 and the invisible
+  dark-mode logo were both found. Still iOS-only: the screenshot tooling, and
+  any verification past the first screen — which needs Phase 0 fixed first.
+
+  One thing seen on the emulator and not yet explained: RevenueCat logs
+  `PurchasesError` there. That is expected on an emulator with no Play account
+  signed in, so it is not evidence of a bug — but billing has never been
+  exercised on Android and should not be assumed working.
 
 ## Phase 4 — Expand
 
