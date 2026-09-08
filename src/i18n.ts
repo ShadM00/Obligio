@@ -6,6 +6,8 @@ type Copy = {
   calendar: string;
   documents: string;
   settings: string;
+  crashTitle: string;
+  crashBody: string;
   businessProfile: string;
   privacyAndData: string;
   helpAndSupport: string;
@@ -85,6 +87,9 @@ const shared = {
   calendar: 'Calendar',
   documents: 'Documents',
   settings: 'Settings',
+  crashTitle: 'Something went wrong.',
+  crashBody:
+    'Obligio hit an unexpected error and stopped. Your obligations and documents are stored on our servers, not on this device, so nothing has been lost.',
   businessProfile: 'Business profile',
   privacyAndData: 'Privacy & data',
   helpAndSupport: 'Help & support',

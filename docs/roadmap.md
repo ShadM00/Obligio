@@ -123,10 +123,17 @@ suggestions are generic.
 None of this blocks submission; all of it is the difference between shipping
 and running a product.
 
-- **Crash reporting.** There is none, deliberately — the data-safety
-  declaration says no crash logs are collected, and that is currently true.
-  The cost is that the first you hear of a crash is a one-star review. If this
-  changes, the declaration on both stores has to change with it.
+- **Crash reporting.** Still none, and still deliberately: the data-safety
+  declaration says no crash logs are collected, and that stays true. Adding an
+  SDK changes what both stores have to be told, so it is a decision to take
+  openly rather than a side effect.
+
+  What has changed is that a render error no longer leaves a blank screen.
+  `src/ErrorBoundary.tsx` catches it, says plainly that nothing was lost —
+  obligations and documents live on the server, not the device — and offers a
+  retry that remounts the tree. It reports nowhere, so no declaration moves.
+  The gap that remains is visibility: you still learn about crashes from
+  reviews rather than from telemetry.
 - **End-to-end tests.** Started: `e2e/smoke.yaml` is a Maestro launch flow,
   run with `maestro test e2e/smoke.yaml` against a booted device.
 
