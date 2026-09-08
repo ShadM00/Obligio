@@ -146,8 +146,14 @@ and running a product.
   version of it passed on this same broken app because it checked for the
   error banner immediately, before Clerk had finished timing out.
 
-  Everything past the welcome screen still needs Phase 0 fixed before it can
-  be written: sign-in, upload, purchase and restore all sit behind a session.
+  The free-limit gate is now covered where it actually lives, in
+  `__tests__/gating.test.tsx`: the real App, driven with a signed-in business,
+  checking that a free account meets the paywall at the limit and that a
+  subscriber never does. Policy was already unit tested, but policy that is
+  never consulted gates nothing.
+
+  Upload, purchase and restore still need a device and a session, so they wait
+  on Phase 0.
 - ~~**In-app account deletion.**~~ Done: Settings → Delete account, backed by
   `convex/account.ts`. It removes the owner's businesses, obligations and
   stored documents, cancels the device reminders for them, and signs out. The
