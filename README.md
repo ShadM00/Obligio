@@ -135,3 +135,15 @@ silently, so the parity check is load-bearing.
 ## Disclaimer
 
 Obligio provides organizational tools, not legal or tax advice.
+
+## End-to-end
+
+`e2e/smoke.yaml` is a [Maestro](https://maestro.mobile.dev) launch flow. Boot a
+device or emulator, install a debug build, then:
+
+```sh
+maestro test e2e/smoke.yaml
+```
+
+It asserts the welcome screen renders *and* that the session resolves, so it
+fails while authentication is broken. See [docs/roadmap.md](docs/roadmap.md).

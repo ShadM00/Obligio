@@ -1,0 +1,27 @@
+# Launch smoke test.
+#
+#   maestro test e2e/smoke.yaml
+#
+# Asserts what must NOT be on screen as well as what must. A flow that only
+# checks the welcome screen renders passes happily while authentication is dead
+# behind it — which is the state the app shipped in to TestFlight and Play, and
+# what this exists to catch.
+#
+# The absence assertions are repeated rather than made once. The session check
+# is a network round trip, and when the frontend API host does not resolve
+# Clerk takes about forty seconds to exhaust its retries before the banner
+# appears — measured, not guessed. Asserting once, immediately, passes before
+# the thing it is looking for could possibly exist, which is exactly the false
+# pass this flow is meant to avoid. Each iteration costs a UI hierarchy dump,
+# so the count is sized to cover that window with room to spare.
+appId: com.obligio.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Your business obligations, under control."
+- assertVisible: "Sign in to get started"
+- repeat:
+    times: 45
+    commands:
+      - assertNotVisible: "Unable to load the authentication session."
+      - assertNotVisible: "Sign-in is unavailable in this build"

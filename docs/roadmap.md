@@ -127,10 +127,16 @@ and running a product.
   declaration says no crash logs are collected, and that is currently true.
   The cost is that the first you hear of a crash is a one-star review. If this
   changes, the declaration on both stores has to change with it.
-- **End-to-end tests.** 164 unit tests cover pricing policy, dates, reminders,
-  i18n and scoping. Nothing covers the paths that actually earn money or lose
-  users: sign-in, upload, purchase, restore. A Detox simulator already exists
-  on the build machine.
+- **End-to-end tests.** Started: `e2e/smoke.yaml` is a Maestro launch flow,
+  run with `maestro test e2e/smoke.yaml` against a booted device.
+
+  **It fails today, and should** — it asserts the authentication session
+  resolves, which is Phase 0. That is the flow doing its job: an earlier
+  version of it passed on this same broken app because it checked for the
+  error banner immediately, before Clerk had finished timing out.
+
+  Everything past the welcome screen still needs Phase 0 fixed before it can
+  be written: sign-in, upload, purchase and restore all sit behind a session.
 - ~~**In-app account deletion.**~~ Done: Settings → Delete account, backed by
   `convex/account.ts`. It removes the owner's businesses, obligations and
   stored documents, cancels the device reminders for them, and signs out. The
