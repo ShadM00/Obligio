@@ -6,16 +6,25 @@ Built with React Native CLI (not Expo), Convex for the backend and file store, C
 
 ## Status
 
-This is pre-release. The client is wired end to end: onboarding, obligations, a month-grouped calendar, document evidence upload, recurring completion, deadline reminders, and the subscription paywall all talk to real backend functions.
+This is pre-release. The client is wired end to end: onboarding, obligations, a
+month-grouped calendar, document evidence upload, recurring completion, deadline
+reminders, and the subscription paywall all talk to real backend functions.
 
-Two things need owner credentials and are **not** complete:
+Verified against both stores and the production backend on 2026-09-08:
 
 | Area | State |
 | --- | --- |
-| **Subscriptions** | No Obligio project exists in RevenueCat yet, so the store keys in `src/config.ts` are `null` and the paywall reports that plans are unavailable. No subscription products exist in App Store Connect either. |
-| **Authentication** | The native `ObligioAuth` Clerk bridge exists on both platforms, but the native applications are not registered in Clerk production. Without a session the app shows clearly-labelled sample data and Convex returns nothing. See [docs/native-auth-bridge.md](docs/native-auth-bridge.md). |
+| **Backend** | `greedy-parakeet-883` is current with `main`. The rules catalogue holds 8 US federal entries, reviewed 2026-09-06. |
+| **Subscriptions** | RevenueCat keys are set for both platforms. `obligio_plus_monthly` and `obligio_plus_annual` are *Ready to Submit* with review screenshots attached. |
+| **Authentication** | The native `ObligioAuth` Clerk bridge is live on both platforms and Convex is configured against the Clerk instance. See [docs/native-auth-bridge.md](docs/native-auth-bridge.md). |
+| **App Store** | 1.0 *Prepare for Submission*, build `202609062135` attached, listing and screenshots live. Not submitted. |
+| **Play** | Internal track, version code 3, completed. No closed, open or production track. Listing, screenshots, feature graphic and icon live. |
 
-Store records exist on both platforms — App Store Connect app `6808265621` at *Prepare for Submission*, and a Play Console entry with nothing released. Signing and upload are configured (see [docs/release.md](docs/release.md)), but no build has been submitted and several console-side declarations are still outstanding. Deployment is not claimed complete.
+**Nobody has yet completed onboarding against production** — the `businesses`
+table is empty, so the signed-in path has never been exercised live. Several
+console-side declarations are also outstanding on both stores. Deployment is
+not claimed complete; [docs/roadmap.md](docs/roadmap.md) is the ordered list of
+what is left.
 
 ## Getting started
 
