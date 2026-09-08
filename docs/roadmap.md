@@ -111,7 +111,11 @@ to close it, and the choice should be deliberate:
 - **Write state and industry rules.** The highest-value slices are the ones
   with real per-state variation: workers' compensation, business licence
   renewal, food handler certification, contractor licensing. Each needs
-  research and a `reviewedAt` attestation.
+  research and a `reviewedAt` attestation — the content and the attestation are
+  the work; the tooling is not in the way. `seedRules.addTemplate` takes any
+  country/region/industry and is now idempotent, and `catalogue:review` lists
+  what is seeded with its authorities and review ages so a review, first or
+  repeat, is something you can sit down and do.
 - **Or soften the copy** until they exist, so the listing describes the
   federal catalogue it actually ships with.
 

@@ -24,10 +24,25 @@ export const addTemplate = internalMutation({
     reviewedAt: v.string(),
     recurrence: v.optional(v.string()),
   },
-  returns: v.id('rules'),
+  returns: v.union(v.id('rules'), v.null()),
   handler: async (ctx, args) => {
     assertIsoDate(args.effectiveFrom, 'effectiveFrom');
     assertIsoDate(args.reviewedAt, 'reviewedAt');
+
+    // Idempotent, like seedUnitedStatesFederal below. The catalogue is shared
+    // reference data: a second run of the same command used to insert a
+    // duplicate, which every owner in that jurisdiction would then see twice
+    // in "Suggested for you" with no way to tell them apart. Returns null when
+    // the entry is already present.
+    const existing = await ctx.db
+      .query('rules')
+      .withIndex('by_jurisdiction_and_industry', q =>
+        q.eq('country', args.country).eq('region', args.region).eq('industry', args.industry),
+      )
+      .collect();
+    if (existing.some(row => row.title === args.title)) {
+      return null;
+    }
     return ctx.db.insert('rules', args);
   },
 });

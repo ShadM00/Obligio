@@ -57,8 +57,28 @@ from the Convex dashboard, from another Convex function, or from the CLI:
 
 ```sh
 npx convex run seedRules:seedUnitedStatesFederal '{"reviewedAt":"YYYY-MM-DD"}' --prod
-npx convex run --prod --inline-query 'return (await ctx.db.query("rules").take(200)).length'
+npx convex run catalogue:review --prod
 ```
+
+Both seed entry points are idempotent — re-running reports what it skipped
+rather than inserting a second copy that owners would see twice with no way to
+tell them apart.
+
+## Reviewing what is already there
+
+`reviewedAt` records that a person checked an entry against its authority on a
+date, and that is the whole basis for showing it to an owner. It decays:
+thresholds and deadlines change, so an entry nobody has re-checked in a year is
+a claim nobody currently stands behind.
+
+```sh
+npx convex run catalogue:review --prod
+npx convex run catalogue:review '{"staleAfterDays":180}' --prod
+```
+
+It groups the catalogue by scope and lists each entry with its authority, its
+review date and how old that is, oldest first — which is the order to work
+through when re-checking.
 
 `reviewedAt` is a required argument rather than a baked-in constant, because
 running the seed asserts that someone checked the catalogue on that date. The

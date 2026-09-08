@@ -11,6 +11,7 @@
 import type * as account from "../account.js";
 import type * as auth from "../auth.js";
 import type * as businesses from "../businesses.js";
+import type * as catalogue from "../catalogue.js";
 import type * as dates from "../dates.js";
 import type * as documents from "../documents.js";
 import type * as recurrence from "../recurrence.js";
@@ -29,6 +30,7 @@ declare const fullApi: ApiFromModules<{
   account: typeof account;
   auth: typeof auth;
   businesses: typeof businesses;
+  catalogue: typeof catalogue;
   dates: typeof dates;
   documents: typeof documents;
   recurrence: typeof recurrence;
