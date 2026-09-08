@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable, StatusBar, Text, View} from 'react-native';
+import {LogBox, Pressable, StatusBar, Text, View} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
 import {AUTO_ADVANCE_MS} from './config';
@@ -43,6 +43,11 @@ function Chrome({title, children}: {title: string; children: React.ReactNode}) {
     </ScreenScroll>
   );
 }
+
+// The dev LogBox toast counts errors as they arrive and repaints each time it
+// does, so a capture run sees one frame as several short ones and drops most
+// of them. It is also not something that should appear in a store screenshot.
+LogBox.ignoreAllLogs(true);
 
 export default function ScreenshotRoot() {
   const [index, setIndex] = useState(0);

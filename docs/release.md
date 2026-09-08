@@ -238,7 +238,10 @@ RCT_METRO_PORT=8082 npx react-native run-ios --udid <udid> --port 8082 --no-pack
 #    module this app has never depended on
 xcrun simctl spawn <udid> defaults write com.obligio.app RCT_jsLocation "localhost:8082"
 # 4. capture both appearances, then compose the listing images
-python3 scripts/capture-screenshots.py <udid> /tmp/captures
+ADVANCE_S=3.5 python3 scripts/capture-screenshots.py ios <udid> /tmp/captures
+# Android: AUTO_ADVANCE_MS = 9000 in config.ts, and
+#   adb -s <serial> reverse tcp:8082 tcp:8082
+# ADVANCE_S=9 python3 scripts/capture-screenshots.py android <serial> /tmp/captures
 python3 scripts/build-store-screenshots.py /tmp/captures /tmp/store
 cp /tmp/store/light-*.png fastlane/screenshots/en-US/
 cp /tmp/store/light-*.png fastlane/metadata/android/en-US/images/phoneScreenshots/
