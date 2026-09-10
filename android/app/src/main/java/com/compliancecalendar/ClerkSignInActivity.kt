@@ -23,6 +23,7 @@ class ClerkSignInActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       AuthView(
+        clerkTheme = ObligioClerkTheme,
         onAuthComplete = {
           setResult(Activity.RESULT_OK)
           finish()
