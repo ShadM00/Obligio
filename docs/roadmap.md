@@ -8,50 +8,50 @@ stores and the production backend on 2026-09-08.
 | | State |
 | --- | --- |
 | Backend | `greedy-parakeet-883` current with `main`; auth gate closed; 8 rules, **0 businesses** |
-| App Store | 1.0 *Prepare for Submission*, build `202609101932` attached, export compliance carried in the binary |
-| Play | internal track, version code 4, completed. No closed, open or production track |
+| App Store | 1.0 *Prepare for Submission*, build `202609102143` attached, export compliance carried in the binary |
+| Play | internal track, version code 6, completed. No closed, open or production track |
 | Listings | text, 5 screenshots, feature graphic and icon live on both stores |
 | Subscriptions | `obligio_plus_monthly` / `obligio_plus_annual` **Ready to Submit**, review screenshots attached, RevenueCat keys set for both platforms |
 | Tests | 164 unit tests, `tsc` clean. No end-to-end tests |
 
 Neither store has been submitted.
 
-## Phase 0 — Sign-in
+## Phase 0 — Sign-in (resolved 2026-09-10)
 
 Authentication was broken for three separate reasons, each hidden behind the
-one before it. Two are fixed.
+one before it. All three are fixed, and both platforms are verified on device
+through to Clerk's credential screen.
 
-**Fixed: `clerk.obligio.com` did not resolve.** Five CNAME records were missing
-from the Hostinger zone. Added 2026-09-10, additive, touching none of the
-existing records. Clerk verified all five and issued certificates for
-`clerk.` and `accounts.`.
+1. **`clerk.obligio.com` did not resolve.** Five CNAME records were missing
+   from the Hostinger zone; added additively, verified by Clerk, certificates
+   issued for `clerk.` and `accounts.`.
+2. **Android `signIn()` was a stub** that rejected unconditionally. It now
+   presents Clerk's prebuilt flow, themed in the Obligio palette in both
+   schemes (see [native-auth-bridge.md](native-auth-bridge.md)).
+3. **The redirect allowlist was empty**, so Clerk rejected iOS hosted sign-in
+   outright. `com.obligio.app://callback`, `clerk://com.obligio.app.callback`
+   and `clerk://com.obligio.app.oauth` are now allowed.
 
-**Fixed: Android `signIn()` was a stub.** It rejected unconditionally, so no
-Android user could ever have signed in. It now presents Clerk's prebuilt flow
-(see [native-auth-bridge.md](native-auth-bridge.md)). Verified on an emulator:
-tapping Sign in opens the live production sign-in screen, and backing out
-returns cleanly. Shipped as Play internal version code 5.
+Verifying it turned up one more thing: the iOS consent prompt read
+'"ComplianceCalendar" Wants to Use "accounts.obligio.com" to Sign In', because
+`CFBundleName` fell through to the Xcode project name. It now says Obligio.
 
-**Open: the redirect allowlist is empty.** Hosted and OAuth sign-in hand
-control back to the app through a redirect URL, and Clerk production allows
-none. On iOS, tapping Sign in fails with "The current redirect url ... does not
-match an authorized redirect URI for this instance. com.obligio.app://callback".
-Three entries are needed:
+Shipped as App Store build `202609101932`→`202609102143` and Play internal
+version code 6.
 
-| URL | Used by |
-| --- | --- |
-| `com.obligio.app://callback` | iOS — every sign-in, via `startHostedAuth` |
-| `clerk://com.obligio.app.callback` | Android — Sign in with Google |
-| `clerk://com.obligio.app.oauth` | Android — Sign in with Google |
+**Not verified: completing a sign-in**, because that means entering
+credentials. That is the first thing to do with the reviewer demo account.
 
-Each is `POST /v1/redirect_urls` against the production instance. This is an
-authentication security control, so it waits on an explicit go-ahead rather
-than riding on the DNS approval.
+**Still yours, in the Clerk dashboard:**
 
-Also unverified: whether Google sign-in in production uses your own Google
-OAuth credentials. Clerk production requires them; the shared development
-credentials do not work there. It is enabled, so check it in the dashboard
-(Configure → SSO connections → Google) or remove it before review.
+- **Branding.** There is no API for it. The hosted page on iOS uses Clerk's
+  default purple, and both platforms show a generic building icon where the
+  Obligio logo should be. Customization → Branding: upload the logo and set
+  the primary colour to `#163E31`.
+- **Google OAuth credentials.** Sign in with Google is enabled in production,
+  where Clerk's shared development credentials do not work. Configure → SSO
+  connections → Google needs your own client ID, or turn it off before
+  review so a reviewer does not tap a button that fails.
 
 ## Phase 1 — Submit
 
