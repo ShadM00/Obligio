@@ -16,46 +16,29 @@ stores and the production backend on 2026-09-08.
 
 Neither store has been submitted.
 
-## Phase 0 — Nobody can sign in
+## Phase 0 — Sign-in (resolved 2026-09-10)
 
-**Authentication is broken on both platforms, in the builds already on
-TestFlight and Play.** This is why `businesses` is empty: it is not that
-nobody has tried, it is that nobody can.
+Authentication was broken on both platforms, for two separate reasons, and the
+first hid the second.
 
-Both apps are built against Clerk production, whose frontend API is
-`clerk.obligio.com` — the publishable key encodes that host, and Convex
-verifies tokens against the same URL. That hostname **does not resolve**:
+**`clerk.obligio.com` did not resolve.** Both apps are built against Clerk
+production, whose frontend API is that host. Five CNAME records were missing
+from the Hostinger zone. They were added on 2026-09-10 — additive, touching
+none of the existing records — and Clerk verified all five, issued
+certificates for `clerk.` and `accounts.`, and now serves the Obligio
+environment.
 
-```
-clerk.obligio.com           NXDOMAIN
-accounts.obligio.com        NXDOMAIN
-clkmail.obligio.com         NXDOMAIN
-clk._domainkey.obligio.com  NXDOMAIN
-clk2._domainkey.obligio.com NXDOMAIN
-```
+**Android `signIn()` was a stub.** It rejected unconditionally with "Use
+Clerk's native authentication UI to start sign-in", so no Android user could
+ever have signed in, DNS or not. It now presents Clerk's prebuilt flow; see
+[native-auth-bridge.md](native-auth-bridge.md).
 
-On Android this surfaces as "Unable to load the authentication session" over
-four uncaught coroutine errors, with `ClerkLog: Failed to refresh client and
-environment` in logcat. iOS fails the same way for the same reason.
+Verified on an Android emulator: the smoke flow that failed on the outage now
+passes, Clerk logs no errors on launch, tapping Sign in opens the production
+sign-in screen, and backing out returns to the welcome screen cleanly.
 
-The Clerk production instance itself is fine — it exists, and the key is
-correct for it. What is missing is five CNAME records on `obligio.com`, whose
-DNS is at Hostinger:
-
-| Host | Target |
-| --- | --- |
-| `clerk` | `frontend-api.clerk.services` |
-| `accounts` | `accounts.clerk.services` |
-| `clkmail` | `mail.o90g9fmf2i15.clerk.services` |
-| `clk._domainkey` | `dkim1.o90g9fmf2i15.clerk.services` |
-| `clk2._domainkey` | `dkim2.o90g9fmf2i15.clerk.services` |
-
-They are additive — every one of those subdomains is currently unused, and the
-zone holds no MX records, so nothing that exists today is affected. Values come
-from `clerk api /domains`; they validate against the Hostinger zone API.
-
-A store reviewer hits this on the first screen, so nothing below matters until
-it is fixed.
+Not verified, because it means entering credentials: completing a sign-in.
+That is the first thing to do with the reviewer demo account.
 
 ## Phase 1 — Submit
 

@@ -7,7 +7,7 @@ than an Expo dependency.
 The module is named `ObligioAuth` and exposes:
 
 - `getToken(forceRefresh)` — requests a short-lived Clerk session JWT or `null`; forced refresh bypasses the SDK token cache.
-- `signIn()` — starts Clerk hosted authentication on iOS; Android authentication presentation remains outstanding.
+- `signIn()` — starts Clerk hosted authentication on iOS (`startHostedAuth`). On Android it presents Clerk's prebuilt Compose flow (`AuthView`) in `ClerkSignInActivity` and resolves when that activity finishes; the Android SDK has no one-call hosted equivalent. Backing out resolves rather than rejects, so a cancelled sign-in returns to the welcome screen without an error banner.
 - `signOut()` — clears the active Clerk session.
 - `isSignedIn()` — reports whether a valid session is active.
 

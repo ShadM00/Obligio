@@ -15,6 +15,9 @@ buildscript {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        // Clerk's Android sign-in UI is Jetpack Compose. From Kotlin 2.0 the
+        // Compose compiler ships as a Kotlin plugin, versioned with Kotlin.
+        classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion")
     }
 }
 

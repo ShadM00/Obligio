@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "org.jetbrains.kotlin.plugin.compose"
 apply plugin: "com.facebook.react"
 
 /**
@@ -99,6 +100,9 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
 
     namespace "com.compliancecalendar"
+    buildFeatures {
+        compose true
+    }
     defaultConfig {
     applicationId "com.obligio.app"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -136,6 +140,10 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation("com.clerk:clerk-android-api:1.0.16")
+    // The prebuilt sign-in flow, pinned to the same release as the API so the
+    // two agree on session state. It is what ObligioAuth.signIn presents.
+    implementation("com.clerk:clerk-android-ui:1.0.16")
+    implementation("androidx.activity:activity-compose:1.10.1")
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

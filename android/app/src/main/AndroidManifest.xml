@@ -23,5 +23,10 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <!-- Clerk's prebuilt sign-in flow, presented by ObligioAuth.signIn. -->
+      <activity
+        android:name=".ClerkSignInActivity"
+        android:exported="false"
+        android:theme="@style/AppTheme" />
     </application>
 </manifest>
