@@ -16,29 +16,42 @@ stores and the production backend on 2026-09-08.
 
 Neither store has been submitted.
 
-## Phase 0 — Sign-in (resolved 2026-09-10)
+## Phase 0 — Sign-in
 
-Authentication was broken on both platforms, for two separate reasons, and the
-first hid the second.
+Authentication was broken for three separate reasons, each hidden behind the
+one before it. Two are fixed.
 
-**`clerk.obligio.com` did not resolve.** Both apps are built against Clerk
-production, whose frontend API is that host. Five CNAME records were missing
-from the Hostinger zone. They were added on 2026-09-10 — additive, touching
-none of the existing records — and Clerk verified all five, issued
-certificates for `clerk.` and `accounts.`, and now serves the Obligio
-environment.
+**Fixed: `clerk.obligio.com` did not resolve.** Five CNAME records were missing
+from the Hostinger zone. Added 2026-09-10, additive, touching none of the
+existing records. Clerk verified all five and issued certificates for
+`clerk.` and `accounts.`.
 
-**Android `signIn()` was a stub.** It rejected unconditionally with "Use
-Clerk's native authentication UI to start sign-in", so no Android user could
-ever have signed in, DNS or not. It now presents Clerk's prebuilt flow; see
-[native-auth-bridge.md](native-auth-bridge.md).
+**Fixed: Android `signIn()` was a stub.** It rejected unconditionally, so no
+Android user could ever have signed in. It now presents Clerk's prebuilt flow
+(see [native-auth-bridge.md](native-auth-bridge.md)). Verified on an emulator:
+tapping Sign in opens the live production sign-in screen, and backing out
+returns cleanly. Shipped as Play internal version code 5.
 
-Verified on an Android emulator: the smoke flow that failed on the outage now
-passes, Clerk logs no errors on launch, tapping Sign in opens the production
-sign-in screen, and backing out returns to the welcome screen cleanly.
+**Open: the redirect allowlist is empty.** Hosted and OAuth sign-in hand
+control back to the app through a redirect URL, and Clerk production allows
+none. On iOS, tapping Sign in fails with "The current redirect url ... does not
+match an authorized redirect URI for this instance. com.obligio.app://callback".
+Three entries are needed:
 
-Not verified, because it means entering credentials: completing a sign-in.
-That is the first thing to do with the reviewer demo account.
+| URL | Used by |
+| --- | --- |
+| `com.obligio.app://callback` | iOS — every sign-in, via `startHostedAuth` |
+| `clerk://com.obligio.app.callback` | Android — Sign in with Google |
+| `clerk://com.obligio.app.oauth` | Android — Sign in with Google |
+
+Each is `POST /v1/redirect_urls` against the production instance. This is an
+authentication security control, so it waits on an explicit go-ahead rather
+than riding on the DNS approval.
+
+Also unverified: whether Google sign-in in production uses your own Google
+OAuth credentials. Clerk production requires them; the shared development
+credentials do not work there. It is enabled, so check it in the dashboard
+(Configure → SSO connections → Google) or remove it before review.
 
 ## Phase 1 — Submit
 
