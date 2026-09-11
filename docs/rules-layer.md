@@ -124,7 +124,7 @@ attestation that someone checked it.
 
 | Set | Scope | Entries |
 | --- | --- | --- |
-| `US_STATE_REPORTS` | `US / <state> / General` | 48, across 47 jurisdictions — California has two, because its LLCs file every two years and its corporations every year |
+| `US_STATE_REPORTS` | `US / <state> / General` | 50, across 49 jurisdictions — California has two, because its LLCs file every two years and its corporations every year |
 | `US_FEDERAL_INDUSTRY` | `US / (country-wide) / <industry>` | 7 — Transport (4), Construction (1), Healthcare (2) |
 
 The state entries are the periodic report every state asks of its

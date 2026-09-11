@@ -105,8 +105,8 @@ but the differentiator the listing sells does not exist yet. Two honest ways
 to close it, and the choice should be deliberate:
 
 - **Write state and industry rules — drafted, awaiting review.** Chosen
-  2026-09-11. `convex/catalogueUs.ts` has 48 state entries (the periodic
-  corporate/LLC report, across 47 jurisdictions) and 7 federal industry
+  2026-09-11. `convex/catalogueUs.ts` has 50 state entries (the periodic
+  corporate/LLC report, across 49 jurisdictions) and 7 federal industry
   entries (Transport, Construction, Healthcare), each linked to its official
   source. Nothing is seeded: the review and the `reviewedAt` are the owner's,
   and the seeds require naming the states and industries actually reviewed.
