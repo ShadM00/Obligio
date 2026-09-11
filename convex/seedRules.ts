@@ -1,6 +1,7 @@
-import {internalMutation} from './_generated/server';
+import {internalMutation, type MutationCtx} from './_generated/server';
 import {v} from 'convex/values';
 import {assertIsoDate} from './dates';
+import {US_FEDERAL_INDUSTRY, US_STATE_REPORTS, selectReviewed, type CatalogueTemplate} from './catalogueUs';
 
 /**
  * Seeds the jurisdiction rules catalogue.
@@ -184,5 +185,103 @@ export const seedUnitedStatesFederal = internalMutation({
       inserted += 1;
     }
     return {inserted, skipped};
+  },
+});
+
+/**
+ * Inserts the templates, skipping any already present in their scope.
+ *
+ * Idempotent for the same reason as the federal seed: the catalogue is shared,
+ * and a duplicate shows every owner in that scope the same obligation twice.
+ */
+async function insertTemplates(
+  ctx: MutationCtx,
+  templates: readonly CatalogueTemplate[],
+  reviewedAt: string,
+  effectiveFrom: string,
+): Promise<{inserted: number; skipped: number}> {
+  let inserted = 0;
+  let skipped = 0;
+  const seenByScope = new Map<string, Set<string>>();
+  for (const template of templates) {
+    const scope = `${template.region}|${template.industry}`;
+    let seen = seenByScope.get(scope);
+    if (!seen) {
+      const existing = await ctx.db
+        .query('rules')
+        .withIndex('by_jurisdiction_and_industry', q =>
+          q.eq('country', 'US').eq('region', template.region).eq('industry', template.industry),
+        )
+        .collect();
+      seen = new Set(existing.map(row => row.title));
+      seenByScope.set(scope, seen);
+    }
+    if (seen.has(template.title)) {
+      skipped += 1;
+      continue;
+    }
+    await ctx.db.insert('rules', {
+      country: 'US',
+      region: template.region,
+      industry: template.industry,
+      category: template.category,
+      title: template.title,
+      description: template.description,
+      sourceName: template.sourceName,
+      sourceUrl: template.sourceUrl,
+      effectiveFrom,
+      reviewedAt,
+      recurrence: template.recurrence,
+    });
+    seen.add(template.title);
+    inserted += 1;
+  }
+  return {inserted, skipped};
+}
+
+/**
+ * Seeds the state corporate/LLC report entries for the states you reviewed.
+ *
+ *     npx convex run seedRules:seedUnitedStatesStates \
+ *       '{"reviewedAt":"2026-09-11","regions":["WA","OR","CA"]}' --prod
+ */
+export const seedUnitedStatesStates = internalMutation({
+  args: {
+    /** The date you checked these entries against their sources. */
+    reviewedAt: v.string(),
+    /** Two-letter codes of the states you actually reviewed. */
+    regions: v.array(v.string()),
+    effectiveFrom: v.optional(v.string()),
+  },
+  returns: v.object({inserted: v.number(), skipped: v.number()}),
+  handler: async (ctx, args) => {
+    assertIsoDate(args.reviewedAt, 'reviewedAt');
+    const effectiveFrom = args.effectiveFrom ?? args.reviewedAt;
+    assertIsoDate(effectiveFrom, 'effectiveFrom');
+    const templates = selectReviewed(US_STATE_REPORTS, 'region', args.regions);
+    return insertTemplates(ctx, templates, args.reviewedAt, effectiveFrom);
+  },
+});
+
+/**
+ * Seeds the federal industry entries for the industries you reviewed.
+ *
+ *     npx convex run seedRules:seedUnitedStatesIndustries \
+ *       '{"reviewedAt":"2026-09-11","industries":["Transport","Healthcare"]}' --prod
+ */
+export const seedUnitedStatesIndustries = internalMutation({
+  args: {
+    reviewedAt: v.string(),
+    /** Industry values, as in src/jurisdictions.ts, that you reviewed. */
+    industries: v.array(v.string()),
+    effectiveFrom: v.optional(v.string()),
+  },
+  returns: v.object({inserted: v.number(), skipped: v.number()}),
+  handler: async (ctx, args) => {
+    assertIsoDate(args.reviewedAt, 'reviewedAt');
+    const effectiveFrom = args.effectiveFrom ?? args.reviewedAt;
+    assertIsoDate(effectiveFrom, 'effectiveFrom');
+    const templates = selectReviewed(US_FEDERAL_INDUSTRY, 'industry', args.industries);
+    return insertTemplates(ctx, templates, args.reviewedAt, effectiveFrom);
   },
 });

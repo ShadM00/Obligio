@@ -115,3 +115,85 @@ prompt rather than a federal rule.
 
 State and industry catalogues (`region: 'CA'`, `industry: 'FoodService'`, and so
 on) are not written. The vocabulary they must use is in `src/jurisdictions.ts`.
+
+## Draft catalogue review notes
+
+`convex/catalogueUs.ts` holds a draft beyond the federal-general set, written
+2026-09-11. **None of it is seeded.** It is research, and seeding is the
+attestation that someone checked it.
+
+| Set | Scope | Entries |
+| --- | --- | --- |
+| `US_STATE_REPORTS` | `US / <state> / General` | 48, across 47 jurisdictions — California has two, because its LLCs file every two years and its corporations every year |
+| `US_FEDERAL_INDUSTRY` | `US / (country-wide) / <industry>` | 7 — Transport (4), Construction (1), Healthcare (2) |
+
+The state entries are the periodic report every state asks of its
+corporations and LLCs — the one deadline nearly every small business has, and
+the one that makes the state answer in onboarding actually change what is
+suggested. The industry entries do the same for the trade answer.
+
+### How to review
+
+Open each entry's `sourceUrl` and check the description against it. Then seed
+**only what you reviewed** — the seeds require the list, and reject a name with
+no draft entries so a typo cannot pass for a completed review:
+
+```sh
+npx convex run seedRules:seedUnitedStatesStates \
+  '{"reviewedAt":"YYYY-MM-DD","regions":["WA","OR","CA"]}' --prod
+npx convex run seedRules:seedUnitedStatesIndustries \
+  '{"reviewedAt":"YYYY-MM-DD","industries":["Transport","Construction","Healthcare"]}' --prod
+npx convex run catalogue:review --prod
+```
+
+Doing it a few states at a time is fine and honest; each run is idempotent.
+
+### How it was researched, and why that is not enough
+
+Each state was checked with a web search restricted to that state's own
+domain, and where the result was ambiguous the primary page, PDF or statute
+was read directly — Kansas's 2024 change from the Secretary of State's own
+flyer, Idaho from § 30-21-213, North Dakota, Nebraska, Missouri and South
+Carolina from their pages. Search summaries paraphrase, and a paraphrase is
+where a date quietly shifts. That is precisely what the review is for.
+
+### Gaps found while drafting
+
+Settle these before seeding the affected entries:
+
+- **New Mexico — excluded.** No official guidance page stating the current
+  rule could be reached; the only evidence (a biennial corporate report due
+  April 15) came from images of filed documents.
+- **Ohio — excluded, correctly.** Ohio requires no annual report from
+  corporations or LLCs (Secretary of State FAQ).
+- **Missouri — corporations only.** Whether Missouri LLCs file a periodic
+  report was not confirmed from an official page.
+- **Virginia — registration fee only.** The SCC's pages refuse automated
+  access, so whether stock corporations also file an annual report was not
+  confirmed; the automatic-cancellation rule is confirmed for LLCs only.
+- **Illinois — corporations.** The LLC rule is confirmed. The corporation
+  rule is described as tied to the anniversary month with an optional
+  extended filing month, which is what the forms support; the exact wording
+  page was blocked.
+- **Wisconsin.** The quarter-of-anniversary rule is quoted from DFI's
+  non-stock corporation instructions; confirm it for stock corporations and
+  LLCs.
+- **IFTA.** The entry deliberately gives no dates. IFTA, Inc.'s carrier page
+  leaves the schedule to each base jurisdiction.
+
+### Industries with no entry
+
+Food service, childcare, beauty, fitness, professional services and retail are
+regulated almost entirely by states and localities. The federal rule people
+reach for first often does not apply — FDA food facility registration exempts
+restaurants — so they have no entry rather than a wrong one. The next useful
+wave is state-level: workers' compensation and sales tax permits, both of
+which vary by state and apply across trades.
+
+### Multi-year cadences
+
+Several entries repeat every two, three or five years, so `biennial`,
+`triennial` and `quinquennial` were added to the recurrence model, the
+picker, and the "Repeats …" label. A client older than that change shows the
+raw value — "Repeats biennial" — and still schedules correctly, because the
+next date is computed on the server.

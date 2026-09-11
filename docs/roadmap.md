@@ -104,16 +104,16 @@ the widening in `coveringScopes` is what makes federal rules visible at all —
 but the differentiator the listing sells does not exist yet. Two honest ways
 to close it, and the choice should be deliberate:
 
-- **Write state and industry rules.** The highest-value slices are the ones
-  with real per-state variation: workers' compensation, business licence
-  renewal, food handler certification, contractor licensing. Each needs
-  research and a `reviewedAt` attestation — the content and the attestation are
-  the work; the tooling is not in the way. `seedRules.addTemplate` takes any
-  country/region/industry and is now idempotent, and `catalogue:review` lists
-  what is seeded with its authorities and review ages so a review, first or
-  repeat, is something you can sit down and do.
-- **Or soften the copy** until they exist, so the listing describes the
-  federal catalogue it actually ships with.
+- **Write state and industry rules — drafted, awaiting review.** Chosen
+  2026-09-11. `convex/catalogueUs.ts` has 48 state entries (the periodic
+  corporate/LLC report, across 47 jurisdictions) and 7 federal industry
+  entries (Transport, Construction, Healthcare), each linked to its official
+  source. Nothing is seeded: the review and the `reviewedAt` are the owner's,
+  and the seeds require naming the states and industries actually reviewed.
+  The gaps found while drafting — New Mexico, Missouri LLCs, Virginia
+  corporations and three more — are in
+  [rules-layer.md](rules-layer.md#draft-catalogue-review-notes).
+- ~~**Or soften the copy**~~ — not chosen.
 
 Shipping Phase 1 without doing one of these means the first reviews say the
 suggestions are generic.

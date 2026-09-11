@@ -8,8 +8,25 @@
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-export const RECURRENCES = ['monthly', 'quarterly', 'annual'] as const;
-export type Recurrence = (typeof RECURRENCES)[number];
+/**
+ * How often an obligation repeats, and the months each period spans.
+ *
+ * Multi-year periods exist because real filings use them: California's
+ * Statement of Information is biennial, a DEA registration is renewed every
+ * three years, EPA lead-safe firm certification every five. Squeezing those
+ * into `annual` would tell an owner to file something that is not due.
+ */
+export const RECURRENCE_MONTHS = {
+  monthly: 1,
+  quarterly: 3,
+  annual: 12,
+  biennial: 24,
+  triennial: 36,
+  quinquennial: 60,
+} as const;
+
+export const RECURRENCES = Object.keys(RECURRENCE_MONTHS) as (keyof typeof RECURRENCE_MONTHS)[];
+export type Recurrence = keyof typeof RECURRENCE_MONTHS;
 
 export function isIsoDate(value: string): boolean {
   if (!ISO_DATE.test(value)) return false;
@@ -43,7 +60,7 @@ export function nextDueDate(date: string, recurrence: string): string {
   assertIsoDate(date);
   const period = assertRecurrence(recurrence);
   const [year, month, day] = date.split('-').map(Number);
-  const monthsToAdd = period === 'monthly' ? 1 : period === 'quarterly' ? 3 : 12;
+  const monthsToAdd = RECURRENCE_MONTHS[period];
 
   const targetMonthIndex = month - 1 + monthsToAdd;
   const targetYear = year + Math.floor(targetMonthIndex / 12);

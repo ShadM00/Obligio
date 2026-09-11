@@ -7,15 +7,10 @@ import {formatDisplayDate, parseToIsoDate} from './dates';
 import {dueDatePlaceholder, locales, type Locale} from './i18n';
 import type {NewRequirement, Requirement, RuleTemplate} from './types';
 import {getAvailablePackages, hasPlusEntitlement, isBillingAvailable, purchasePackage, restorePurchases} from './billing';
+import {RECURRENCE_OPTIONS, repeatsLabel} from './recurrence';
 
 type Copy = (typeof locales)[Locale];
 
-const RECURRENCE_OPTIONS = [
-  {value: undefined, label: 'One-off'},
-  {value: 'monthly', label: 'Monthly'},
-  {value: 'quarterly', label: 'Quarterly'},
-  {value: 'annual', label: 'Annual'},
-] as const;
 
 function message(error: unknown): string {
   return error instanceof Error ? error.message : 'Something went wrong. Please try again.';
@@ -188,7 +183,7 @@ export function RequirementDetail({
       <Text style={[s.detailStatus, item.status === 'current' && s.detailStatusCurrent]}>{statusCopy}</Text>
       <Text style={s.helper}>
         {item.category} · Due {formatDisplayDate(item.dueDate, locale)}
-        {item.recurrence ? ` · Repeats ${item.recurrence}` : ''}
+        {item.recurrence ? ` · Repeats ${repeatsLabel(item.recurrence)}` : ''}
       </Text>
 
       <View style={s.detailCard}>
@@ -442,7 +437,7 @@ export function TemplatePicker({
               <Text style={s.itemTitle}>{rule.title}</Text>
               <Text style={s.muted}>
                 {rule.category}
-                {rule.recurrence ? ` · Repeats ${rule.recurrence}` : ' · One-off'}
+                {rule.recurrence ? ` · Repeats ${repeatsLabel(rule.recurrence)}` : ' · One-off'}
               </Text>
               <Text style={s.helper}>{rule.description}</Text>
               <Text style={s.sourceLine}>

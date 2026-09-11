@@ -62,11 +62,18 @@ describe('nextDueDate', () => {
     expect(nextDueDate('2026-10-14', 'monthly')).toBe('2026-11-14');
     expect(nextDueDate('2026-10-14', 'quarterly')).toBe('2027-01-14');
     expect(nextDueDate('2026-10-14', 'annual')).toBe('2027-10-14');
+    expect(nextDueDate('2026-10-14', 'biennial')).toBe('2028-10-14');
+    expect(nextDueDate('2026-10-14', 'triennial')).toBe('2029-10-14');
+    expect(nextDueDate('2026-10-14', 'quinquennial')).toBe('2031-10-14');
   });
 
   test('clamps to the end of a shorter month instead of spilling over', () => {
     expect(nextDueDate('2026-01-31', 'monthly')).toBe('2026-02-28');
     expect(nextDueDate('2024-01-31', 'monthly')).toBe('2024-02-29');
+    // A leap day carried across a multi-year period lands on the 28th in a
+    // common year rather than spilling into March.
+    expect(nextDueDate('2024-02-29', 'biennial')).toBe('2026-02-28');
+    expect(nextDueDate('2024-02-29', 'quinquennial')).toBe('2029-02-28');
   });
 
   test('refuses a display-formatted date instead of producing Invalid Date', () => {
