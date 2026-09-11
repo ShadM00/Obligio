@@ -8,8 +8,8 @@ stores and the production backend on 2026-09-08.
 | | State |
 | --- | --- |
 | Backend | `greedy-parakeet-883` current with `main`; auth gate closed; 8 rules, **0 businesses** |
-| App Store | 1.0 *Prepare for Submission*, build `202609102143` attached, export compliance carried in the binary |
-| Play | internal track, version code 6, completed. No closed, open or production track |
+| App Store | 1.0 *Prepare for Submission*, build `202609112039` attached, export compliance carried in the binary |
+| Play | internal track, version code 7, completed. No closed, open or production track |
 | Listings | text, 5 screenshots, feature graphic and icon live on both stores |
 | Subscriptions | `obligio_plus_monthly` / `obligio_plus_annual` **Ready to Submit**, review screenshots attached, RevenueCat keys set for both platforms |
 | Tests | 164 unit tests, `tsc` clean. No end-to-end tests |

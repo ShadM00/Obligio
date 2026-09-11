@@ -17,8 +17,8 @@ Verified against both stores and the production backend on 2026-09-08:
 | **Backend** | `greedy-parakeet-883` is current with `main`. The rules catalogue holds 8 US federal entries, reviewed 2026-09-06. |
 | **Subscriptions** | RevenueCat keys are set for both platforms. `obligio_plus_monthly` and `obligio_plus_annual` are *Ready to Submit* with review screenshots attached. |
 | **Authentication** | The native `ObligioAuth` Clerk bridge is live on both platforms and Convex is configured against the Clerk instance. See [docs/native-auth-bridge.md](docs/native-auth-bridge.md). |
-| **App Store** | 1.0 *Prepare for Submission*, build `202609102143` attached, listing and screenshots live. Not submitted. |
-| **Play** | Internal track, version code 6, completed. No closed, open or production track. Listing, screenshots, feature graphic and icon live. |
+| **App Store** | 1.0 *Prepare for Submission*, build `202609112039` attached, listing and screenshots live. Not submitted. |
+| **Play** | Internal track, version code 7, completed. No closed, open or production track. Listing, screenshots, feature graphic and icon live. |
 
 **Sign-in works on both platforms as of 2026-09-10**, verified on device
 through to Clerk's credential screen. Nobody has yet completed a sign-in
