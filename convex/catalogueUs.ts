@@ -390,10 +390,10 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   ),
   report(
     'VA',
-    'Virginia annual registration fee',
-    'Virginia corporations and LLCs pay an annual registration fee to the State Corporation Commission by the last day of the month in which they were formed; the SCC sends the assessment two months before. An LLC that has not paid by the end of the third month after the due date is automatically cancelled.',
-    'Virginia SCC — Annual Registration Fees',
-    'https://www.scc.virginia.gov/businesses/business-faqs/annual-registration-fees/',
+    'Virginia annual report and registration fee',
+    'Virginia corporations file an annual report with the State Corporation Commission by the last day of their anniversary month each year, and pay an annual registration fee by the same date; the report can be filed up to three months early. Virginia LLCs pay the annual registration fee by the last day of their anniversary month, and one that has not paid by the end of the third month after is automatically cancelled.',
+    'Code of Virginia § 13.1-775 — Annual report of corporations',
+    'https://law.lis.virginia.gov/vacode/title13.1/chapter9/section13.1-775/',
   ),
   report(
     'WA',

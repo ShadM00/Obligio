@@ -161,23 +161,31 @@ where a date quietly shifts. That is precisely what the review is for.
 
 Settle these before seeding the affected entries:
 
-- **New Mexico — excluded.** No official guidance page stating the current
-  rule could be reached; the only evidence (a biennial corporate report due
-  April 15) came from images of filed documents.
+- **New Mexico — excluded, because the sources conflict.** Statute text for
+  § 53-5-2 NMSA, as quoted in a 2018 bill, puts the biennial corporate report
+  on the fifteenth day of the *third* month after the tax year; filed reports
+  say April 15, the *fourth*. The 2018 bill may be what changed it, and the
+  Legislature's site refuses automated access. Read the current statute
+  before writing this entry.
 - **Ohio — excluded, correctly.** Ohio requires no annual report from
   corporations or LLCs (Secretary of State FAQ).
 - **Missouri — corporations only.** Whether Missouri LLCs file a periodic
-  report was not confirmed from an official page.
-- **Virginia — registration fee only.** The SCC's pages refuse automated
-  access, so whether stock corporations also file an annual report was not
-  confirmed; the automatic-cancellation rule is confirmed for LLCs only.
+  report was not confirmed from an official page. Suggestive, not conclusive:
+  the Secretary of State's own filing guide shows registration reports offered
+  for corporations and nonprofits, but not under LLC filings.
+- **Virginia — resolved.** The SCC's pages refuse automated access, but Code
+  of Virginia § 13.1-775 is in force and requires corporations to file an
+  annual report by the end of the anniversary month, so the entry now covers
+  the report as well as the registration fee. The fee rules are on the SCC's
+  [Annual Registration Fees](https://www.scc.virginia.gov/businesses/business-faqs/annual-registration-fees/)
+  page; whether LLCs also file a report was not confirmed either way.
 - **Illinois — corporations.** The LLC rule is confirmed. The corporation
   rule is described as tied to the anniversary month with an optional
   extended filing month, which is what the forms support; the exact wording
   page was blocked.
-- **Wisconsin.** The quarter-of-anniversary rule is quoted from DFI's
-  non-stock corporation instructions; confirm it for stock corporations and
-  LLCs.
+- **Wisconsin — resolved.** Wis. Stat. § 180.1622 confirms domestic
+  corporations file during the calendar quarter matching their anniversary,
+  the same rule DFI's instructions give for LLCs.
 - **IFTA.** The entry deliberately gives no dates. IFTA, Inc.'s carrier page
   leaves the schedule to each base jurisdiction.
 
