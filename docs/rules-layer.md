@@ -122,6 +122,10 @@ on) are not written. The vocabulary they must use is in `src/jurisdictions.ts`.
 2026-09-11. **None of it is seeded.** It is research, and seeding is the
 attestation that someone checked it.
 
+Every entry, and the nine live international rules, was checked against its
+source on 2026-09-19: see [catalogue-review-2026-09-19.md](catalogue-review-2026-09-19.md)
+for the discrepancies and suggested fixes. That check is not the attestation.
+
 | Set | Scope | Entries |
 | --- | --- | --- |
 | `US_STATE_REPORTS` | `US / <state> / General` | 50, across 49 jurisdictions — California has two, because its LLCs file every two years and its corporations every year |
