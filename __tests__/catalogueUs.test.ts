@@ -1,6 +1,16 @@
-import {US_FEDERAL_INDUSTRY, US_STATE_REPORTS, selectReviewed} from '../convex/catalogueUs';
-import {RECURRENCES} from '../convex/dates';
-import {coveringScopes, GENERAL_INDUSTRY, INDUSTRIES, US_STATES} from '../src/jurisdictions';
+import {
+  UNVERIFIED_REGIONS,
+  US_FEDERAL_INDUSTRY,
+  US_STATE_REPORTS,
+  selectReviewed,
+} from '../convex/catalogueUs';
+import { RECURRENCES } from '../convex/dates';
+import {
+  coveringScopes,
+  GENERAL_INDUSTRY,
+  INDUSTRIES,
+  US_STATES,
+} from '../src/jurisdictions';
 
 const ALL = [...US_STATE_REPORTS, ...US_FEDERAL_INDUSTRY];
 const STATE_CODES = US_STATES.map(state => state.value).filter(Boolean);
@@ -22,7 +32,10 @@ describe('draft US catalogue', () => {
     }
     for (const entry of US_FEDERAL_INDUSTRY) {
       for (const region of STATE_CODES) {
-        expect(coveringScopes(region, entry.industry)).toContainEqual({region: '', industry: entry.industry});
+        expect(coveringScopes(region, entry.industry)).toContainEqual({
+          region: '',
+          industry: entry.industry,
+        });
       }
     }
   });
@@ -50,7 +63,9 @@ describe('draft US catalogue', () => {
     // .gov, Colorado's state.co.us, and IFTA, Inc. — the body the member
     // jurisdictions created to administer the agreement.
     const official = (host: string) =>
-      host.endsWith('.gov') || host.endsWith('.state.co.us') || host === 'www.iftach.org';
+      host.endsWith('.gov') ||
+      host.endsWith('.state.co.us') ||
+      host === 'www.iftach.org';
     for (const entry of ALL) {
       const url = new URL(entry.sourceUrl);
       expect(url.protocol).toBe('https:');
@@ -59,7 +74,9 @@ describe('draft US catalogue', () => {
   });
 
   it('never lists the same obligation twice in one scope', () => {
-    const keys = ALL.map(entry => `${entry.region}|${entry.industry}|${entry.title}`);
+    const keys = ALL.map(
+      entry => `${entry.region}|${entry.industry}|${entry.title}`,
+    );
     expect(new Set(keys).size).toBe(keys.length);
   });
 
@@ -79,7 +96,8 @@ describe('draft US catalogue', () => {
   });
 
   it('writes in US English, like the listing it ships under', () => {
-    const british = /\b(licence|organisation|organised|catalogue|centre|programme|defence|enrolment)\w*/i;
+    const british =
+      /\b(licence|organisation|organised|catalogue|centre|programme|defence|enrolment)\w*/i;
     for (const entry of ALL) {
       expect(`${entry.title} ${entry.description}`).not.toMatch(british);
     }
@@ -89,18 +107,37 @@ describe('draft US catalogue', () => {
 describe('selectReviewed', () => {
   it('seeds only the scopes named', () => {
     const picked = selectReviewed(US_STATE_REPORTS, 'region', ['WA', 'CA']);
-    expect(new Set(picked.map(entry => entry.region))).toEqual(new Set(['WA', 'CA']));
+    expect(new Set(picked.map(entry => entry.region))).toEqual(
+      new Set(['WA', 'CA']),
+    );
     // California carries two entries: LLCs and corporations repeat differently.
     expect(picked).toHaveLength(3);
   });
 
   it('refuses to seed without naming what was reviewed', () => {
-    expect(() => selectReviewed(US_STATE_REPORTS, 'region', [])).toThrow(/Name the regions/);
+    expect(() => selectReviewed(US_STATE_REPORTS, 'region', [])).toThrow(
+      /Name the regions/,
+    );
   });
 
   it('rejects a name with no draft entries rather than skipping it', () => {
     // A typo must not pass for a completed review.
-    expect(() => selectReviewed(US_STATE_REPORTS, 'region', ['WA', 'WX'])).toThrow(/WX/);
-    expect(() => selectReviewed(US_STATE_REPORTS, 'region', ['OH'])).toThrow(/OH/);
+    expect(() =>
+      selectReviewed(US_STATE_REPORTS, 'region', ['WA', 'WX']),
+    ).toThrow(/WX/);
+    expect(() => selectReviewed(US_STATE_REPORTS, 'region', ['OH'])).toThrow(
+      /OH/,
+    );
+  });
+
+  it('refuses a state whose source nobody could read', () => {
+    expect(() =>
+      selectReviewed(US_STATE_REPORTS, 'region', ['WA', 'FL']),
+    ).toThrow(/FL \(every official page/);
+    for (const region of Object.keys(UNVERIFIED_REGIONS)) {
+      expect(US_STATE_REPORTS.some(entry => entry.region === region)).toBe(
+        true,
+      );
+    }
   });
 });

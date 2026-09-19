@@ -522,6 +522,21 @@ export const US_FEDERAL_INDUSTRY: readonly CatalogueTemplate[] = [
 ];
 
 /**
+ * States whose official source nobody has been able to read, so no review of
+ * them can be complete. Seeding refuses them until the entry is checked against
+ * the page itself and removed from this list. See
+ * docs/catalogue-seed-checklist.md.
+ */
+export const UNVERIFIED_REGIONS: Readonly<Record<string, string>> = {
+  FL: 'every official page is behind a Cloudflare check',
+  ID: 'the statute site refuses automated and browser readers',
+  IL: 'ilsos.gov denies access; the corporation rule is unconfirmed',
+  IN: 'the INBiz page returns 403',
+  NV: 'the nvsos.gov FAQ is behind a bot wall',
+  MA: 'cited to a contractor tip sheet, not the Corporations Division',
+};
+
+/**
  * Picks the templates for the scopes someone actually reviewed.
  *
  * The list is required and names every scope explicitly, because seeding is
@@ -543,6 +558,15 @@ export function selectReviewed(
   const unknown = reviewed.filter(name => !available.has(name));
   if (unknown.length > 0) {
     throw new Error(`No draft entries for: ${unknown.join(', ')}.`);
+  }
+  const blocked =
+    key === 'region' ? reviewed.filter(name => name in UNVERIFIED_REGIONS) : [];
+  if (blocked.length > 0) {
+    throw new Error(
+      `Not verifiable yet: ${blocked
+        .map(name => `${name} (${UNVERIFIED_REGIONS[name]})`)
+        .join('; ')}.`,
+    );
   }
   const wanted = new Set(reviewed);
   return templates.filter(template => wanted.has(template[key]));
