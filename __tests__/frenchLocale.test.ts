@@ -58,3 +58,14 @@ it('translates rules that share a title by their own wording', () => {
     'Angleterre',
   );
 });
+it('still translates the City of Perth wording that is live until the sync', () => {
+  const live = {
+    ...INTERNATIONAL_RULES.find(rule => rule.locality === 'city-of-perth')!,
+    title: 'City of Perth food premises approval',
+    description:
+      'For premises inside the City of Perth council area, confirm whether registration or notification is required. New fit-outs and structural changes may need building or planning approval before food-business approval. Contact the City about the form appropriate to your premises. This does not cover the whole Perth metropolitan area.',
+  };
+  expect(localizeTemplate(live, 'fr-CA').title).toBe(
+    'Autorisation des locaux alimentaires dans la ville de Perth',
+  );
+});
