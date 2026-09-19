@@ -90,9 +90,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'AR',
     'Arkansas annual franchise tax report',
-    'Corporations and LLCs registered in Arkansas file an annual franchise tax report and pay the tax to the Secretary of State by May 1. Late reports or payments incur penalties and interest, and the tax keeps accruing until the entity is dissolved or withdrawn.',
-    'Arkansas Secretary of State — Franchise Tax / Annual Report',
-    'https://www.sos.arkansas.gov/business-commercial-services-bcs/franchise-tax-report-forms/',
+    'Corporations and LLCs registered in Arkansas file an annual franchise tax report with the Secretary of State on or before May 1. Filing after May 1 brings penalties.',
+    'Arkansas Secretary of State — State Franchise Tax and Annual Report Filing System',
+    'https://sos-franchise.ark.org/',
   ),
   report(
     'CA',
@@ -133,7 +133,7 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'DC',
     'District of Columbia biennial report',
-    'Corporations and LLCs registered in DC file a biennial report — the first by April 1 of the year after registering, then by April 1 every two years. Reports filed after April 1 incur a late fee.',
+    'Corporations and LLCs registered in DC file a biennial report — the first by April 1 of the year after registering, then by April 1 every two years.',
     'DC Department of Licensing and Consumer Protection — Business Registration FAQs',
     'https://dlcp.dc.gov/page/corporations-division-business-registration-faqs',
     'biennial',
@@ -454,9 +454,10 @@ export const US_FEDERAL_INDUSTRY: readonly CatalogueTemplate[] = [
     category: 'Registration',
     title: 'Unified Carrier Registration (UCR)',
     description:
-      'Motor carriers, brokers, freight forwarders and leasing companies operating in interstate commerce register and pay UCR fees for each registration year, which runs with the calendar year. Registration for a year opens on October 1 of the year before, and states enforce it from January 1 of the registration year; penalties for not registering are set by each state. Carriers that operate only within one state, and private carriers of passengers, do not register.',
-    sourceName: 'Unified Carrier Registration Plan',
-    sourceUrl: 'https://plan.ucr.gov/',
+      'Motor carriers, brokers, freight forwarders and leasing companies in interstate commerce register and pay UCR fees for each registration year, which is the calendar year. Registration opens on October 1 before the year. To keep operating legally, register and pay before January 1; after that, states can take enforcement action, and each sets its own penalties. Private carriers of passengers are not covered.',
+    sourceName: 'Unified Carrier Registration Plan — UCR Handbook',
+    sourceUrl:
+      'https://prod-public-ucr-docs-governing-documents.s3.amazonaws.com/UCR%20Handbook%20022924.pdf',
     recurrence: 'annual',
   },
   {
@@ -478,9 +479,9 @@ export const US_FEDERAL_INDUSTRY: readonly CatalogueTemplate[] = [
     title: 'IFTA quarterly fuel tax return',
     description:
       'If you run a qualified motor vehicle — two axles over 26,000 pounds, three or more axles, or a combination over 26,000 pounds — in two or more jurisdictions, you hold an IFTA license and file a quarterly fuel tax return with your base jurisdiction. Every member jurisdiction uses the same due dates: April 30, July 31, October 31 and January 31, or the next business day. A return is due even with no miles. A late return can be charged $50 or 10% of the tax due, whichever is greater, plus interest.',
-    sourceName: 'IFTA, Inc. — Articles of Agreement (R930, R960, R1220)',
-    sourceUrl:
-      'https://www.iftach.org/manuals/2026/AA/Articles%20of%20Agreement%20-%2003-11-2026.pdf',
+    sourceName:
+      'IFTA, Inc. — Current IFTA Manuals (Articles of Agreement R930, R960, R1220)',
+    sourceUrl: 'https://www.iftach.org/manual2020.php',
     recurrence: 'quarterly',
   },
   {
@@ -502,9 +503,11 @@ export const US_FEDERAL_INDUSTRY: readonly CatalogueTemplate[] = [
     title:
       'DEA controlled substance registration (practitioners, pharmacies, hospitals and clinics)',
     description:
-      'Practitioners, pharmacies and hospitals or clinics that handle controlled substances hold a DEA registration, renewed online every three years, no earlier than 60 days before it expires. A renewal filed before expiry lets you keep operating until DEA acts on it. An expired registration can be reinstated only within one calendar month, after which a new application is needed; handling controlled substances while expired is prohibited. Manufacturers and distributors renew yearly and are not covered.',
-    sourceName: 'DEA Diversion Control Division — Registration',
-    sourceUrl: 'https://www.deadiversion.usdoj.gov/drugreg/registration.html',
+      'Practitioners, hospitals and clinics, retail pharmacies and teaching institutions that dispense controlled substances hold a DEA registration for three years. It expires on the last day of an assigned month, and can be renewed no more than 60 days before it expires. No one may handle controlled substances without a registration. Manufacturers, distributors and researchers register for one year and are not covered here.',
+    sourceName:
+      '21 CFR 1301.13 — Application for registration; time for application; expiration date',
+    sourceUrl:
+      'https://www.ecfr.gov/current/title-21/chapter-II/part-1301/subject-group-ECFR4b41a1b5ae2a296/section-1301.13',
     recurrence: 'triennial',
   },
   {
@@ -534,6 +537,8 @@ export const UNVERIFIED_REGIONS: Readonly<Record<string, string>> = {
   IN: 'the INBiz page returns 403',
   NV: 'the nvsos.gov FAQ is behind a bot wall',
   MA: 'cited to a contractor tip sheet, not the Corporations Division',
+  HI: 'the rule is only in dated quarterly releases; the statute is behind a Cloudflare check',
+  TN: 'the annual report instructions return 403; the FAQ cited does not state the due date',
 };
 
 /**

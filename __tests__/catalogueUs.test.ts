@@ -61,11 +61,16 @@ describe('draft US catalogue', () => {
 
   it('links every entry to an official source', () => {
     // .gov, Colorado's state.co.us, and IFTA, Inc. — the body the member
-    // jurisdictions created to administer the agreement.
+    // jurisdictions created to administer the agreement. Two exact hosts
+    // besides: the Arkansas Secretary of State's filing system, on the
+    // state's ark.org portal, and the bucket where the UCR Plan publishes its
+    // governing documents, linked from plan.ucr.gov.
     const official = (host: string) =>
       host.endsWith('.gov') ||
       host.endsWith('.state.co.us') ||
-      host === 'www.iftach.org';
+      host === 'www.iftach.org' ||
+      host === 'sos-franchise.ark.org' ||
+      host === 'prod-public-ucr-docs-governing-documents.s3.amazonaws.com';
     for (const entry of ALL) {
       const url = new URL(entry.sourceUrl);
       expect(url.protocol).toBe('https:');
