@@ -1,0 +1,10 @@
+{
+  "status": "awaiting_new_binaries_and_device_checks",
+  "retain": ["US", "GB"],
+  "add_with_updated_binary": ["AU", "CA"],
+  "interface_locales": ["en-US", "en-GB", "es-US", "fr-CA"],
+  "catalogue_language": "en",
+  "catalogue_coverage": "selected requirements only",
+  "android_version_currently_live": 12,
+  "do_not_expand_old_us_only_onboarding": true
+}

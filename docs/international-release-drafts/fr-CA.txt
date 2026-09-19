@@ -1,0 +1,17 @@
+Nom : Obligio : Suivi des échéances
+Sous-titre : Obligations et documents
+Description :
+Organisez les obligations de votre entreprise : permis, assurances, déclarations et documents justificatifs.
+
+Choisissez votre pays et votre région indépendamment de la langue de l’interface. Ajoutez vos propres obligations et consultez une sélection de suggestions avec des liens vers les autorités officielles.
+
+Le catalogue est limité. Certaines suggestions et sources restent en anglais. Il ne recense pas toutes les exigences nationales, provinciales ou municipales. Vérifiez chaque exigence et son échéance auprès de l’autorité compétente.
+
+Suivez jusqu’à trois obligations gratuitement. Obligio Plus comprend les obligations illimitées, les pièces jointes et la récurrence. Les prix et les offres sont affichés dans la boutique. Les abonnements sont gérés dans l’App Store ou Google Play.
+
+Obligio fournit des outils d’organisation, pas des conseils juridiques ou fiscaux.
+Confidentialité : https://obligio.com/privacy
+Assistance : https://obligio.com/support
+Conditions Apple (EULA) : https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+
+Statut : brouillon. Ne pas publier avant validation du nouveau binaire et des captures françaises.
