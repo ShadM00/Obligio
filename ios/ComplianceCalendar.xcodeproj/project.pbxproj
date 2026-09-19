@@ -9,24 +9,60 @@
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-ComplianceCalendar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-ComplianceCalendar.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		2A89D9141FF48C20FC2FB446 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650DA69ECBB19FE09FF0045C /* Foundation.framework */; };
+		39CE82F6DE269BEDA9B61313 /* ObligioWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5F5EB18634256C46F4C080 /* ObligioWatchApp.swift */; };
 		44308666C614221C9A97EB81 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		78EEB5DD3C80DC500CCA82CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3D7136BB5DC3D62E93D672 /* Assets.xcassets */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BB902070B4474ACAB0000001 /* ObligioAuthBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB902070B4474ACAB0000002 /* ObligioAuthBridge.mm */; };
+		CA47A8D3D1B246BE63A2F29A /* ObligioWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4C327E50B65497E4FF4F76 /* ObligioWatch.swift */; };
 		D092792D34E1A6FBC0F606E8 /* ObligioAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A6539E28F93FDE53F8DA38 /* ObligioAuth.swift */; };
+		E311A49CFA86924FD66E4878 /* ObligioWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0E56F6E2BBD7894180ED0DAB /* ObligioWatch.app */; };
+		FA7FF85CEBF11BC9793926A0 /* ObligioWatchBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 37D3C19EE441A07E7DB214F7 /* ObligioWatchBridge.mm */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2F7FE9EA5EC32356BD04B00E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F059581733D26CD81C6EC3D;
+			remoteInfo = ObligioWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3B6AFA170A10E9B68BDDC8D6 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				E311A49CFA86924FD66E4878 /* ObligioWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0E56F6E2BBD7894180ED0DAB /* ObligioWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObligioWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* ComplianceCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComplianceCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ComplianceCalendar/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ComplianceCalendar/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = ComplianceCalendar/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		37D3C19EE441A07E7DB214F7 /* ObligioWatchBridge.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = ObligioWatchBridge.mm; path = ComplianceCalendar/ObligioWatchBridge.mm; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-ComplianceCalendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComplianceCalendar.debug.xcconfig"; path = "Target Support Files/Pods-ComplianceCalendar/Pods-ComplianceCalendar.debug.xcconfig"; sourceTree = "<group>"; };
+		3C5F5EB18634256C46F4C080 /* ObligioWatchApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObligioWatchApp.swift; path = ObligioWatch/ObligioWatchApp.swift; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-ComplianceCalendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComplianceCalendar.release.xcconfig"; path = "Target Support Files/Pods-ComplianceCalendar/Pods-ComplianceCalendar.release.xcconfig"; sourceTree = "<group>"; };
+		5B3D7136BB5DC3D62E93D672 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ObligioWatch/Assets.xcassets; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-ComplianceCalendar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ComplianceCalendar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		650DA69ECBB19FE09FF0045C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ComplianceCalendar/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ComplianceCalendar/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BB902070B4474ACAB0000002 /* ObligioAuthBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ComplianceCalendar/ObligioAuthBridge.mm; sourceTree = "<group>"; };
+		CB4C327E50B65497E4FF4F76 /* ObligioWatch.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObligioWatch.swift; path = ComplianceCalendar/ObligioWatch.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F3A6539E28F93FDE53F8DA38 /* ObligioAuth.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ComplianceCalendar/ObligioAuth.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -37,6 +73,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-ComplianceCalendar.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4357D6756427229E8F85A0CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A89D9141FF48C20FC2FB446 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,8 +106,17 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-ComplianceCalendar.a */,
+				72A6ACF15B712BA0642EF982 /* watchOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		72A6ACF15B712BA0642EF982 /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				650DA69ECBB19FE09FF0045C /* Foundation.framework */,
+			);
+			name = watchOS;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -81,6 +134,10 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				CB4C327E50B65497E4FF4F76 /* ObligioWatch.swift */,
+				37D3C19EE441A07E7DB214F7 /* ObligioWatchBridge.mm */,
+				3C5F5EB18634256C46F4C080 /* ObligioWatchApp.swift */,
+				5B3D7136BB5DC3D62E93D672 /* Assets.xcassets */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -91,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* ComplianceCalendar.app */,
+				0E56F6E2BBD7894180ED0DAB /* ObligioWatch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,10 +176,12 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				3B6AFA170A10E9B68BDDC8D6 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				384C0026F90AEF27307493AF /* PBXTargetDependency */,
 			);
 			name = ComplianceCalendar;
 			packageProductDependencies = (
@@ -129,6 +189,23 @@
 			);
 			productName = ComplianceCalendar;
 			productReference = 13B07F961A680F5B00A75B9A /* ComplianceCalendar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2F059581733D26CD81C6EC3D /* ObligioWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C1FBE01E1795B39C16CC6951 /* Build configuration list for PBXNativeTarget "ObligioWatch" */;
+			buildPhases = (
+				5A966DE88863BDA95FAC13CF /* Sources */,
+				4357D6756427229E8F85A0CE /* Frameworks */,
+				445D3C1192CE8ECD8C07D363 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ObligioWatch;
+			productName = ObligioWatch;
+			productReference = 0E56F6E2BBD7894180ED0DAB /* ObligioWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -161,6 +238,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* ComplianceCalendar */,
+				2F059581733D26CD81C6EC3D /* ObligioWatch */,
 			);
 		};
 /* End PBXProject section */
@@ -173,6 +251,14 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				44308666C614221C9A97EB81 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445D3C1192CE8ECD8C07D363 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78EEB5DD3C80DC500CCA82CF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,10 +347,29 @@
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
 				D092792D34E1A6FBC0F606E8 /* ObligioAuth.swift in Sources */,
 				BB902070B4474ACAB0000001 /* ObligioAuthBridge.mm in Sources */,
+				CA47A8D3D1B246BE63A2F29A /* ObligioWatch.swift in Sources */,
+				FA7FF85CEBF11BC9793926A0 /* ObligioWatchBridge.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5A966DE88863BDA95FAC13CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				39CE82F6DE269BEDA9B61313 /* ObligioWatchApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		384C0026F90AEF27307493AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ObligioWatch;
+			target = 2F059581733D26CD81C6EC3D /* ObligioWatch */;
+			targetProxy = 2F7FE9EA5EC32356BD04B00E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
@@ -273,8 +378,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ComplianceCalendar/Obligio.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 202609112039;
+				CURRENT_PROJECT_VERSION = 202609180022;
 				DEVELOPMENT_TEAM = 2KBXMW6U9N;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ComplianceCalendar/Info.plist;
@@ -283,7 +389,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -294,7 +400,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -305,8 +411,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ComplianceCalendar/Obligio.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 202609112039;
+				CURRENT_PROJECT_VERSION = 202609180022;
 				DEVELOPMENT_TEAM = 2KBXMW6U9N;
 				INFOPLIST_FILE = ComplianceCalendar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -314,7 +421,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -324,10 +431,35 @@
 				PRODUCT_NAME = ComplianceCalendar;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_VERSION = 6.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
+		};
+		13CAA4414D2E11B02BAABB13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 202609180022;
+				DEVELOPMENT_TEAM = 2KBXMW6U9N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Obligio;
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.obligio.app;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.obligio.app.watchkitapp;
+				PRODUCT_NAME = ObligioWatch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -485,6 +617,32 @@
 			};
 			name = Release;
 		};
+		BD056247B1EAD21F858EA3A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 202609180022;
+				DEVELOPMENT_TEAM = 2KBXMW6U9N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Obligio;
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.obligio.app;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.obligio.app.watchkitapp;
+				PRODUCT_NAME = ObligioWatch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -502,6 +660,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C1FBE01E1795B39C16CC6951 /* Build configuration list for PBXNativeTarget "ObligioWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD056247B1EAD21F858EA3A0 /* Release */,
+				13CAA4414D2E11B02BAABB13 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
