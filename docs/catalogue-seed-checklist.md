@@ -53,7 +53,7 @@ Perth).
 | VA | SEED, after one check | § 13.1-914 is marked "effective until January 1, 2027". It sits in the Nonstock Corporation Act, so it probably doesn't touch this entry; confirm what replaces it. |
 | AR | SEED | Now cites the Secretary of State's franchise tax filing system, which states "due on or before May 1 to avoid penalties". Who files (corporations and LLCs) is on the SOS forms page that links to it. The accrual sentence was dropped: only the forms page states it. |
 | DC | SEED | Late-fee sentence dropped; the FAQ cited supports the rest. |
-| UT | FIX, date-bound | Describes S.B. 40, which takes effect **1 Oct 2026**. Don't seed before then. Afterwards, swap `sourceUrl` from the enrolled bill to the codified § 16-1a-212 on le.utah.gov. |
+| UT | SEED from 1 Oct 2026 | Describes S.B. 40, which takes effect **1 Oct 2026**; `NOT_IN_FORCE_UNTIL` refuses to seed it before then. Now cites the codified § 16-1a-212 on le.utah.gov (published ahead of that date); the dissolution rule is § 16-1a-602. |
 | FL, ID, IL, IN, NV, MA, HI, TN | BLOCK | Refused by `UNVERIFIED_REGIONS`, with the reason shown. Read the official page yourself, correct the entry if needed, then remove the state from the list. |
 | NM | BLOCK (absent) | No entry. Read NMSA 53-5-2 on NMOneSource; if it says the fourth month, draft a biennial entry. |
 | OH | — | No periodic report required; deliberately absent. |
@@ -76,5 +76,5 @@ requests, and the FAQ cited doesn't state the due date.
 
 1. Seed the SEED states and Construction, after reading each source.
 2. Read and seed AR, DC, Healthcare and Transport, now fixed in code.
-3. After 1 October 2026: swap Utah's source and seed it.
+3. From 1 October 2026: read and seed Utah.
 4. Clear the BLOCK states one at a time, by reading the official page.

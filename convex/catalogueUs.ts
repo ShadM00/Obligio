@@ -378,8 +378,8 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
     'UT',
     'Utah annual renewal',
     'From October 1, 2026, Utah corporations, LLCs and registered foreign entities file an annual report with the Division of Corporations by the last day of their anniversary month — the month they formed or registered — and may file up to 60 days early. The division can administratively dissolve a domestic entity whose report is more than 60 days late. The division may set a different period by rule.',
-    'Utah Legislature — S.B. 40 (2026), Utah Code § 16-1a-212 and § 16-1a-602',
-    'https://le.utah.gov/Session/2026/bills/enrolled/SB0040.pdf',
+    'Utah Code § 16-1a-212, effective 1 October 2026 (dissolution: § 16-1a-602)',
+    'https://le.utah.gov/xcode/Title16/Chapter1A/16-1a-S212.html',
   ),
   report(
     'VT',
@@ -542,6 +542,14 @@ export const UNVERIFIED_REGIONS: Readonly<Record<string, string>> = {
 };
 
 /**
+ * States whose entry describes a rule that is not yet in force. Seeding them
+ * before that date would show owners a deadline that does not apply yet.
+ */
+export const NOT_IN_FORCE_UNTIL: Readonly<Record<string, string>> = {
+  UT: '2026-10-01',
+};
+
+/**
  * Picks the templates for the scopes someone actually reviewed.
  *
  * The list is required and names every scope explicitly, because seeding is
@@ -553,6 +561,7 @@ export function selectReviewed(
   templates: readonly CatalogueTemplate[],
   key: 'region' | 'industry',
   reviewed: string[],
+  today: string = new Date().toISOString().slice(0, 10),
 ): CatalogueTemplate[] {
   if (reviewed.length === 0) {
     throw new Error(
@@ -570,6 +579,17 @@ export function selectReviewed(
     throw new Error(
       `Not verifiable yet: ${blocked
         .map(name => `${name} (${UNVERIFIED_REGIONS[name]})`)
+        .join('; ')}.`,
+    );
+  }
+  const early =
+    key === 'region'
+      ? reviewed.filter(name => (NOT_IN_FORCE_UNTIL[name] ?? '') > today)
+      : [];
+  if (early.length > 0) {
+    throw new Error(
+      `Not in force yet: ${early
+        .map(name => `${name} (from ${NOT_IN_FORCE_UNTIL[name]})`)
         .join('; ')}.`,
     );
   }

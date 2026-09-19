@@ -135,6 +135,15 @@ describe('selectReviewed', () => {
     );
   });
 
+  it('refuses a state whose rule is not in force yet', () => {
+    expect(() =>
+      selectReviewed(US_STATE_REPORTS, 'region', ['UT'], '2026-09-30'),
+    ).toThrow(/UT \(from 2026-10-01\)/);
+    expect(
+      selectReviewed(US_STATE_REPORTS, 'region', ['UT'], '2026-10-01'),
+    ).toHaveLength(1);
+  });
+
   it('refuses a state whose source nobody could read', () => {
     expect(() =>
       selectReviewed(US_STATE_REPORTS, 'region', ['WA', 'FL']),
