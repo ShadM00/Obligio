@@ -10,6 +10,20 @@ entry as it now stands in code: a person still reads it, then seeds. **FIX**
 means a specific change is due first. **BLOCK** means nobody has been able to
 read the official source; `selectReviewed` refuses these (`UNVERIFIED_REGIONS`).
 
+## Seeding is on hold (decided 19 September 2026)
+
+Nothing in the US catalogue is seeded, on purpose. Production had one
+business on that date: a US test account with no state set. A state rule would
+reach no real owner, so seeding it would add risk and help no one. Revisit:
+
+- **before marketing to a particular state:** read that state's source (one
+  official page, linked below), then seed it with the date you read it;
+- **when real owners sign up:** seed their states first, the same way;
+- **before a wider US launch:** read and seed the rest of the SEED set.
+
+The blocks (`UNVERIFIED_REGIONS`, `NOT_IN_FORCE_UNTIL`) stay in force while
+seeding waits.
+
 ## How seeding works, and why it shapes the order
 
 - **Seeding runs per state and per industry, not per entry.** California seeds
