@@ -103,3 +103,30 @@ Also found: **Scotland has no food registration row.** The GB food rows cover En
 | Transport: Unified Carrier Registration (UCR) | Minor | Covered entities are correct: motor carriers (for-hire, private and exempt), brokers, freight forwarders and leasing companies in interstate commerce. plan.ucr.gov confirms registration opens in the autumn before the year: 'The 2027 Registration Portal ... opens October 1, 2026.' Missing: the UCR Board recommends that states begin enforcement on January 1 of the registration year, which is the practical deadline, and the draft says only 'before operating in that year'. Penalties for not registering are set by each state, which could be said. Intrastate-only carriers and private passenger carriers are exempt. UCR is run by the UCR Plan (plan.ucr.gov), not FMCSA, so the Plan's site is a better and fetchable primary source. Recurrence 'annual' and industry fit. | '...Registration for a year opens in the autumn before it (1 October), and states enforce it from 1 January of the registration year; penalties for not registering are set by each state. Intrastate-only carriers and private passenger carriers are exempt.' Consider sourceUrl https://plan.ucr.gov/ with sourceName 'Unified Carrier Registration Plan'. | sourceUrl https://www.fmcsa.dot.gov/ucr returns HTTP 403 to every fetcher tried. Verified against plan.ucr.gov (home page fetched) and plan.ucr.gov and FMCSA search snippets. |
 | Construction: EPA Lead-Safe firm certification (RRP) | Match | Every claim is supported: firms including sole proprietorships; housing or child-occupied facilities built before 1978; 'good for five years'; recertification submitted 'at least 90 days before' expiry keeps the certification valid, and a late application can lapse so the firm cannot work until EPA approves it. The page states no penalty amount. Small nuance, not an error: RRP covers paid work that disturbs painted surfaces, with exemptions (minor repair, lead-free-certified housing). Recurrence 'quinquennial' and industry 'Construction' fit. | — | sourceUrl fetched (epa.gov, 'Renovation, Repair and Painting Program: Firm Certification'). |
 | Healthcare: CLIA certificate | Match | Every claim is supported: any facility testing human specimens needs one, including waived-only testing (Certificate of Waiver); 'All certificate types: Are effective for two years'; labs 'pay certain fees every two years to maintain' the certificate. No penalty is stated on the page. Recurrence 'biennial' and industry 'Healthcare' fit. 'Practice' is narrower than the source's 'facility' but accurate for the audience. | — | sourceUrl fetched (cms.gov, 'Apply for a CLIA Certificate'). |
+
+## Follow-up, same day
+
+The owner approved the fixes. What changed:
+
+- **Live rules, in production:** the Companies House confirmation statement
+  now states the 14-day deadline and director identity verification, citing
+  the guidance page that says both. The Corporations Canada annual return
+  says individuals-with-significant-control information is filed with it.
+  Scotland has its own food-registration row (Food Standards Scotland, 28
+  days before opening). `seedInternational:seed` now syncs, and each row
+  carries the date its wording was approved.
+- **Drafts:** 33 US entries rewritten to the suggested wording; nine came
+  back unchanged. Still drafts, still unseeded.
+- **Alabama, corrected from the table above:** the corporate annual report
+  to the Secretary of State was repealed by HB 230, effective 1 October 2024
+  (sos.alabama.gov/business-entities). The draft had relied on a January
+  2024 notice from before the repeal, and the table above suggested
+  splitting it into two entries. Instead, it is now a single Business
+  Privilege Tax return entry.
+
+Still to read in a browser before seeding: AK, FL, ID, IL, IN, NV, NH and UT
+(their sites block automated readers), MA (source is a contractor tip sheet),
+the FMCSA biennial-update page, and New Mexico, still absent. Virginia's
+§ 13.1-914 is marked "effective until January 1, 2027"; it sits in the
+Nonstock Corporation Act, but confirm nothing replacing it affects the entry.
+Hawaii's source is a dated quarterly release and will need replacing.
