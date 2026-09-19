@@ -54,15 +54,18 @@ Perth).
 | AR | SEED | Now cites the Secretary of State's franchise tax filing system, which states "due on or before May 1 to avoid penalties". Who files (corporations and LLCs) is on the SOS forms page that links to it. The accrual sentence was dropped: only the forms page states it. |
 | DC | SEED | Late-fee sentence dropped; the FAQ cited supports the rest. |
 | UT | SEED from 1 Oct 2026 | Describes S.B. 40, which takes effect **1 Oct 2026**; `NOT_IN_FORCE_UNTIL` refuses to seed it before then. Now cites the codified § 16-1a-212 on le.utah.gov (published ahead of that date); the dissolution rule is § 16-1a-602. |
-| FL, ID, IL, IN, NV, MA, HI, TN | BLOCK | Refused by `UNVERIFIED_REGIONS`, with the reason shown. Read the official page yourself, correct the entry if needed, then remove the state from the list. |
-| NM | BLOCK (absent) | No entry. Read NMSA 53-5-2 on NMOneSource; if it says the fourth month, draft a biennial entry. |
+| FL | SEED | Rewritten 19 Sep from Fla. Stat. § 607.1622 on flsenate.gov (LLCs: § 605.0212; the $400 late charge: § 607.193). |
+| NV | SEED | Rewritten from the nvsos.gov business license FAQ, which loaded normally in a browser: due by the last day of the *anniversary* month, $100 late license penalty, default then revocation after a year. |
+| MA | SEED | Now cites the Corporations Division fee schedule (sec.state.ma.us) instead of the contractor tip sheet. "Around March 15" dropped: not stated. |
+| HI | SEED | Now cites the undated BREG FAQ: due by the end of the registration quarter, nothing due in the year of registration. The $10 late fee was dropped: it is only in the dated releases. |
+| TN | SEED | Now cites the Secretary of State's charter instructions (SS-4417; LLCs SS-4270): first day of the fourth month after the fiscal year closes. Dissolution is on the SOS business FAQ. |
+| NM | SEED | New entry, corporations only, from NMSA §§ 53-5-2 and 53-5-7 on NMOneSource: first report within 30 days, then biennial by the 15th day of the fourth month after the tax year; $200 late penalty; cancellation 60 days after notice. |
+| ID, IL, IN | BLOCK | Refused by `UNVERIFIED_REGIONS`, with the reason shown. ID and IL: their official sites refuse connections from this machine, so try another network. IN: the rule was read only on an IN.gov business guide of uncertain date. |
 | OH | — | No periodic report required; deliberately absent. |
 
-HI moved to BLOCK on 19 Sep: BREG states the rule only in dated quarterly
-releases, the old portal only redirects, and the statute on
-capitol.hawaii.gov is behind a Cloudflare check. TN moved to BLOCK the same
-day: the annual report instructions return 403 to the browser and to plain
-requests, and the FAQ cited doesn't state the due date.
+HI and TN were blocked, then cleared later on 19 Sep once readable official
+pages were found: the BREG FAQ for Hawaii, and the Secretary of State's own
+filing instructions for Tennessee.
 
 ## US federal industries
 
@@ -77,4 +80,4 @@ requests, and the FAQ cited doesn't state the due date.
 1. Seed the SEED states and Construction, after reading each source.
 2. Read and seed AR, DC, Healthcare and Transport, now fixed in code.
 3. From 1 October 2026: read and seed Utah.
-4. Clear the BLOCK states one at a time, by reading the official page.
+4. Clear ID, IL and IN, by reading a current official page for each.

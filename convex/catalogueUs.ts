@@ -60,9 +60,8 @@ const report = (
 /**
  * The periodic state report for corporations and LLCs.
  *
- * Ohio is absent because it requires none. New Mexico is absent because an
- * official page confirming its current rule could not be reached; see the
- * review notes.
+ * Ohio is absent because it requires none. New Mexico's entry covers
+ * corporations only: its Corporate Reports Act does not reach LLCs.
  */
 export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
@@ -141,9 +140,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'FL',
     'Florida annual report',
-    'Florida corporations and LLCs file an annual report between January 1 and May 1 each year. Profit corporations and LLCs that file after May 1 pay a $400 late fee.',
-    'Florida Division of Corporations — File Annual Report',
-    'https://dos.fl.gov/sunbiz/manage-business/efile/annual-report/',
+    'Florida corporations and LLCs, domestic and foreign, file an annual report between January 1 and May 1 each year, starting the year after they are formed or authorized in Florida. A report paid after May 1 carries a $400 late charge. An entity that does not file cannot maintain a lawsuit in a Florida court until it does, and can be dissolved or have its authority cancelled.',
+    'Florida Statutes § 607.1622 — Annual report for department (Online Sunshine, Florida Legislature)',
+    'https://www.flsenate.gov/Laws/Statutes/2026/607.1622',
   ),
   report(
     'GA',
@@ -155,9 +154,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'HI',
     'Hawaii annual business report',
-    'Hawaii corporations and LLCs file an annual business report each year during the calendar quarter set by their registration date, by the last day of that quarter. Late reports incur a $10 fee for each year delinquent.',
-    'Hawaii DCCA Business Registration Division — Third Quarter Annual Business Reports Due',
-    'https://cca.hawaii.gov/breg/third-quarter-hawaii-annual-business-reports-due-2026/',
+    'Hawaii businesses registered with the Business Registration Division file an annual report each year, due by the last day of the calendar quarter in which they registered: March 31, June 30, September 30 or December 31. An entity registered in the same year a report would fall due does not file for that year. The report asks for no financial information.',
+    'Hawaii DCCA Business Registration Division — FAQs',
+    'https://cca.hawaii.gov/breg/faqs/',
   ),
   report(
     'ID',
@@ -228,9 +227,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'MA',
     'Massachusetts annual report',
-    'Massachusetts LLCs file an annual report on or before the anniversary of their formation filing; a foreign LLC, on or before the anniversary of its registration. Corporations file within two and a half months of their fiscal year end — around March 15 for a calendar year.',
-    'Mass.gov — Reminders Regarding your Annual Report',
-    'https://www.mass.gov/info-details/dcms-tip-sheet-volume-5-edition-13-reminders-regarding-your-annual-report',
+    'Massachusetts corporations, domestic and foreign, file an annual report that must reach the Corporations Division, not just be postmarked, within two and a half months of their fiscal year end; a late report costs more. LLCs file an annual report on or before the anniversary of their organization; a foreign LLC, on or before the anniversary of its registration.',
+    'Massachusetts Secretary of the Commonwealth, Corporations Division — Fee Schedule (updated 3/14/22)',
+    'https://www.sec.state.ma.us/divisions/corporations/download/Fee_Schedule.pdf',
   ),
   report(
     'MI',
@@ -278,7 +277,7 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'NV',
     'Nevada annual list and state business license',
-    'Nevada corporations and LLCs file an annual list of officers or managers and renew their state business license together, by the last day of the month in which they were formed. Filing late adds a penalty.',
+    'Nevada corporations and LLCs file an annual list of officers (or its equivalent) and renew their state business license together, by the last day of their anniversary month. A late business license renewal adds a $100 penalty. An entity that misses the due date goes into default, and an entity still in default after one year is revoked.',
     'Nevada Secretary of State — State Business License FAQ',
     'https://www.nvsos.gov/licensing/state-business-license/state-business-license-faq',
   ),
@@ -295,6 +294,14 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
     'New Jersey corporations and LLCs file an annual report every year by the last day of the month in which they were formed. The business is responsible even if no notice arrives, and not filing can lead to revocation.',
     'Business.NJ.gov — Taxes and Annual Report',
     'https://business.nj.gov/pages/filings-and-accounting',
+  ),
+  report(
+    'NM',
+    'New Mexico biennial corporate report',
+    'New Mexico corporations, domestic and foreign, file a first corporate report within 30 days of receiving their certificate of incorporation or authority, then a report every two years, on or before the fifteenth day of the fourth month after their taxable year ends. A late report incurs a $200 civil penalty, and a corporation that still has not filed 60 days after written notice has its certificate cancelled. A change of officers, directors or registered agent needs a supplemental report within 30 days.',
+    'NMSA 1978 § 53-5-2 — Corporate and supplemental reports (NMOneSource)',
+    'https://nmonesource.com/nmos/nmsa/en/item/4400/index.do',
+    'biennial',
   ),
   report(
     'NY',
@@ -363,9 +370,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'TN',
     'Tennessee annual report',
-    'Tennessee corporations and LLCs file an annual report by the first day of the fourth month after their fiscal year ends — April 1 for a calendar year. A business that does not file can be administratively dissolved.',
-    'Tennessee Secretary of State — Frequently Asked Questions for Businesses',
-    'https://sos.tn.gov/businesses/faqs',
+    'Tennessee corporations and LLCs file an annual report on or before the first day of the fourth month after their fiscal year closes. If no fiscal year close month was given at formation, the Secretary of State records December. A business that does not file its annual report on time can be administratively dissolved.',
+    'Tennessee Secretary of State — Charter (For-Profit Corporation) instructions, SS-4417',
+    'https://sos-tn-gov-files.tnsosfiles.com/forms/ss-4417_0.pdf',
   ),
   report(
     'TX',
@@ -531,14 +538,9 @@ export const US_FEDERAL_INDUSTRY: readonly CatalogueTemplate[] = [
  * docs/catalogue-seed-checklist.md.
  */
 export const UNVERIFIED_REGIONS: Readonly<Record<string, string>> = {
-  FL: 'every official page is behind a Cloudflare check',
-  ID: 'the statute site refuses automated and browser readers',
-  IL: 'ilsos.gov denies access; the corporation rule is unconfirmed',
-  IN: 'the INBiz page returns 403',
-  NV: 'the nvsos.gov FAQ is behind a bot wall',
-  MA: 'cited to a contractor tip sheet, not the Corporations Division',
-  HI: 'the rule is only in dated quarterly releases; the statute is behind a Cloudflare check',
-  TN: 'the annual report instructions return 403; the FAQ cited does not state the due date',
+  ID: 'no official page stating the due date could be read; the statute site refuses connections',
+  IL: 'ilsos.gov and ilga.gov refuse access; no part of the rule has been read',
+  IN: 'the only official page read is an IN.gov business guide of uncertain date; confirm on a current SOS page',
 };
 
 /**

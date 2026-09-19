@@ -60,7 +60,7 @@ describe('draft US catalogue', () => {
   });
 
   it('links every entry to an official source', () => {
-    // .gov, Colorado's state.co.us, and IFTA, Inc. — the body the member
+    // .gov, Colorado's state.co.us and Massachusetts' state.ma.us, and IFTA, Inc. — the body the member
     // jurisdictions created to administer the agreement. Two exact hosts
     // besides: the Arkansas Secretary of State's filing system, on the
     // state's ark.org portal, and the bucket where the UCR Plan publishes its
@@ -68,9 +68,15 @@ describe('draft US catalogue', () => {
     const official = (host: string) =>
       host.endsWith('.gov') ||
       host.endsWith('.state.co.us') ||
+      host.endsWith('.state.ma.us') ||
       host === 'www.iftach.org' ||
       host === 'sos-franchise.ark.org' ||
-      host === 'prod-public-ucr-docs-governing-documents.s3.amazonaws.com';
+      host === 'prod-public-ucr-docs-governing-documents.s3.amazonaws.com' ||
+      // NMOneSource is published by the New Mexico Compilation Commission, the
+      // official publisher of the NMSA; tnsosfiles.com hosts the Tennessee
+      // Secretary of State's own forms.
+      host === 'nmonesource.com' ||
+      host === 'sos-tn-gov-files.tnsosfiles.com';
     for (const entry of ALL) {
       const url = new URL(entry.sourceUrl);
       expect(url.protocol).toBe('https:');
@@ -86,12 +92,11 @@ describe('draft US catalogue', () => {
   });
 
   it('names the jurisdictions it deliberately leaves out', () => {
-    // Ohio requires no annual report; New Mexico's rule could not be
-    // confirmed from an official page. Adding either should be a decision,
-    // made with a source, that updates this test.
+    // Ohio requires no annual report. Adding it should be a decision, made
+    // with a source, that updates this test.
     const covered = new Set(US_STATE_REPORTS.map(entry => entry.region));
     const missing = STATE_CODES.filter(code => !covered.has(code));
-    expect(missing).toEqual(['NM', 'OH']);
+    expect(missing).toEqual(['OH']);
   });
 
   it('keeps descriptions short enough to read on a card', () => {
@@ -146,8 +151,8 @@ describe('selectReviewed', () => {
 
   it('refuses a state whose source nobody could read', () => {
     expect(() =>
-      selectReviewed(US_STATE_REPORTS, 'region', ['WA', 'FL']),
-    ).toThrow(/FL \(every official page/);
+      selectReviewed(US_STATE_REPORTS, 'region', ['WA', 'IL']),
+    ).toThrow(/IL \(ilsos.gov/);
     for (const region of Object.keys(UNVERIFIED_REGIONS)) {
       expect(US_STATE_REPORTS.some(entry => entry.region === region)).toBe(
         true,

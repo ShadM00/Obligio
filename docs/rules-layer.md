@@ -165,12 +165,10 @@ where a date quietly shifts. That is precisely what the review is for.
 
 Settle these before seeding the affected entries:
 
-- **New Mexico — excluded, because the sources conflict.** Statute text for
-  § 53-5-2 NMSA, as quoted in a 2018 bill, puts the biennial corporate report
-  on the fifteenth day of the *third* month after the tax year; filed reports
-  say April 15, the *fourth*. The 2018 bill may be what changed it, and the
-  Legislature's site refuses automated access. Read the current statute
-  before writing this entry.
+- **New Mexico — settled 19 Sep 2026.** The current § 53-5-2 NMSA, read on
+  NMOneSource, says the fifteenth day of the *fourth* month after the tax
+  year: the 2018 amendment changed it from the third. The entry now exists,
+  for corporations only.
 - **Ohio — excluded, correctly.** Ohio requires no annual report from
   corporations or LLCs (Secretary of State FAQ).
 - **Missouri — corporations only.** Whether Missouri LLCs file a periodic
