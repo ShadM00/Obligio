@@ -124,9 +124,32 @@ The owner approved the fixes. What changed:
   splitting it into two entries. Instead, it is now a single Business
   Privilege Tax return entry.
 
-Still to read in a browser before seeding: AK, FL, ID, IL, IN, NV, NH and UT
-(their sites block automated readers), MA (source is a contractor tip sheet),
-the FMCSA biennial-update page, and New Mexico, still absent. Virginia's
-§ 13.1-914 is marked "effective until January 1, 2027"; it sits in the
-Nonstock Corporation Act, but confirm nothing replacing it affects the entry.
-Hawaii's source is a dated quarterly release and will need replacing.
+Browser pass, later the same day (pages read as a visitor; bot checks were
+not bypassed):
+
+- **Alaska:** the page loads in a browser and supports every claim. Match.
+- **New Hampshire:** the cited page states none of the rules. Moved to the
+  Secretary of State's Business FAQs, which gives April 1, the late fee, and
+  administrative dissolution (domestic, after two years) or suspension
+  (foreign). Rewritten.
+- **Utah:** the statute behind the old entry, § 16-10a-1607, is repealed on
+  1 October 2026. S.B. 40 (2026) replaces it with § 16-1a-212: the report is
+  due by the last day of the anniversary month, can be filed 60 days early, and
+  a domestic entity more than 60 days late can be administratively dissolved
+  (§ 16-1a-602). Rewritten to the new rule and sourced to the enrolled bill.
+  Replace the source with the codified section once le.utah.gov publishes it.
+- **FMCSA biennial update:** the FAQ still refuses every reader, but
+  49 CFR 390.19T loads and states the month table, the odd/even-year rule and
+  deactivation. The entry now cites the regulation.
+- **Florida:** every official page sits behind a Cloudflare check. Search
+  excerpts of them agree with the entry (May 1, the $400 late fee) and add
+  administrative dissolution on the fourth Friday of September; not added,
+  because no page could be read.
+
+Still to read by a person before seeding: FL, ID, IL, IN, NV (sites refuse
+automated browsers), MA (source is a contractor tip sheet; the Corporations
+Division site and the General Laws site refused the browser), and New Mexico,
+still absent. Virginia's § 13.1-914 is marked "effective until January 1,
+2027"; it sits in the Nonstock Corporation Act, but confirm nothing replacing
+it affects the entry. Hawaii's source is a dated quarterly release and will
+need replacing.

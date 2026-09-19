@@ -285,9 +285,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'NH',
     'New Hampshire annual report',
-    'New Hampshire corporations and LLCs file an annual report by April 1 each year. Reports and fees received after April 1 incur a late fee.',
-    'New Hampshire Secretary of State — File an Annual Report',
-    'https://www.sos.nh.gov/corporations-0/file-annual-report',
+    'New Hampshire corporations and LLCs file an annual report by April 1 each year, starting the year after registration. A report filed after April 1 incurs a late fee, which cannot be waived, and the business falls out of good standing. A domestic business that fails to file for two consecutive years is administratively dissolved; a foreign one that misses the current year is administratively suspended.',
+    'New Hampshire Secretary of State — Business FAQs',
+    'https://www.sos.nh.gov/corporations-0/business-faqs',
   ),
   report(
     'NJ',
@@ -377,9 +377,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'UT',
     'Utah annual renewal',
-    'Utah corporations and LLCs renew with the Division of Corporations every year by the anniversary of their registration. The renewal window opens 60 days before, when a notice goes to the registered agent. A business that does not renew goes delinquent and then expires.',
-    'Utah Division of Corporations — Renewal Process',
-    'https://commerce.utah.gov/corporations/renewal-process/',
+    'From October 1, 2026, Utah corporations, LLCs and registered foreign entities file an annual report with the Division of Corporations by the last day of their anniversary month — the month they formed or registered — and may file up to 60 days early. The division can administratively dissolve a domestic entity whose report is more than 60 days late. The division may set a different period by rule.',
+    'Utah Legislature — S.B. 40 (2026), Utah Code § 16-1a-212 and § 16-1a-602',
+    'https://le.utah.gov/Session/2026/bills/enrolled/SB0040.pdf',
   ),
   report(
     'VT',
@@ -443,9 +443,9 @@ export const US_FEDERAL_INDUSTRY: readonly CatalogueTemplate[] = [
     title: 'USDOT biennial update (Form MCS-150)',
     description:
       'Every entity with a USDOT number updates its registration with FMCSA every two years, even if nothing has changed. The last digit of the USDOT number sets the month, and the update is due by the last day of that month; an odd next-to-last digit means odd-numbered years, an even one even years. Missing it deactivates the USDOT number and can bring civil penalties.',
-    sourceName: 'FMCSA — When am I required to file a biennial update?',
+    sourceName: '49 CFR 390.19T — Filing schedule',
     sourceUrl:
-      'https://www.fmcsa.dot.gov/faq/when-am-i-required-file-biennial-update',
+      'https://www.ecfr.gov/current/title-49/subtitle-B/chapter-III/subchapter-B/part-390/subpart-E/section-390.19T',
     recurrence: 'biennial',
   },
   {
