@@ -10,6 +10,9 @@ import android.view.Gravity
 import android.widget.*
 import com.google.android.gms.wearable.*
 import org.json.JSONObject
+import java.text.DateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.UUID
 
 class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient.OnMessageReceivedListener {
@@ -20,6 +23,27 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
   private var selected: String? = null
   private val handler = Handler(Looper.getMainLooper())
   private val mint = Color.rgb(140, 214, 180)
+
+  /**
+   * The watch speaks the language the owner chose in the phone app, which the
+   * phone sends with each snapshot. This English is only for a watch that has
+   * never synced.
+   */
+  private val fallback = mapOf(
+    "title" to "Obligio", "deadline" to "Deadline", "lastSynced" to "Last synced {time}",
+    "noObligations" to "No obligations yet. Add one on your phone.",
+    "signInOnPhone" to "Open Obligio on your phone and sign in to sync your obligations.",
+    "refresh" to "Refresh", "connecting" to "Connecting…", "markComplete" to "Mark complete",
+    "saving" to "Saving…", "confirmTitle" to "Complete this obligation?", "complete" to "Complete",
+    "cancel" to "Cancel", "ok" to "OK", "back" to "Back", "completedStatus" to "Completed",
+    "completedFeedback" to "Completed. Your phone will sync the next deadline if this obligation repeats.",
+    "openPhone" to "Open Obligio on your paired phone and keep it nearby.",
+    "phoneUnavailable" to "Phone unavailable. Open Obligio on your phone and try again.",
+    "noReply" to "No reply. Refresh before retrying to check whether the item completed.",
+  )
+  private fun s(key: String): String =
+    snapshot.optJSONObject("strings")?.optString(key)?.takeIf { it.isNotEmpty() } ?: fallback[key] ?: key
+  private fun snapshotLocale(): Locale = Locale.forLanguageTag(snapshot.optString("locale").ifEmpty { "en-US" })
   override fun onCreate(state: Bundle?) { super.onCreate(state); render() }
   override fun onResume() {
     super.onResume()
@@ -27,7 +51,7 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
     Wearable.getMessageClient(this).addListener(this)
     Wearable.getDataClient(this).dataItems.addOnSuccessListener { buffer ->
       try { for (item in buffer) accept(item) } finally { buffer.release() }
-    }.addOnFailureListener { notice("Pair this watch with your Android phone and open Obligio there.") }
+    }.addOnFailureListener { notice(s("openPhone")) }
   }
   override fun onPause() {
     Wearable.getDataClient(this).removeListener(this)
@@ -58,11 +82,11 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
           val item = items.getJSONObject(i)
           if (item.optString("id") == completing) item.put("status", "current")
         }
-        notice("Completed. Your phone will sync the next deadline if this obligation repeats.")
+        notice(s("completedFeedback"))
       } else if (value.has("snapshot")) {
         val fresh = try { JSONObject(value.getString("snapshot")) } catch (_: Exception) { JSONObject() }
         if (fresh.has("version")) snapshot = fresh
-        else notice("Open Obligio on your phone to sync.")
+        else notice(s("openPhone"))
       }
       completing = null
       render()
@@ -71,7 +95,7 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
   private fun send(action: String, itemId: String? = null) {
     if (pending != null) return
     val node = phoneNode
-    if (node == null) { notice("Open Obligio on your paired Android phone to sync first."); return }
+    if (node == null) { notice(s("openPhone")); return }
     val id = UUID.randomUUID().toString()
     pending = id
     completing = itemId
@@ -82,16 +106,16 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
     Wearable.getMessageClient(this).sendMessage(node, "/obligio/action", request.toString().toByteArray(Charsets.UTF_8))
       .addOnFailureListener {
         pending = null; completing = null; render()
-        notice("Phone unavailable. Open Obligio on your phone and try again.")
+        notice(s("phoneUnavailable"))
       }
     handler.postDelayed({
       if (pending == id) {
         pending = null; completing = null; render()
-        notice("No reply. Refresh before retrying to check whether the item completed.")
+        notice(s("noReply"))
       }
     }, 30000)
   }
-  private fun notice(text: String) { if (!isFinishing) AlertDialog.Builder(this).setTitle("Obligio").setMessage(text).setPositiveButton("OK", null).show() }
+  private fun notice(text: String) { if (!isFinishing) AlertDialog.Builder(this).setTitle(s("title")).setMessage(text).setPositiveButton(s("ok"), null).show() }
   private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
   private fun render() {
     val scroll = ScrollView(this)
@@ -112,31 +136,36 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
         isEnabled = enabled; setOnClickListener { click() }
       }, LinearLayout.LayoutParams(-1, -2))
     }
-    text("Obligio", 22f, mint)
+    text(s("title"), 22f, mint)
     val items = snapshot.optJSONArray("items")
     val detail = if (items != null) (0 until items.length()).map { items.getJSONObject(it) }.firstOrNull { it.optString("id") == selected } else null
     if (selected != null && detail != null) {
       text(detail.optString("title"), 18f)
-      text("Due ${detail.optString("dueDate")}")
-      if (detail.optString("recurrence").isNotEmpty()) text("Repeats ${detail.optString("recurrence")}")
-      if (detail.optString("status") == "current") text("✓ Completed", 16f, mint)
-      else button(if (pending != null) "Saving…" else "Mark complete", pending == null) {
-        AlertDialog.Builder(this).setTitle("Complete this obligation?")
-          .setPositiveButton("Complete") { _, _ -> send("complete", detail.getString("id")) }
-          .setNegativeButton("Cancel", null).show()
+      text(detail.optString("dueLabel").ifEmpty { "Due ${detail.optString("dueDate")}" })
+      if (detail.optString("recurrence").isNotEmpty()) {
+        text(detail.optString("repeatsLabel").ifEmpty { "Repeats ${detail.optString("recurrence")}" })
       }
-      button("Back") { selected = null; render() }
+      if (detail.optString("status") == "current") text("✓ ${s("completedStatus")}", 16f, mint)
+      else button(if (pending != null) s("saving") else s("markComplete"), pending == null) {
+        AlertDialog.Builder(this).setTitle(s("confirmTitle"))
+          .setPositiveButton(s("complete")) { _, _ -> send("complete", detail.getString("id")) }
+          .setNegativeButton(s("cancel"), null).show()
+      }
+      button(s("back")) { selected = null; render() }
     } else if (snapshot.optString("ownerId").isNotEmpty()) {
       text(snapshot.optString("businessName"), 16f)
-      text("Last synced ${java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT).format(java.util.Date(snapshot.optLong("updatedAt")))}", 12f, Color.LTGRAY)
-      if (snapshot.optInt("totalCount") > (items?.length() ?: 0)) text("Showing ${items?.length() ?: 0} of ${snapshot.optInt("totalCount")}. Open your phone for all obligations.", 12f)
-      if (items == null || items.length() == 0) text("No obligations yet. Add one on your phone.")
-      else (0 until items.length()).map { items.getJSONObject(it) }.sortedBy { it.optString("dueDate") }.forEach { item ->
-        val subtitle = if (item.optString("status") == "current") "✓ Completed" else item.optString("dueDate")
+      val time = DateFormat.getTimeInstance(DateFormat.SHORT, snapshotLocale()).format(Date(snapshot.optLong("updatedAt")))
+      text(s("lastSynced").replace("{time}", time), 12f, Color.LTGRAY)
+      snapshot.optString("truncationNote").takeIf { it.isNotEmpty() }?.let { text(it, 12f) }
+      if (items == null || items.length() == 0) text(s("noObligations"))
+      // The phone sends items already ordered: open deadlines by date, completed last.
+      else (0 until items.length()).map { items.getJSONObject(it) }.forEach { item ->
+        val subtitle = if (item.optString("status") == "current") "✓ ${s("completedStatus")}"
+          else item.optString("dueLabel").ifEmpty { item.optString("dueDate") }
         button("${item.optString("title")}\n$subtitle") { selected = item.optString("id"); render() }
       }
-    } else text("Open Obligio on your Android phone and sign in to sync your obligations.")
-    button(if (pending != null) "Connecting…" else "Refresh", pending == null) { send("refresh") }
+    } else text(s("signInOnPhone"))
+    button(if (pending != null) s("connecting") else s("refresh"), pending == null) { send("refresh") }
     scroll.addView(column)
     setContentView(scroll)
   }

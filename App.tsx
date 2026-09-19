@@ -113,8 +113,8 @@ export default function App() {
   const items: Requirement[] = usingSampleData ? SAMPLE_REQUIREMENTS : liveRequirements;
 
   const watchSnapshot = useMemo(
-    () => makeWatchSnapshot(session.status === 'signed-in' ? business : null, usingSampleData ? [] : items),
-    [business, items, session.status, usingSampleData],
+    () => makeWatchSnapshot(session.status === 'signed-in' ? business : null, usingSampleData ? [] : items, locale),
+    [business, items, session.status, usingSampleData, locale],
   );
   useEffect(() => {
     watchBridge?.updateSnapshot(JSON.stringify(watchSnapshot)).catch(() => undefined);
