@@ -68,9 +68,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'AL',
     'Alabama Business Privilege Tax return and annual report',
-    'Every corporation and LLC organized, registered or doing business in Alabama files a Business Privilege Tax return and annual report with the Department of Revenue, due on the same date as its federal income tax return — Form PPT for LLCs and S corporations, Form CPT for C corporations. It stays due every year until the entity is formally dissolved or withdrawn, active or not. Since 2024 a corporation files its Secretary of State annual report separately.',
+    "For tax years beginning after December 31, 2023, taxpayers whose calculated Alabama Business Privilege Tax is $100 or less are exempt from both the tax and the return-filing requirement. Check the Department of Revenue instructions for your entity's filing obligation and due date. Since January 2024, domestic and foreign for-profit and professional corporations file their annual report separately with the Secretary of State.",
     'Alabama Department of Revenue — Business Privilege Tax',
-    'https://www.revenue.alabama.gov/faqs/what-taxpayers-must-file-an-alabama-business-privilege-tax-return/',
+    'https://www.revenue.alabama.gov/notice-important-changes-to-the-2024-business-privilege-tax-filing-requirements/',
   ),
   report(
     'AK',
@@ -192,7 +192,7 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'KS',
     'Kansas information report',
-    'Since 2024, Kansas corporations and LLCs file an information report every two years instead of every year. A business formed in an even year files in even years; one formed in an odd year, in odd years. The month and day it is due did not change: the fifteenth day of the fourth month after the tax year ends — April 15 for a calendar year.',
+    "Kansas registered businesses file an information report every two years. Businesses formed in even-numbered years report in even years; those formed in odd-numbered years report in odd years. For-profit business reports are due April 15 and not-for-profit reports June 15. An entity that remains delinquent for three months after its due date may forfeit its registration.",
     'Kansas Secretary of State — Information Reports',
     'https://www.sos.ks.gov/businesses/information-reports.html',
     'biennial',
@@ -314,9 +314,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'ND',
     'North Dakota annual report',
-    'North Dakota LLCs file an annual report by November 15 each year, and business corporations by August 1. A business that does not file loses good standing and can be involuntarily terminated if the report stays overdue for 6 to 12 months.',
+    "North Dakota annual reports first fall due in the year after registration. Domestic business and professional corporations generally report by August 1; foreign business and professional corporations by May 15; LLCs and professional LLCs by November 15. Farm, ranch and authorized livestock corporations and LLCs have an April 15 deadline. Confirm the entity classification and deadline shown by the Secretary of State.",
     'North Dakota Secretary of State — LLC Annual Report',
-    'https://sos.nd.gov/business/business-services/business-structures/limited-liability-companies/limited-liability-company-llc/llc-annual-report',
+    'https://www.sos.nd.gov/business/business-services/maintain-registration',
   ),
   report(
     'OK',
@@ -349,7 +349,7 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'SC',
     'South Carolina corporation annual report',
-    'South Carolina corporations file an annual report (Schedule D) with the Department of Revenue alongside the corporate income tax return, by the same due date — April 15 for a calendar year. An LLC taxed as a corporation files it too; an LLC taxed as a partnership or disregarded entity does not.',
+    "South Carolina's corporate annual report is Schedule D of the applicable corporate income tax return. Filing obligations and due dates depend on the entity's tax classification and fiscal year; dormant corporations can still have filing obligations. LLCs not taxed as corporations and other specifically exempt entities are excluded. Check the Department of Revenue guidance for the applicable corporate return and license-fee requirements.",
     'South Carolina Department of Revenue — Corporate FAQs',
     'https://dor.sc.gov/business-income-taxes/corporate/corporate-faqs',
   ),
@@ -370,9 +370,9 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'TX',
     'Texas franchise tax and Public Information Report',
-    'Texas corporations and LLCs file an annual franchise tax report with the Comptroller by May 15, together with a Public Information Report or Ownership Information Report. Even an entity that owes no tax must file the information report, or it can forfeit its right to do business in Texas.',
+    "Texas annual franchise-tax obligations are generally due May 15, or the next business day when that falls on a weekend or holiday. For report years 2024 and later, entities at or below the applicable no-tax-due revenue threshold no longer file a No Tax Due Report, but generally still file a Public Information Report or Ownership Information Report. Special exemptions and entity-specific rules apply; confirm your report-year threshold, entity classification and required forms with the Comptroller.",
     'Texas Comptroller — Franchise Tax',
-    'https://comptroller.texas.gov/taxes/franchise/',
+    'https://comptroller.texas.gov/taxes/franchise/ntd-rpt-updates-2024.php',
   ),
   report(
     'UT',
@@ -405,7 +405,7 @@ export const US_STATE_REPORTS: readonly CatalogueTemplate[] = [
   report(
     'WV',
     'West Virginia annual report',
-    'West Virginia corporations and LLCs file an annual report between January 1 and June 30 each year, starting the year after registration. Filing after the July 1 deadline adds a late fee.',
+    "West Virginia annual reports are filed between January 1 and June 30, beginning in the year after registration. Failure to file by June 30 may result in penalties, administrative dissolution or revocation. Confirm the report obligation for your registered entity with the Secretary of State.",
     'West Virginia Secretary of State — Annual Reports',
     'https://sos.wv.gov/business/updates-and-changes/annual-reports',
   ),

@@ -12,6 +12,7 @@ import type * as account from "../account.js";
 import type * as auth from "../auth.js";
 import type * as businesses from "../businesses.js";
 import type * as catalogue from "../catalogue.js";
+import type * as catalogueInternational from "../catalogueInternational.js";
 import type * as catalogueUs from "../catalogueUs.js";
 import type * as dates from "../dates.js";
 import type * as documents from "../documents.js";
@@ -19,6 +20,7 @@ import type * as recurrence from "../recurrence.js";
 import type * as requirements from "../requirements.js";
 import type * as requirementsMutations from "../requirementsMutations.js";
 import type * as rules from "../rules.js";
+import type * as seedInternational from "../seedInternational.js";
 import type * as seedRules from "../seedRules.js";
 
 import type {
@@ -32,6 +34,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   businesses: typeof businesses;
   catalogue: typeof catalogue;
+  catalogueInternational: typeof catalogueInternational;
   catalogueUs: typeof catalogueUs;
   dates: typeof dates;
   documents: typeof documents;
@@ -39,6 +42,7 @@ declare const fullApi: ApiFromModules<{
   requirements: typeof requirements;
   requirementsMutations: typeof requirementsMutations;
   rules: typeof rules;
+  seedInternational: typeof seedInternational;
   seedRules: typeof seedRules;
 }>;
 

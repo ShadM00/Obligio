@@ -15,6 +15,8 @@ export const completeAndScheduleNext = mutation({
     const current = await ctx.db.get(args.requirementId);
     if (!current) return null;
     await requireBusinessOwner(ctx, current.businessId);
+    // A retried phone/watch completion must not create another next cycle.
+    if (current.status === 'current') return null;
     await ctx.db.patch(args.requirementId, {status: 'current'});
     if (!current.recurrence) return null;
     return ctx.db.insert('requirements', {

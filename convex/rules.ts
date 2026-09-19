@@ -1,7 +1,7 @@
 import {query} from './_generated/server';
 import {v} from 'convex/values';
 import {requireIdentity} from './auth';
-import {coveringScopes} from '../src/jurisdictions';
+import {coveringScopes, ruleMatchesBusiness} from '../src/jurisdictions';
 
 /**
  * Reference rules for a jurisdiction and industry. The catalogue is shared
@@ -9,7 +9,7 @@ import {coveringScopes} from '../src/jurisdictions';
  * session rather than on business ownership.
  */
 export const listTemplates = query({
-  args: {country: v.string(), region: v.string(), industry: v.string()},
+  args: {country: v.string(), region: v.string(), industry: v.string(), locality: v.optional(v.string()), entityType: v.optional(v.string())},
   returns: v.array(
     v.object({
       _id: v.id('rules'),
@@ -47,7 +47,7 @@ export const listTemplates = query({
       for (const row of rows) {
         // The scopes overlap whenever the business is itself country-wide or
         // general, so the same row can come back more than once.
-        if (seen.has(row._id)) {
+        if (seen.has(row._id) || !ruleMatchesBusiness(row, args)) {
           continue;
         }
         seen.add(row._id);

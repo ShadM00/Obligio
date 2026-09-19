@@ -1,3 +1,5 @@
+import {localizeTemplate} from '../src/catalogueTranslations';
+import {ruleMatchesBusiness} from '../src/jurisdictions';
 import {mutation} from './_generated/server';
 import {v} from 'convex/values';
 import {requireBusinessOwner} from './auth';
@@ -91,19 +93,22 @@ export const createFromTemplate = mutation({
   args: {
     businessId: v.id('businesses'),
     ruleId: v.id('rules'),
+    locale: v.optional(v.string()),
     dueDate: v.string(),
   },
   returns: v.id('requirements'),
   handler: async (ctx, args) => {
-    await requireBusinessOwner(ctx, args.businessId);
+    const {business} = await requireBusinessOwner(ctx, args.businessId);
     assertIsoDate(args.dueDate);
 
     const rule = await ctx.db.get(args.ruleId);
     if (!rule) throw new Error('Template not found');
+    if (!ruleMatchesBusiness(rule, business)) throw new Error('This template does not match your business profile.');
 
+    const localized = localizeTemplate(rule, args.locale);
     return ctx.db.insert('requirements', {
       businessId: args.businessId,
-      title: rule.title,
+      title: localized.title,
       category: rule.category,
       dueDate: args.dueDate,
       recurrence: rule.recurrence,

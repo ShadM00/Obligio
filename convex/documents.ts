@@ -11,11 +11,22 @@ export const generateUploadUrl = mutation({
 export const attach = mutation({
   args: {requirementId: v.id('requirements'), documentStorageId: v.id('_storage')},
   returns: v.null(),
-  handler: async (ctx, args) => { const row = await ctx.db.get(args.requirementId); if (!row) throw new Error('Requirement not found'); await requireBusinessOwner(ctx, row.businessId); await ctx.db.patch(args.requirementId, {documentStorageId: args.documentStorageId}); return null; },
+  handler: async (ctx, args) => {
+    const row = await ctx.db.get(args.requirementId);
+    if (!row) throw new Error('Requirement not found');
+    await requireBusinessOwner(ctx, row.businessId);
+    // A retry must not delete the file that remains attached. Replacements
+    // remove the previous evidence in the same transaction as the new link.
+    if (row.documentStorageId && row.documentStorageId !== args.documentStorageId) {
+      await ctx.storage.delete(row.documentStorageId);
+    }
+    await ctx.db.patch(args.requirementId, {documentStorageId: args.documentStorageId});
+    return null;
+  },
 });
 
 /**
- * A short-lived URL for a requirement's attached evidence.
+ * A storage URL for a requirement's attached evidence.
  *
  * The storage id never leaves the server; the client asks for a URL by
  * requirement and only gets one if it owns the business. Returns null when
