@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import base64
 import json
+import os
 import pathlib
 import subprocess
 import sys
@@ -27,7 +28,8 @@ FIXTURES = ROOT / "scripts" / "watch-fixtures"
 LOCALES = ["en-US", "es-US"]
 WATCHOS_BUNDLE = "com.obligio.app.watchkitapp"
 WEAR_ACTIVITY = "com.obligio.app/com.obligio.watch.MainActivity"
-SETTLE_S = 6
+# Seconds to let the app draw before capturing; raise it on a slow emulator.
+SETTLE_S = float(os.environ.get("WATCH_SETTLE_S", "6"))
 
 
 def fixture(locale: str) -> dict:
@@ -41,8 +43,6 @@ def run(*args: str, env: dict | None = None) -> None:
 
 
 def watchos(udid: str, dest: pathlib.Path) -> None:
-    import os
-
     for locale in LOCALES:
         data = fixture(locale)
         shots = [("1-list", None), ("2-detail", data["items"][0]["id"])]
@@ -69,7 +69,9 @@ def wearos(serial: str, dest: pathlib.Path) -> None:
             if open_id:
                 extras += ["--es", "open", open_id]
             run("adb", "-s", serial, "shell", "am", "force-stop", "com.obligio.app")
-            run("adb", "-s", serial, "shell", "am", "start", "-n", WEAR_ACTIVITY, *extras)
+            # -W returns once the activity has drawn, so a slow emulator is not
+            # captured on its launch splash.
+            run("adb", "-s", serial, "shell", "am", "start", "-W", "-n", WEAR_ACTIVITY, *extras)
             time.sleep(SETTLE_S)
             out = dest / f"{locale}-wear-{name}.png"
             png = subprocess.run(["adb", "-s", serial, "exec-out", "screencap", "-p"], check=True, capture_output=True).stdout
