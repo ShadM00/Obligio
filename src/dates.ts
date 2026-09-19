@@ -8,6 +8,7 @@ import type {Locale} from './i18n';
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const MONTH_NAMES = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const SPANISH_MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 const DISPLAY_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function isRealDate(year: number, month: number, day: number): boolean {
@@ -36,8 +37,11 @@ export function isIsoDate(value: string): boolean {
  * date, so callers can refuse to save rather than store something unusable.
  */
 export function parseToIsoDate(input: string, locale: Locale = 'en-US'): string | null {
-  const text = input.trim();
+  const text = input.trim().replace(/\s+de\s+/gi, ' ');
+  const monthNames = locale === 'es-US' ? SPANISH_MONTHS : MONTH_NAMES;
   if (!text) return null;
+  // Canadian French uses an unambiguous ISO entry format.
+  if (locale === 'fr-CA' && !ISO_DATE.test(text)) return null;
 
   if (ISO_DATE.test(text)) {
     const [year, month, day] = text.split('-').map(Number);
@@ -47,7 +51,7 @@ export function parseToIsoDate(input: string, locale: Locale = 'en-US'): string 
   // "Oct 14, 2026" / "October 14 2026"
   const monthFirst = text.match(/^([A-Za-z]{3,})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})$/);
   if (monthFirst) {
-    const month = MONTH_NAMES.indexOf(monthFirst[1].slice(0, 3).toLowerCase()) + 1;
+    const month = monthNames.indexOf(monthFirst[1].slice(0, 3).toLowerCase()) + 1;
     if (month > 0) return toIso(Number(monthFirst[3]), month, Number(monthFirst[2]));
     return null;
   }
@@ -55,7 +59,7 @@ export function parseToIsoDate(input: string, locale: Locale = 'en-US'): string 
   // "14 Oct 2026" / "14 October 2026"
   const dayFirst = text.match(/^(\d{1,2})(?:st|nd|rd|th)?\.?\s+([A-Za-z]{3,})\.?,?\s+(\d{4})$/);
   if (dayFirst) {
-    const month = MONTH_NAMES.indexOf(dayFirst[2].slice(0, 3).toLowerCase()) + 1;
+    const month = monthNames.indexOf(dayFirst[2].slice(0, 3).toLowerCase()) + 1;
     if (month > 0) return toIso(Number(dayFirst[3]), month, Number(dayFirst[1]));
     return null;
   }
@@ -76,6 +80,8 @@ export function parseToIsoDate(input: string, locale: Locale = 'en-US'): string 
 export function formatDisplayDate(iso: string, locale: Locale = 'en-US'): string {
   if (!isIsoDate(iso)) return iso;
   const [year, month, day] = iso.split('-').map(Number);
+  if (locale === 'fr-CA') return new Intl.DateTimeFormat('fr-CA', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'}).format(new Date(Date.UTC(year, month - 1, day)));
+  if (locale === 'es-US') return `${day} ${SPANISH_MONTHS[month - 1]} ${year}`;
   const monthName = DISPLAY_MONTHS[month - 1];
   return locale === 'en-GB' ? `${day} ${monthName} ${year}` : `${monthName} ${day}, ${year}`;
 }
@@ -91,9 +97,11 @@ export function statusForDueDate(iso: string, today = todayIso()): 'upcoming' | 
 }
 
 /** Month heading used to group the calendar, e.g. "October 2026". */
-export function monthLabel(iso: string): string {
+export function monthLabel(iso: string, locale: Locale = 'en-US'): string {
   if (!isIsoDate(iso)) return 'Undated';
   const [year, month] = iso.split('-').map(Number);
+  if (locale === 'es-US') return `${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][month - 1]} ${year}`;
+  if (locale === 'fr-CA') return new Intl.DateTimeFormat('fr-CA', {month: 'long', year: 'numeric', timeZone: 'UTC'}).format(new Date(Date.UTC(year, month - 1, 1)));
   const full = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   return `${full[month - 1]} ${year}`;
 }

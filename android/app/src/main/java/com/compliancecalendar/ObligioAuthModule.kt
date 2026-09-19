@@ -5,6 +5,7 @@ import android.content.Intent
 import com.clerk.api.Clerk
 import com.clerk.api.network.serialization.ClerkResult
 import com.clerk.api.session.GetTokenOptions
+import com.clerk.api.user.delete
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -87,6 +88,25 @@ class ObligioAuthModule(context: ReactApplicationContext) : ReactContextBaseJava
         }
       } catch (error: Exception) {
         promise.reject("CLERK_SIGN_OUT_ERROR", "Sign-out did not complete. Please try again.", error)
+      }
+    }
+  }
+
+  @ReactMethod fun deleteAccount(promise: Promise) {
+    scope.launch {
+      try {
+        awaitReady()
+        val user = Clerk.user
+        if (user == null) {
+          promise.reject("CLERK_DELETE_ERROR", "Sign in again to finish deleting your account.")
+          return@launch
+        }
+        when (user.delete()) {
+          is ClerkResult.Success -> promise.resolve(null)
+          is ClerkResult.Failure -> promise.reject("CLERK_DELETE_ERROR", "Account deletion did not complete. Please try again.")
+        }
+      } catch (error: Exception) {
+        promise.reject("CLERK_DELETE_ERROR", "Account deletion did not complete. Please try again.", error)
       }
     }
   }

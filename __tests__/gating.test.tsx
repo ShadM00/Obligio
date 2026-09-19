@@ -10,6 +10,7 @@
  */
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {locales} from '../src/i18n';
 import {FREE_REQUIREMENT_LIMIT} from '../src/entitlements';
@@ -94,6 +95,8 @@ jest.mock('react-native-purchases', () => ({
 }));
 
 import App from '../App';
+import {AddRequirement, Paywall, RequirementDetail} from '../src/modals';
+import {Home} from '../src/screens';
 
 function obligations(count: number) {
   return Array.from({length: count}, (_, i) => ({
@@ -110,7 +113,7 @@ function obligations(count: number) {
 async function render() {
   let tree!: ReactTestRenderer.ReactTestRenderer;
   await ReactTestRenderer.act(async () => {
-    tree = ReactTestRenderer.create(<App />);
+    tree = ReactTestRenderer.create(<SafeAreaProvider initialMetrics={{frame: {x: 0, y: 0, width: 360, height: 800}, insets: {top: 24, right: 0, bottom: 24, left: 0}}}><App /></SafeAreaProvider>);
   });
   return tree;
 }
@@ -125,6 +128,24 @@ describe('free requirement limit', () => {
   beforeEach(() => {
     mockIsPlus = false;
     mockRequirements = [];
+  });
+
+  it('replaces the detail sheet with editing and restores details on cancel', async () => {
+    mockRequirements = obligations(1);
+    const tree = await render();
+    await ReactTestRenderer.act(async () => {
+      tree.root.findByType(Home).props.onSelect(mockRequirements[0]);
+    });
+    await ReactTestRenderer.act(async () => {
+      tree.root.findByType(RequirementDetail).props.onEdit(mockRequirements[0]);
+    });
+    expect(tree.root.findAllByType(RequirementDetail)).toHaveLength(0);
+    expect(tree.root.findByType(AddRequirement).props.initial).toBe(mockRequirements[0]);
+    await ReactTestRenderer.act(async () => {
+      tree.root.findByType(AddRequirement).props.onClose();
+    });
+    expect(tree.root.findAllByType(AddRequirement)).toHaveLength(0);
+    expect(tree.root.findByType(RequirementDetail).props.item).toBe(mockRequirements[0]);
   });
 
   it('says nothing about the limit below it', async () => {
@@ -143,5 +164,24 @@ describe('free requirement limit', () => {
     mockIsPlus = true;
     mockRequirements = obligations(FREE_REQUIREMENT_LIMIT + 4);
     expect(texts(await render())).not.toContain(copy.freeLimitReached(FREE_REQUIREMENT_LIMIT));
+  });
+
+  it('shows active access instead of a purchase button to a Plus member', async () => {
+    let tree!: ReactTestRenderer.ReactTestRenderer;
+    await ReactTestRenderer.act(async () => {
+      tree = ReactTestRenderer.create(<Paywall copy={copy} isPlus onClose={jest.fn()} packagesOverride={[]} />);
+    });
+    expect(texts(tree)).toContain('Obligio Plus is active');
+    expect(texts(tree)).not.toContain('Subscribe');
+    expect(texts(tree)).not.toContain('Restore purchases');
+  });
+
+  it('retains the subscription and restore options for a free account', async () => {
+    let tree!: ReactTestRenderer.ReactTestRenderer;
+    await ReactTestRenderer.act(async () => {
+      tree = ReactTestRenderer.create(<Paywall copy={copy} isPlus={false} onClose={jest.fn()} packagesOverride={[]} />);
+    });
+    expect(texts(tree)).toContain('Subscribe');
+    expect(texts(tree)).toContain('Restore purchases');
   });
 });

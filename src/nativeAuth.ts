@@ -4,6 +4,7 @@ type NativeAuth = {
   getToken: (forceRefresh: boolean) => Promise<string | null>;
   signIn: () => Promise<void>;
   signOut: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
   isSignedIn: () => Promise<boolean>;
 };
 
@@ -22,4 +23,8 @@ export const authBridge = {
     await nativeAuth.signOut();
   },
   isSignedIn: async () => (nativeAuth ? nativeAuth.isSignedIn() : false),
+  deleteAccount: async () => {
+    if (!nativeAuth) throw new Error('Native Clerk authentication is not installed');
+    await nativeAuth.deleteAccount();
+  },
 };

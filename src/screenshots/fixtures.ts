@@ -18,6 +18,21 @@ export const screenshotRequirements: Requirement[] = [
   {_id: null, title: "Workers' compensation review", category: 'Insurance', dueDate: '2027-01-20', status: 'current', recurrence: 'annual', hasDocument: true},
 ];
 
+// Representative user-entered titles, not translations of the legal catalogue.
+const spanishTitles = [
+  'Seguro de responsabilidad civil',
+  'Pago estimado de impuestos federales',
+  'Renovación de licencia comercial',
+  'Certificación de manipulación de alimentos',
+  'Inspección de seguridad contra incendios',
+  'Revisión del seguro de accidentes laborales',
+];
+export const spanishScreenshotRequirements = screenshotRequirements.map((item, index) => ({
+  ...item,
+  title: spanishTitles[index],
+  category: ({Insurance: 'Seguros', Tax: 'Impuestos', Licenses: 'Licencias', Safety: 'Seguridad'} as Record<string, string>)[item.category] ?? item.category,
+}));
+
 export const screenshotTemplates: RuleTemplate[] = [
   {
     _id: 'rule_941' as RuleTemplate['_id'],

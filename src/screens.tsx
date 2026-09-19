@@ -7,7 +7,7 @@ import {formatDisplayDate, monthLabel} from './dates';
 import type {Locale} from './i18n';
 import {locales} from './i18n';
 import type {Requirement, RequirementStatus} from './types';
-import {COUNTRIES, INDUSTRIES, regionsFor, type Country} from './jurisdictions';
+import {COUNTRIES, INDUSTRIES, regionsFor, localitiesFor, entitiesFor, COVERAGE_NOTICE, type BusinessProfile, type Country} from './jurisdictions';
 
 type Copy = (typeof locales)[Locale];
 
@@ -51,10 +51,10 @@ export function SignIn({
   const unavailable = status === 'unavailable';
   return (
     <SafeAreaView style={s.safe}>
-      <View style={s.welcome}>
+      <ScrollView contentContainerStyle={s.welcome}>
         <View
           accessibilityRole="image"
-          accessibilityLabel="Obligio logo"
+          accessibilityLabel={copy.text('Obligio logo')}
           style={[s.logo, {backgroundColor: colors.brandDeep, borderRadius: radii.card}]}>
           <Text style={s.logoText}>✓</Text>
         </View>
@@ -80,7 +80,7 @@ export function SignIn({
 
         {error && <ErrorBanner message={error} onRetry={onSignIn} retryLabel={copy.tryAgain} />}
         <Text style={s.disclaimer}>{copy.disclaimer}</Text>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -122,21 +122,25 @@ function OptionChips({
 export function Onboarding({
   copy,
   onCreate,
+  initial,
   busy,
   error,
   onSignOut,
 }: {
   copy: Copy;
-  onCreate: (profile: {name: string; country: Country; region: string; industry: string}) => void;
+  onCreate: (profile: BusinessProfile) => void;
+  initial?: BusinessProfile;
   busy: boolean;
   error: string | null;
   onSignOut: () => void;
 }) {
   const {s} = useAppTheme();
-  const [name, setName] = useState('');
-  const [country, setCountry] = useState<Country>('US');
-  const [region, setRegion] = useState('');
-  const [industry, setIndustry] = useState('General');
+  const [name, setName] = useState(initial?.name ?? '');
+  const [country, setCountry] = useState<Country>(initial?.country ?? 'US');
+  const [region, setRegion] = useState(initial?.region ?? '');
+  const [industry, setIndustry] = useState(initial?.industry ?? 'General');
+  const [locality, setLocality] = useState(initial?.locality ?? '');
+  const [entityType, setEntityType] = useState(initial?.entityType ?? '');
 
   const canCreate = name.trim().length > 0 && !busy;
 
@@ -146,6 +150,7 @@ export function Onboarding({
         <Text style={s.eyebrow}>{copy.appName}</Text>
         <Text style={s.title}>{copy.onboardingTitle}</Text>
         <Text style={s.helperSpaced}>{copy.onboardingBody}</Text>
+        <Text style={s.helperSpaced}>{copy.text('Use your registered jurisdiction. Suggestions cover one location; add obligations for other operating locations manually.')}</Text>
 
         <TextInput
           style={s.input}
@@ -158,18 +163,24 @@ export function Onboarding({
         {COUNTRIES.length > 1 && (
           <OptionChips
             label={copy.country}
-            options={COUNTRIES}
+            options={COUNTRIES.map(option => ({...option, label: copy.text(option.label)}))}
             value={country}
             onChange={next => {
               setCountry(next as Country);
               // Regions are country specific; keep the pair coherent.
               setRegion('');
+              setLocality('');
+              setEntityType('');
             }}
           />
         )}
-        <OptionChips label={copy.region} options={regionsFor(country)} value={region} onChange={setRegion} />
-        <OptionChips label={copy.industry} options={INDUSTRIES} value={industry} onChange={setIndustry} />
+        <OptionChips label={copy.region} options={regionsFor(country).map(option => ({...option, label: copy.text(option.label)}))} value={region} onChange={next => {setRegion(next); setLocality('');}} />
+        <OptionChips label={copy.industry} options={INDUSTRIES.map(option => ({...option, label: copy.text(option.label)}))} value={industry} onChange={setIndustry} />
 
+        <OptionChips label={copy.text('Local authority')} options={localitiesFor(country, region).map(option => ({...option, label: copy.text(option.label)}))} value={locality} onChange={setLocality} />
+        <OptionChips label={copy.text('Entity type')} options={entitiesFor(country).map(option => ({...option, label: copy.text(option.label)}))} value={entityType} onChange={setEntityType} />
+        <Text style={s.helperSpaced}>{copy.text(COVERAGE_NOTICE)}</Text>
+        {initial && <Text style={s.helperSpaced}>{copy.text('Changing your profile updates suggestions only. Review existing obligations separately.')}</Text>}
         {error && <Text style={s.destructiveText}>{error}</Text>}
 
         <TouchableOpacity
@@ -177,12 +188,12 @@ export function Onboarding({
           accessibilityState={{disabled: !canCreate}}
           disabled={!canCreate}
           style={[s.primary, !canCreate && s.primaryDisabled]}
-          onPress={() => onCreate({name: name.trim(), country, region, industry})}>
-          <Text style={s.primaryText}>{busy ? copy.creatingBusiness : copy.createBusiness}</Text>
+          onPress={() => onCreate({name: name.trim(), country, region, industry, locality, entityType})}>
+          <Text style={s.primaryText}>{busy ? copy.creatingBusiness : initial ? copy.text('Save business profile') : copy.createBusiness}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity accessibilityRole="button" onPress={onSignOut}>
-          <Text style={s.centeredLink}>{copy.signOut}</Text>
+          <Text style={s.centeredLink}>{initial ? copy.close : copy.signOut}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -218,7 +229,7 @@ export function ItemRow({
   return (
     <TouchableOpacity
       accessibilityRole="button"
-      accessibilityLabel={`${item.title}, ${label}, due ${due}${item.hasDocument ? ', evidence attached' : ''}`}
+      accessibilityLabel={`${item.title}, ${label}, ${copy.text('Due')} ${due}${item.hasDocument ? `, ${copy.text('evidence attached')}` : ''}`}
       onPress={onPress}
       style={s.item}>
       <View accessibilityElementsHidden importantForAccessibility="no" style={[s.dot, dotStyle]} />
@@ -261,12 +272,12 @@ export function Home({
   return (
     <>
       <View style={s.scoreCard}>
-        <View>
+        <View style={s.scoreCopy}>
           <Text style={s.score}>{score}%</Text>
           <Text style={s.scoreLabel}>{copy.complianceHealth}</Text>
           <Text style={s.darkMuted}>{outstanding === 0 ? copy.scoreHintClear : copy.scoreHint(outstanding)}</Text>
         </View>
-        <View accessibilityLabel={`${score} percent compliance health`} style={s.ring}>
+        <View accessibilityLabel={`${score} ${copy.text('percent compliance health')}`} style={s.ring}>
           <Text style={s.ringText}>✓</Text>
         </View>
       </View>
@@ -322,7 +333,7 @@ export function CalendarScreen({
   const ordered = [...items].sort((a, b) => a.dueDate.localeCompare(b.dueDate));
   const months: {label: string; rows: Requirement[]}[] = [];
   for (const item of ordered) {
-    const label = monthLabel(item.dueDate);
+    const label = monthLabel(item.dueDate, locale);
     const bucket = months.find(m => m.label === label);
     if (bucket) bucket.rows.push(item);
     else months.push({label, rows: [item]});
@@ -340,7 +351,7 @@ export function CalendarScreen({
 
   return (
     <View>
-      <Text style={s.helper}>Upcoming deadlines are grouped by month.</Text>
+      <Text style={s.helper}>{copy.text('Upcoming deadlines are grouped by month.')}</Text>
       {months.map(month => (
         <View key={month.label}>
           <Text style={s.monthHeading}>{month.label.toUpperCase()}</Text>
@@ -380,7 +391,7 @@ export function DocumentsScreen({
 
       {withEvidence.length > 0 && (
         <>
-          <Text style={s.monthHeading}>ATTACHED</Text>
+          <Text style={s.monthHeading}>{copy.text('ATTACHED')}</Text>
           {withEvidence.map((item, index) => (
             <ItemRow key={item._id ?? `doc-${index}`} item={item} copy={copy} locale={locale} onPress={() => onSelect(item)} />
           ))}
@@ -389,7 +400,7 @@ export function DocumentsScreen({
 
       {withoutEvidence.length > 0 && (
         <>
-          <Text style={s.monthHeading}>MISSING EVIDENCE</Text>
+          <Text style={s.monthHeading}>{copy.text('MISSING EVIDENCE')}</Text>
           {withoutEvidence.map((item, index) => (
             <ItemRow key={item._id ?? `nodoc-${index}`} item={item} copy={copy} locale={locale} onPress={() => onSelect(item)} />
           ))}
@@ -409,8 +420,11 @@ export function DocumentsScreen({
 
 export function SettingsScreen({
   copy,
+  onEditProfile,
   onSubscribe,
   onEnableNotifications,
+  onTestReminder,
+  onCheckTestReminder,
   onOpenPrivacy,
   onOpenSupport,
   onDeleteAccount,
@@ -421,8 +435,11 @@ export function SettingsScreen({
   signOutLabel,
 }: {
   copy: Copy;
+  onEditProfile?: () => void;
   onSubscribe: () => void;
   onEnableNotifications: () => void;
+  onTestReminder?: () => void;
+  onCheckTestReminder?: () => void;
   onOpenPrivacy: () => void;
   onOpenSupport: () => void;
   onDeleteAccount: () => void;
@@ -434,19 +451,28 @@ export function SettingsScreen({
 }) {
   const {s} = useAppTheme();
   const rows: {label: string; hint?: string; onPress?: () => void; destructive?: boolean}[] = [
-    {label: copy.businessProfile},
+    {label: copy.businessProfile, onPress: onEditProfile},
     {
-      label: 'Notification preferences',
-      hint: notificationsEnabled ? 'Deadline reminders are on' : 'Tap to enable deadline reminders',
+      label: copy.text('Notification preferences'),
+      hint: notificationsEnabled ? copy.text('Deadline reminders are on') : copy.text('Tap to enable deadline reminders'),
       onPress: onEnableNotifications,
     },
     {
-      label: 'Subscription',
+      label: copy.text('Send test reminder'),
+      hint: copy.text('Check delivery in one minute'),
+      onPress: onTestReminder,
+    },
+    {
+      label: copy.text('Test reminder status'),
+      onPress: onCheckTestReminder,
+    },
+    {
+      label: copy.text('Subscription'),
       hint: isPlus
-        ? 'Obligio Plus is active'
+        ? copy.text('Obligio Plus is active')
         : billingAvailable
-          ? 'Free plan — tap to see Obligio Plus'
-          : 'Plans are not available in this build',
+          ? copy.text('Free plan — tap to see Obligio Plus')
+          : copy.text('Plans are not available in this build'),
       onPress: onSubscribe,
     },
     {label: copy.privacyAndData, onPress: onOpenPrivacy},

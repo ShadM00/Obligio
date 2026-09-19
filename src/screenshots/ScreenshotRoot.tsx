@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {LogBox, Pressable, StatusBar, Text, View} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
-import {AUTO_ADVANCE_MS} from './config';
-import {locales, type Locale} from '../i18n';
+import {AUTO_ADVANCE_MS, CAPTURE_FRAME, CAPTURE_LOCALE} from './config';
+import {locales} from '../i18n';
 import {useAppTheme} from '../theme';
 import {CalendarScreen, DocumentsScreen, Home, ScreenScroll} from '../screens';
 import {Paywall, TemplatePicker} from '../modals';
-import {screenshotPackages, screenshotRequirements, screenshotTemplates} from './fixtures';
+import {screenshotPackages, screenshotRequirements, screenshotTemplates, spanishScreenshotRequirements} from './fixtures';
 
 /**
  * A gallery of the real screens against fixture data, for capturing App Store
@@ -23,7 +23,8 @@ import {screenshotPackages, screenshotRequirements, screenshotTemplates} from '.
  * never reaches a release build, since index.js gates this behind `__DEV__`.
  */
 
-const LOCALE: Locale = 'en-US';
+const LOCALE = CAPTURE_LOCALE;
+const requirements = LOCALE === 'es-US' ? spanishScreenshotRequirements : screenshotRequirements;
 
 const FRAMES = ['dashboard', 'calendar', 'documents', 'suggested', 'paywall'] as const;
 type Frame = (typeof FRAMES)[number];
@@ -74,7 +75,7 @@ export default function ScreenshotRoot() {
   }, []);
 
   const copy = locales[LOCALE];
-  const frame: Frame = FRAMES[index % FRAMES.length];
+  const frame: Frame = FRAMES[(CAPTURE_FRAME ?? index) % FRAMES.length];
   const noop = () => undefined;
 
   return (
@@ -87,7 +88,7 @@ export default function ScreenshotRoot() {
               <Home
                 copy={copy}
                 locale={LOCALE}
-                items={screenshotRequirements}
+                items={requirements}
                 onAdd={noop}
                 onSelect={noop}
                 onBrowseTemplates={noop}
@@ -96,12 +97,12 @@ export default function ScreenshotRoot() {
           )}
           {frame === 'calendar' && (
             <Chrome title={copy.calendar}>
-              <CalendarScreen copy={copy} locale={LOCALE} items={screenshotRequirements} onSelect={noop} />
+              <CalendarScreen copy={copy} locale={LOCALE} items={requirements} onSelect={noop} />
             </Chrome>
           )}
           {frame === 'documents' && (
             <Chrome title={copy.documents}>
-              <DocumentsScreen copy={copy} locale={LOCALE} items={screenshotRequirements} onSelect={noop} />
+              <DocumentsScreen copy={copy} locale={LOCALE} items={requirements} onSelect={noop} />
             </Chrome>
           )}
           {frame === 'suggested' && (

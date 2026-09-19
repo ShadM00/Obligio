@@ -2,6 +2,7 @@ const mockNativeAuth = {
   getToken: jest.fn(),
   signIn: jest.fn(),
   signOut: jest.fn(),
+  deleteAccount: jest.fn(),
   isSignedIn: jest.fn(),
 };
 
@@ -41,4 +42,10 @@ test('waits for native sign-out completion', async () => {
   mockNativeAuth.signOut.mockResolvedValue(undefined);
   await expect(authBridge.signOut()).resolves.toBeUndefined();
   expect(mockNativeAuth.signOut).toHaveBeenCalledTimes(1);
+});
+
+test('propagates failed account deletion so it can be retried', async () => {
+  mockNativeAuth.deleteAccount.mockRejectedValue(new Error('Deletion failed'));
+  await expect(authBridge.deleteAccount()).rejects.toThrow('Deletion failed');
+  expect(mockNativeAuth.signOut).not.toHaveBeenCalled();
 });

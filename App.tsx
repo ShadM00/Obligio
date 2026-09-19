@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Alert, Linking, StatusBar, Text, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useConvex, useMutation, useQuery} from 'convex/react';
 import {pick, types} from '@react-native-documents/picker';
 
 import {api} from './convex/_generated/api';
 import {PRIVACY_URL, SUPPORT_URL} from './src/config';
-import {locales, type Locale} from './src/i18n';
+import {locales, localeOrder, localeLabels, initialLocale, saveLocale, type Locale} from './src/i18n';
 import {useAppTheme} from './src/theme';
 import {
   CalendarScreen,
@@ -25,12 +25,16 @@ import {
   notificationsAllowed,
   prepareNotifications,
   scheduleReminderForDueDate,
+  scheduleTestReminder,
+  testReminderIsDelivered,
 } from './src/notifications';
 import {uploadPickedDocument} from './src/documentUpload';
 import {isBillingAvailable} from './src/billing';
 import {canAddRequirement, FREE_REQUIREMENT_LIMIT, useSubscription} from './src/subscription';
 import {useSession} from './src/session';
-import type {Country} from './src/jurisdictions';
+import {authBridge} from './src/nativeAuth';
+import type {BusinessProfile} from './src/jurisdictions';
+import {makeWatchSnapshot, validateWatchAction, watchBridge} from './src/watch';
 
 type Tab = 'home' | 'calendar' | 'documents' | 'settings';
 
@@ -47,31 +51,37 @@ function message(error: unknown): string {
 
 export default function App() {
   const {s, isDark} = useAppTheme();
-  const [locale, setLocale] = useState<Locale>('en-US');
+  const insets = useSafeAreaInsets();
+  const [locale, setLocale] = useState<Locale>(initialLocale);
+  useEffect(() => { saveLocale(locale); }, [locale]);
   const [tab, setTab] = useState<Tab>('home');
   const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState<Requirement | null>(null);
   const [paywall, setPaywall] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const [profileBusy, setProfileBusy] = useState(false);
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [editing, setEditing] = useState<Requirement | null>(null);
   const [onboardingBusy, setOnboardingBusy] = useState(false);
   const [onboardingError, setOnboardingError] = useState<string | null>(null);
   const session = useSession();
-  const subscription = useSubscription();
   const [actionError, setActionError] = useState<string | null>(null);
   const [notificationsOn, setNotificationsOn] = useState(false);
 
   const copy = useMemo(() => locales[locale], [locale]);
 
   const business = useQuery(api.businesses.getByOwner, {});
+  const subscription = useSubscription(session.status === 'signed-in' ? business?.ownerId ?? null : null);
   const liveRequirements = useQuery(api.requirements.list, business ? {businessId: business._id} : 'skip');
 
   const templates = useQuery(
     api.rules.listTemplates,
-    business ? {country: business.country, region: business.region, industry: business.industry} : 'skip',
+    business ? {country: business.country, region: business.region, industry: business.industry, locality: business.locality, entityType: business.entityType} : 'skip',
   );
 
   const createBusiness = useMutation(api.businesses.create);
+  const updateProfile = useMutation(api.businesses.updateProfile);
   const createRequirement = useMutation(api.requirementsMutations.create);
   const updateStatus = useMutation(api.requirementsMutations.updateStatus);
   const removeRequirement = useMutation(api.requirementsMutations.remove);
@@ -102,6 +112,13 @@ export default function App() {
   const usingSampleData = previewOnly || !business || liveRequirements === undefined;
   const items: Requirement[] = usingSampleData ? SAMPLE_REQUIREMENTS : liveRequirements;
 
+  const watchSnapshot = useMemo(
+    () => makeWatchSnapshot(session.status === 'signed-in' ? business : null, usingSampleData ? [] : items),
+    [business, items, session.status, usingSampleData],
+  );
+  useEffect(() => {
+    watchBridge?.updateSnapshot(JSON.stringify(watchSnapshot)).catch(() => undefined);
+  }, [watchSnapshot]);
   // Keep the open detail sheet in step with the server after a mutation.
   useEffect(() => {
     if (!selected?._id) return;
@@ -110,7 +127,7 @@ export default function App() {
   }, [items, selected]);
 
   const createProfile = useCallback(
-    async (profile: {name: string; country: Country; region: string; industry: string}) => {
+    async (profile: BusinessProfile) => {
       setOnboardingBusy(true);
       setOnboardingError(null);
       try {
@@ -142,21 +159,21 @@ export default function App() {
   const adoptTemplate = useCallback(
     async (rule: RuleTemplate, dueDate: string) => {
       if (!business) throw new Error(copy.signInRequired);
-      const requirementId = await createFromTemplate({businessId: business._id, ruleId: rule._id, dueDate});
+      const requirementId = await createFromTemplate({businessId: business._id, ruleId: rule._id, dueDate, locale});
       try {
         await scheduleReminderForDueDate(rule.title, dueDate, requirementId);
       } catch {
         // Reminder scheduling is best-effort.
       }
     },
-    [business, copy.signInRequired, createFromTemplate],
+    [business, copy.signInRequired, createFromTemplate, locale],
   );
 
   const completeRequirement = useCallback(
     async (item: Requirement) => {
       if (!item._id) return;
       const nextId = await completeAndScheduleNext({requirementId: item._id});
-      await cancelReminderForRequirement(item._id);
+      await cancelReminderForRequirement(item._id).catch(() => undefined);
       if (nextId && item.recurrence) {
         const next = await convex.query(api.requirements.list, {businessId: business!._id});
         const created = next.find(row => row._id === nextId);
@@ -171,6 +188,38 @@ export default function App() {
     },
     [business, completeAndScheduleNext, convex],
   );
+
+  useEffect(() => {
+    const bridge = watchBridge;
+    if (!bridge) return;
+    let busy = false;
+    let disposed = false;
+    const timer = setInterval(async () => {
+      if (busy || disposed) return;
+      busy = true;
+      try {
+        const actions = await bridge.pendingActions();
+        for (const action of actions) {
+          let error = validateWatchAction(action, watchSnapshot);
+          const item = items.find(candidate => candidate._id === action.requirementId);
+          if (!error && item?.recurrence && !subscription.isPlus) error = copy.recurrenceIsPlus;
+          if (!error && item?._id) {
+            try {
+              await completeRequirement(item);
+            } catch (failure) {
+              error = message(failure);
+            }
+          }
+          await bridge.reply(action.requestId, error);
+        }
+      } catch {
+        // The watch displays its own timeout when the phone cannot respond.
+      } finally {
+        busy = false;
+      }
+    }, 1000);
+    return () => { disposed = true; clearInterval(timer); };
+  }, [watchSnapshot, items, completeRequirement, subscription.isPlus, copy.recurrenceIsPlus]);
 
   const saveEdit = useCallback(
     async (item: NewRequirement) => {
@@ -211,13 +260,26 @@ export default function App() {
       if (!item._id) return;
       await removeRequirement({requirementId: item._id});
       // Otherwise the reminder for a deleted obligation still fires.
-      await cancelReminderForRequirement(item._id);
+      await cancelReminderForRequirement(item._id).catch(() => undefined);
       setSelected(null);
     },
     [removeRequirement],
   );
 
   const deleteAccount = useCallback(async () => {
+    const finishDeletion = async () => {
+      try {
+        const removed = await deleteAccountData({});
+        await Promise.all(removed.requirementIds.map(cancelReminderForRequirement));
+        await authBridge.deleteAccount();
+        await session.signOut();
+      } catch {
+        Alert.alert(copy.deleteAccount, copy.deleteAccountFailed, [
+          {text: copy.deleteAccountCancel, style: 'cancel'},
+          {text: copy.tryAgain, onPress: finishDeletion},
+        ]);
+      }
+    };
     // Platform confirm rather than an in-app sheet: this is irreversible, and
     // the OS dialog is the affordance people already recognise as one they
     // should read. The body explains that a store subscription outlives the
@@ -227,18 +289,7 @@ export default function App() {
       {
         text: copy.deleteAccountConfirm,
         style: 'destructive',
-        onPress: async () => {
-          try {
-            const removed = await deleteAccountData({});
-            // Reminders live on the device, so the server cannot clear them.
-            // Without this a phone keeps buzzing about obligations that no
-            // longer exist anywhere.
-            await Promise.all(removed.requirementIds.map(cancelReminderForRequirement));
-            session.signOut();
-          } catch {
-            Alert.alert(copy.deleteAccount, copy.deleteAccountFailed);
-          }
-        },
+        onPress: finishDeletion,
       },
     ]);
   }, [copy, deleteAccountData, session]);
@@ -280,6 +331,26 @@ export default function App() {
     }
   }, []);
 
+  const sendTestReminder = useCallback(async () => {
+    setActionError(null);
+    try {
+      await scheduleTestReminder();
+      setNotificationsOn(true);
+      Alert.alert(copy.text('Test reminder scheduled'), copy.text('Lock your phone. A test reminder should arrive in about one minute.'));
+    } catch (error) {
+      setActionError(message(error));
+    }
+  }, [copy]);
+
+  const checkTestReminder = useCallback(async () => {
+    try {
+      const delivered = await testReminderIsDelivered();
+      Alert.alert(copy.text('Test reminder status'), copy.text(delivered
+        ? 'Delivered: your test reminder is in Notification Centre.'
+        : 'No test reminder is currently displayed. It may still be waiting or may have been dismissed.'));
+    } catch (error) { setActionError(message(error)); }
+  }, [copy]);
+
   const markStatusCurrent = useCallback(
     async (item: Requirement) => {
       if (!item._id) return;
@@ -299,6 +370,15 @@ export default function App() {
         error={session.error}
       />
     );
+  }
+
+  if (profileOpen && business) {
+    return <Onboarding copy={copy} initial={{name: business.name, country: business.country as BusinessProfile['country'], region: business.region, industry: business.industry, locality: business.locality, entityType: business.entityType}} busy={profileBusy} error={profileError} onSignOut={() => setProfileOpen(false)} onCreate={async profile => {
+      setProfileBusy(true); setProfileError(null);
+      try {await updateProfile({businessId: business._id, ...profile}); setProfileOpen(false);}
+      catch (err) {setProfileError(err instanceof Error ? err.message : String(err));}
+      finally {setProfileBusy(false);}
+    }} />;
   }
 
   // Signed in, but the owner has not created their business yet. `undefined`
@@ -333,8 +413,8 @@ export default function App() {
             accessibilityRole="button"
             accessibilityLabel="Change language"
             style={s.locale}
-            onPress={() => setLocale(locale === 'en-US' ? 'en-GB' : 'en-US')}>
-            <Text style={s.localeText}>{locale === 'en-US' ? 'US' : 'UK'}</Text>
+            onPress={() => setLocale(localeOrder[(localeOrder.indexOf(locale) + 1) % localeOrder.length])}>
+            <Text style={s.localeText}>{localeLabels[locale]}</Text>
           </TouchableOpacity>
         </View>
 
@@ -369,9 +449,12 @@ export default function App() {
         {tab === 'documents' && <DocumentsScreen copy={copy} locale={locale} items={items} onSelect={setSelected} />}
         {tab === 'settings' && (
           <SettingsScreen
+            onEditProfile={business ? () => {setProfileError(null); setProfileOpen(true);} : undefined}
             copy={copy}
             onSubscribe={() => setPaywall(true)}
             onEnableNotifications={enableNotifications}
+            onTestReminder={sendTestReminder}
+            onCheckTestReminder={checkTestReminder}
             onOpenPrivacy={() => openExternal(PRIVACY_URL)}
             onOpenSupport={() => openExternal(SUPPORT_URL)}
             onDeleteAccount={deleteAccount}
@@ -403,7 +486,7 @@ export default function App() {
           allowRecurrence={subscription.isPlus}
         />
       )}
-      {selected && (
+      {selected && !editing && (
         <RequirementDetail
           item={selected}
           copy={copy}
@@ -425,9 +508,9 @@ export default function App() {
           onAdopt={adoptTemplate}
         />
       )}
-      {paywall && <Paywall copy={copy} onClose={() => setPaywall(false)} />}
+      {paywall && <Paywall copy={copy} isPlus={subscription.isPlus} onClose={() => setPaywall(false)} />}
 
-      <View style={s.nav}>
+      <View style={[s.nav, {bottom: insets.bottom}]}>
         {TABS.map(({key, icon, label}) => (
           <TouchableOpacity
             accessibilityRole="button"
@@ -437,7 +520,7 @@ export default function App() {
             style={s.navItem}
             onPress={() => setTab(key)}>
             <Text style={[s.navIcon, tab === key && s.navActive]}>{icon}</Text>
-            <Text style={[s.navLabel, tab === key && s.navActive]}>{label}</Text>
+            <Text style={[s.navLabel, tab === key && s.navActive]}>{copy.text(label)}</Text>
           </TouchableOpacity>
         ))}
       </View>

@@ -20,10 +20,12 @@ function createStyles(c: Palette) {
       justifyContent: 'space-between',
       alignItems: 'center',
     },
+    scoreCopy: {flex: 1, minWidth: 0, paddingRight: 12},
     score: {fontSize: 50, fontWeight: '800', color: c.onBrandDeep},
     scoreLabel: {fontSize: 16, fontWeight: '700', color: c.onBrandDeepMuted, marginTop: -4},
     darkMuted: {fontSize: 13, color: c.onBrandDeepMuted, marginTop: 4},
     ring: {
+      flexShrink: 0,
       width: 70,
       height: 70,
       borderRadius: 35,
@@ -72,7 +74,7 @@ function createStyles(c: Palette) {
     errorBox: {backgroundColor: c.dangerSurface, borderRadius: 12, padding: 14, marginTop: 14},
     errorText: {fontSize: 14, color: c.danger, fontWeight: '600'},
 
-    welcome: {flex: 1, padding: 28, justifyContent: 'center'},
+    welcome: {flexGrow: 1, width: '100%', maxWidth: 560, alignSelf: 'center', padding: 28, justifyContent: 'center'},
     logo: {width: 72, height: 72, alignItems: 'center', justifyContent: 'center', marginBottom: 28},
     // onBrandDeep, not brandSoft: the tile behind this is brandDeep, and
     // brandSoft is a *surface* in the dark palette (#1F4A3A) that lands within
@@ -119,8 +121,9 @@ function createStyles(c: Palette) {
       alignItems: 'center',
     },
 
-    modal: {position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, backgroundColor: 'rgba(6,12,10,.6)', justifyContent: 'flex-end'},
-    modalCard: {backgroundColor: c.background, borderTopLeftRadius: 26, borderTopRightRadius: 26, padding: 24, paddingBottom: 34},
+    modal: {position: 'absolute', zIndex: 10, left: 0, right: 0, top: 0, bottom: 0, backgroundColor: 'rgba(6,12,10,.6)', justifyContent: 'flex-end'},
+    modalCard: {maxHeight: '100%', flexShrink: 1, backgroundColor: c.background, borderTopLeftRadius: 26, borderTopRightRadius: 26, padding: 24, paddingBottom: 34},
+    modalScroll: {flexShrink: 1},
     input: {backgroundColor: c.surfaceAlt, borderRadius: 12, padding: 16, fontSize: 16, marginBottom: 12, color: c.textPrimary},
     inputInvalid: {borderWidth: 1, borderColor: c.danger},
     detailTitle: {fontSize: 28, fontWeight: '800', color: c.textPrimary, marginTop: 14, marginBottom: 10},

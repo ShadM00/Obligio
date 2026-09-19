@@ -1,6 +1,11 @@
-export type Locale = 'en-US' | 'en-GB';
+import {NativeModules} from 'react-native';
+import {spanish} from './spanish';
+import {french} from './french';
+
+export type Locale = 'en-US' | 'en-GB' | 'es-US' | 'fr-CA';
 
 type Copy = {
+  text: (source: string) => string;
   appName: string;
   dashboard: string;
   calendar: string;
@@ -82,6 +87,7 @@ type Copy = {
 };
 
 const shared = {
+  text: (source: string): string => source,
   appName: 'OBLIGIO',
   dashboard: 'Your dashboard',
   calendar: 'Calendar',
@@ -100,7 +106,7 @@ const shared = {
     'This permanently deletes your businesses, every obligation you track and every document you have attached. It cannot be undone.\n\nA paid subscription is billed by the App Store or Google Play, so cancel it there as well — deleting your account here does not stop it.',
   deleteAccountConfirm: 'Delete everything',
   deleteAccountCancel: 'Cancel',
-  deleteAccountFailed: 'Your account could not be deleted. Nothing has been removed — please try again.',
+  deleteAccountFailed: 'Account deletion did not finish. Some app data may already have been removed. Retry to finish deleting your sign-in account, or contact privacy@obligio.com.',
   complianceHealth: 'Compliance health',
   scoreHintClear: 'Everything is on track.',
   scoreHint: (outstanding: number) =>
@@ -167,6 +173,8 @@ const shared = {
 } as const;
 
 export const locales: Record<Locale, Copy> = {
+  'es-US': spanish,
+  'fr-CA': french,
   'en-US': {
     ...shared,
     organisational: 'organizational',
@@ -187,5 +195,26 @@ export const locales: Record<Locale, Copy> = {
 
 /** Placeholder shown in the due-date field, in the locale's own date order. */
 export function dueDatePlaceholder(locale: Locale): string {
+  if (locale === 'fr-CA') return 'Échéance (AAAA-MM-JJ)';
+  if (locale === 'es-US') return 'Fecha límite (p. ej., 14 oct 2026)';
   return locale === 'en-GB' ? 'Due date (e.g. 14 Oct 2026)' : 'Due date (e.g. Oct 14, 2026)';
+}
+
+export const localeOrder: Locale[] = ['en-US', 'en-GB', 'es-US', 'fr-CA'];
+export const localeLabels: Record<Locale, string> = {'en-US': 'US', 'en-GB': 'UK', 'es-US': 'ES', 'fr-CA': 'FR'};
+let currentLocale: Locale | undefined;
+export function initialLocale(): Locale {
+  if (currentLocale) return currentLocale;
+  const saved = NativeModules.ObligioPreferences?.locale;
+  if (localeOrder.includes(saved)) return saved;
+  try {
+    const device = Intl.DateTimeFormat().resolvedOptions().locale;
+    if (device.startsWith('fr')) return 'fr-CA';
+    return device.startsWith('es') ? 'es-US' : device === 'en-GB' ? 'en-GB' : 'en-US';
+  } catch { return 'en-US'; }
+}
+
+export function saveLocale(locale: Locale): void {
+  currentLocale = locale;
+  NativeModules.ObligioPreferences?.setLocale(locale);
 }

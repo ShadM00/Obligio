@@ -4,6 +4,7 @@
 
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 jest.mock('convex/react', () => ({
   ConvexProvider: ({children}: {children: React.ReactNode}) => children,
@@ -51,7 +52,7 @@ jest.mock('react-native-purchases', () => ({
 import App from '../App';
 
 test('renders correctly', async () => {
-  await ReactTestRenderer.act(() => {
-    ReactTestRenderer.create(<App />);
+  await ReactTestRenderer.act(async () => {
+    ReactTestRenderer.create(<SafeAreaProvider initialMetrics={{frame: {x: 0, y: 0, width: 360, height: 800}, insets: {top: 24, right: 0, bottom: 24, left: 0}}}><App /></SafeAreaProvider>);
   });
 });

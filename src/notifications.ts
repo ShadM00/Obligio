@@ -1,3 +1,4 @@
+import {initialLocale} from './i18n';
 import notifee, {AndroidImportance, AuthorizationStatus, TriggerType} from '@notifee/react-native';
 import {isIsoDate} from './dates';
 
@@ -16,7 +17,7 @@ export async function prepareNotifications(): Promise<string> {
   await notifee.requestPermission();
   return notifee.createChannel({
     id: CHANNEL_ID,
-    name: 'Obligation deadlines',
+    name: initialLocale() === 'fr-CA' ? 'Échéances des obligations' : initialLocale() === 'es-US' ? 'Plazos de obligaciones' : 'Obligation deadlines',
     importance: AndroidImportance.DEFAULT,
   });
 }
@@ -73,7 +74,7 @@ export async function scheduleDeadlineReminder(
 ): Promise<string> {
   const channelId = await prepareNotifications();
   return notifee.createTriggerNotification(
-    {id, title: 'Obligio reminder', body: title, android: {channelId}},
+    {id, title: initialLocale() === 'fr-CA' ? 'Rappel Obligio' : initialLocale() === 'es-US' ? 'Recordatorio de Obligio' : 'Obligio reminder', body: title, android: {channelId, pressAction: {id: 'default'}}},
     {type: TriggerType.TIMESTAMP, timestamp, alarmManager: {allowWhileIdle: true}},
   );
 }
@@ -120,4 +121,23 @@ export async function cancelReminderForRequirement(requirementId: string): Promi
 
 export async function cancelDeadlineReminder(notificationId: string) {
   return notifee.cancelNotification(notificationId);
+}
+
+/** Uses the same delivery path as deadline reminders without changing a deadline. */
+export async function scheduleTestReminder(): Promise<void> {
+  await prepareNotifications();
+  if (!(await notificationsAllowed())) {
+    throw new Error('Allow notifications in your phone settings before sending a test reminder.');
+  }
+  await scheduleDeadlineReminder(
+    initialLocale() === 'fr-CA' ? 'Votre rappel de test est arrivé. Les rappels d’échéance utilisent ce même canal.' : initialLocale() === 'es-US' ? 'Llegó tu recordatorio de prueba. Los recordatorios de plazos usan este mismo canal.' : 'Your test reminder arrived. Deadline reminders use this same notification channel.',
+    Date.now() + 60_000,
+    'obligio-test-reminder',
+  );
+}
+
+/** Checks the OS's delivered notifications, not the pending trigger queue. */
+export async function testReminderIsDelivered(): Promise<boolean> {
+  const displayed = await notifee.getDisplayedNotifications();
+  return displayed.some(item => item.notification.id === 'obligio-test-reminder');
 }

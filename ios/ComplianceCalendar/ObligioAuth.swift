@@ -52,4 +52,19 @@ final class ObligioAuth: NSObject {
     let callbacks = PromiseBox(resolve, reject)
     Task { @MainActor in callbacks.resolve(Clerk.shared.session != nil) }
   }
+
+  @objc(deleteAccount:rejecter:)
+  func deleteAccount(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+    let callbacks = PromiseBox(resolve, reject)
+    Task { @MainActor in
+      do {
+        guard let user = Clerk.shared.user else {
+          callbacks.reject("CLERK_DELETE_ERROR", "Sign in again to finish deleting your account.", nil)
+          return
+        }
+        try await user.delete()
+        callbacks.resolve(nil)
+      } catch { callbacks.reject("CLERK_DELETE_ERROR", error.localizedDescription, error) }
+    }
+  }
 }

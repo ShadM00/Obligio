@@ -1,5 +1,6 @@
 const mockNotifee = {
   requestPermission: jest.fn(),
+  getDisplayedNotifications: jest.fn(async (): Promise<{notification: {id: string}}[]> => []),
   createChannel: jest.fn(async () => 'obligio-deadlines'),
   createTriggerNotification: jest.fn(async () => 'scheduled'),
   cancelNotification: jest.fn(async () => undefined),
@@ -21,6 +22,8 @@ const {
   reminderIdFor,
   reminderTimestampsFor,
   scheduleReminderForDueDate,
+  scheduleTestReminder,
+  testReminderIsDelivered,
 }: typeof import('../src/notifications') = require('../src/notifications');
 
 beforeEach(() => jest.clearAllMocks());
@@ -76,4 +79,34 @@ test('does not schedule when notifications are not permitted', async () => {
 test('cancelling a requirement reminder swallows an absent notification', async () => {
   mockNotifee.cancelNotification.mockRejectedValueOnce(new Error('not found'));
   await expect(cancelReminderForRequirement('req4')).resolves.toBeUndefined();
+});
+
+
+test('test reminder uses the deadline channel and launches the app when tapped', async () => {
+  const before = Date.now();
+  await scheduleTestReminder();
+  expect(mockNotifee.createTriggerNotification).toHaveBeenCalledWith(
+    expect.objectContaining({
+      id: 'obligio-test-reminder',
+      android: {channelId: 'obligio-deadlines', pressAction: {id: 'default'}},
+    }),
+    expect.objectContaining({timestamp: expect.any(Number)}),
+  );
+  const trigger = (mockNotifee.createTriggerNotification.mock.calls as unknown as [unknown, {timestamp: number}][])[0][1];
+  expect(trigger.timestamp).toBeGreaterThanOrEqual(before + 60_000);
+  expect(trigger.timestamp).toBeLessThanOrEqual(Date.now() + 60_000);
+});
+
+test('test reminder reports denied permission instead of claiming it was scheduled', async () => {
+  mockNotifee.getNotificationSettings.mockResolvedValueOnce({authorizationStatus: 0});
+  await expect(scheduleTestReminder()).rejects.toThrow('Allow notifications');
+  expect(mockNotifee.createTriggerNotification).not.toHaveBeenCalled();
+});
+
+
+test('delivery status reads delivered notifications rather than treating scheduled as delivered', async () => {
+  await scheduleTestReminder();
+  await expect(testReminderIsDelivered()).resolves.toBe(false);
+  mockNotifee.getDisplayedNotifications.mockResolvedValueOnce([{notification: {id: 'obligio-test-reminder'}}]);
+  await expect(testReminderIsDelivered()).resolves.toBe(true);
 });

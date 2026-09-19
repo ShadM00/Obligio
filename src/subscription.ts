@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import Purchases from 'react-native-purchases';
-import {ENTITLEMENT_ID, configureBilling, isBillingAvailable} from './billing';
+import {ENTITLEMENT_ID, identifyBillingUser, isBillingAvailable, isBillingUserReady} from './billing';
 
 export {FREE_REQUIREMENT_LIMIT, canAddRequirement, canAttachEvidence, canUseRecurrence} from './entitlements';
 
@@ -23,39 +23,63 @@ export type Subscription = {
  * The check is client-side. It decides what the UI offers, not what the
  * backend permits — see docs/release.md.
  */
-export function useSubscription(): Subscription {
+export function useSubscription(userId: string | null = null): Subscription {
   const gated = isBillingAvailable();
-  const [isPlus, setIsPlus] = useState(!gated);
-  const [loading, setLoading] = useState(gated);
+  const [result, setResult] = useState<{userId: string | null; isPlus: boolean; loading: boolean}>({
+    userId: null, isPlus: !gated, loading: gated,
+  });
 
   const refresh = useCallback(async () => {
-    if (!gated) return;
+    if (!gated || !userId) return;
     try {
-      if (!configureBilling()) return;
+      await identifyBillingUser(userId);
       const info = await Purchases.getCustomerInfo();
-      setIsPlus(Boolean(info.entitlements.active[ENTITLEMENT_ID]));
+      if (isBillingUserReady(userId)) {
+        setResult({userId, isPlus: Boolean(info.entitlements.active[ENTITLEMENT_ID]), loading: false});
+      }
     } catch {
-      // A failed lookup must not silently unlock Plus.
-      setIsPlus(false);
-    } finally {
-      setLoading(false);
+      setResult({userId, isPlus: false, loading: false});
     }
-  }, [gated]);
+  }, [gated, userId]);
 
   useEffect(() => {
-    refresh();
-    if (!gated) return undefined;
-    // Purchases, restores, renewals and expiries all arrive here, so the UI
-    // unlocks the moment a purchase completes without a manual refresh.
-    const listener = (info: Parameters<Parameters<typeof Purchases.addCustomerInfoUpdateListener>[0]>[0]) => {
-      setIsPlus(Boolean(info.entitlements.active[ENTITLEMENT_ID]));
-      setLoading(false);
+    if (!gated) return;
+    let active = true;
+    setResult({userId, isPlus: false, loading: Boolean(userId)});
+    const sync = async () => {
+      try {
+        await identifyBillingUser(userId);
+        if (!active || !userId) return;
+        const info = await Purchases.getCustomerInfo();
+        if (active && isBillingUserReady(userId)) {
+          setResult({userId, isPlus: Boolean(info.entitlements.active[ENTITLEMENT_ID]), loading: false});
+        }
+      } catch {
+        if (active) setResult({userId, isPlus: false, loading: false});
+      }
+    };
+    sync();
+    const listener = () => {
+      // Re-read after identity transitions; an SDK event may describe the previous user.
+      if (!active || !userId || !isBillingUserReady(userId)) return;
+      Purchases.getCustomerInfo().then(info => {
+        if (active && isBillingUserReady(userId)) {
+          setResult({userId, isPlus: Boolean(info.entitlements.active[ENTITLEMENT_ID]), loading: false});
+        }
+      }).catch(() => {
+        if (active) setResult({userId, isPlus: false, loading: false});
+      });
     };
     Purchases.addCustomerInfoUpdateListener(listener);
     return () => {
+      active = false;
       Purchases.removeCustomerInfoUpdateListener(listener);
     };
-  }, [gated, refresh]);
+  }, [gated, userId]);
 
-  return {isPlus, loading, refresh};
+  return {
+    isPlus: !gated || Boolean(userId && result.userId === userId && result.isPlus),
+    loading: gated && Boolean(userId) && (result.userId !== userId || result.loading),
+    refresh,
+  };
 }

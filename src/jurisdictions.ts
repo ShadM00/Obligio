@@ -7,23 +7,11 @@
  * changing a value orphans every rule row that used it.
  */
 
-export type Country = 'US' | 'GB';
-
-/**
- * The countries onboarding offers.
- *
- * Only jurisdictions whose catalogue has actually been written and reviewed
- * belong here: every entry is a promise that "Suggested for you" has something
- * to say, and a compliance app that guesses is worse than one that stays
- * quiet. GB keeps its type, regions and copy below so adding it back is the
- * one-line change it should be -- what it lacks is a reviewed catalogue, not
- * code.
- *
- * The en-US/en-GB toggle is separate and unaffected: it drives date format and
- * spelling, not which rules apply.
- */
+export type Country = 'US' | 'GB' | 'AU' | 'CA';
+export type BusinessProfile = {name: string; country: Country; region: string; industry: string; locality?: string; entityType?: string};
 export const COUNTRIES: {value: Country; label: string}[] = [
-  {value: 'US', label: 'United States'},
+  {value: 'US', label: 'United States'}, {value: 'GB', label: 'United Kingdom'},
+  {value: 'AU', label: 'Australia'}, {value: 'CA', label: 'Canada'},
 ];
 
 /** Empty region means "applies country-wide". */
@@ -57,7 +45,7 @@ export const GB_REGIONS: {value: string; label: string}[] = [
 ];
 
 export function regionsFor(country: Country) {
-  return country === 'GB' ? GB_REGIONS : US_STATES;
+  return country === 'GB' ? GB_REGIONS : country === 'AU' ? AU_REGIONS : country === 'CA' ? CA_REGIONS : US_STATES;
 }
 
 /** Industry value for rules that apply whatever trade a business is in. */
@@ -105,3 +93,34 @@ export function coveringScopes(region: string, industry: string): {region: strin
       index === scopes.findIndex(other => other.region === scope.region && other.industry === scope.industry),
   );
 }
+
+export const AU_REGIONS = [
+  {value: '', label: 'Region not selected'},
+  ...Object.entries({ACT: 'Australian Capital Territory', NSW: 'New South Wales', NT: 'Northern Territory', QLD: 'Queensland', SA: 'South Australia', TAS: 'Tasmania', VIC: 'Victoria', WA: 'Western Australia'}).map(([value, label]) => ({value, label})),
+];
+export const CA_REGIONS = [
+  {value: '', label: 'Region not selected'},
+  ...Object.entries({AB: 'Alberta', BC: 'British Columbia', MB: 'Manitoba', NB: 'New Brunswick', NL: 'Newfoundland and Labrador', NS: 'Nova Scotia', NT: 'Northwest Territories', NU: 'Nunavut', ON: 'Ontario', PE: 'Prince Edward Island', QC: 'Quebec', SK: 'Saskatchewan', YT: 'Yukon'}).map(([value, label]) => ({value, label})),
+];
+export function localitiesFor(country: string, region: string) {
+  return [{value: '', label: 'Other / not selected'}, ...(country === 'AU' && region === 'WA' ? [{value: 'city-of-perth', label: 'City of Perth (council area)'}] : [])];
+}
+export function entitiesFor(country: string) {
+  return [{value: '', label: 'Not sure / other'}, {value: 'soleTrader', label: 'Sole trader'}, {value: 'company', label: country === 'CA' ? 'Provincially incorporated corporation' : 'Company / corporation'}, ...(country === 'CA' ? [{value: 'federalCorporation', label: 'Federally incorporated business corporation'}] : [])];
+}
+export function validateProfile(profile: BusinessProfile) {
+  if (!profile.name.trim() || profile.name.length > 150) throw new Error('Enter a business name (1–150 characters).');
+  if (!COUNTRIES.some(c => c.value === profile.country)) throw new Error('Unsupported business country.');
+  if (!regionsFor(profile.country).some(r => r.value === profile.region)) throw new Error('Region does not belong to this country.');
+  if (!INDUSTRIES.some(i => i.value === profile.industry)) throw new Error('Unsupported industry.');
+  if (!localitiesFor(profile.country, profile.region).some(l => l.value === (profile.locality ?? ''))) throw new Error('Local authority does not belong to this region.');
+  if (!entitiesFor(profile.country).some(e => e.value === (profile.entityType ?? ''))) throw new Error('Unsupported entity type.');
+}
+export type RuleScope = {country: string; region: string; industry: string; locality?: string; entityTypes?: string[]};
+export function ruleMatchesBusiness(rule: RuleScope, profile: {country: string; region: string; industry: string; locality?: string; entityType?: string}) {
+  return rule.country === profile.country && (!rule.region || rule.region === profile.region) &&
+    (rule.industry === 'General' || rule.industry === profile.industry) &&
+    (!rule.locality || rule.locality === profile.locality) &&
+    (!rule.entityTypes?.length || (!!profile.entityType && rule.entityTypes.includes(profile.entityType)));
+}
+export const COVERAGE_NOTICE = 'Selected requirements only. Local rules and eligibility may be missing. An empty list does not mean no obligations apply. Confirm requirements with the authority; add other obligations manually.';

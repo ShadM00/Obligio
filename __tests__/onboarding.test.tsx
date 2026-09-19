@@ -32,11 +32,9 @@ function label(text: string): string {
 }
 
 describe('Onboarding', () => {
-  it('hides the country chooser while only one country is offered', () => {
-    // A single chip the owner cannot change is noise. If a second reviewed
-    // catalogue is ever added, the chooser has to come back.
-    expect(COUNTRIES).toHaveLength(1);
-    expect(textsIn(renderOnboarding())).not.toContain(label(copy.country));
+  it('offers independently selectable business countries', () => {
+    expect(COUNTRIES.map(c => c.value)).toEqual(['US', 'GB', 'AU', 'CA']);
+    expect(textsIn(renderOnboarding())).toContain(label(copy.country));
   });
 
   it('still asks for region and industry, which decide what is suggested', () => {

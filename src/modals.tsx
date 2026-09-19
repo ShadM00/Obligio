@@ -1,5 +1,9 @@
+import {localizeTemplate} from './catalogueTranslations';
+import {Linking} from 'react-native';
+import {COVERAGE_NOTICE} from './jurisdictions';
 import React, {useCallback, useEffect, useState} from 'react';
 import {ActivityIndicator, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import type {PurchasesPackage} from 'react-native-purchases';
 import {useAppTheme} from './theme';
 
@@ -19,7 +23,7 @@ function message(error: unknown): string {
 function ModalShell({title, copy, onClose, children}: {title: string; copy: Copy; onClose: () => void; children: React.ReactNode}) {
   const {s} = useAppTheme();
   return (
-    <View style={s.modal}>
+    <SafeAreaView style={s.modal} edges={['top', 'bottom']}>
       <View style={s.modalCard}>
         <View style={s.sectionHeader}>
           <Text style={s.sectionTitle}>{title}</Text>
@@ -27,9 +31,9 @@ function ModalShell({title, copy, onClose, children}: {title: string; copy: Copy
             <Text style={s.link}>{copy.close}</Text>
           </TouchableOpacity>
         </View>
-        <ScrollView keyboardShouldPersistTaps="handled">{children}</ScrollView>
+        <ScrollView style={s.modalScroll} keyboardShouldPersistTaps="handled">{children}</ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -53,7 +57,7 @@ export function AddRequirement({
   const {s} = useAppTheme();
   const [title, setTitle] = useState(initial?.title ?? '');
   const [category, setCategory] = useState(initial?.category ?? '');
-  const [due, setDue] = useState(initial ? formatDisplayDate(initial.dueDate, locale) : '');
+  const [due, setDue] = useState(initial ? (locale === 'fr-CA' ? initial.dueDate : formatDisplayDate(initial.dueDate, locale)) : '');
   const [recurrence, setRecurrence] = useState<string | undefined>(initial?.recurrence);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -82,8 +86,8 @@ export function AddRequirement({
 
   return (
     <ModalShell title={initial ? copy.editRequirement : copy.addRequirement} copy={copy} onClose={onClose}>
-      <TextInput style={s.input} placeholder="Requirement name" value={title} onChangeText={setTitle} />
-      <TextInput style={s.input} placeholder="Category (e.g. Insurance)" value={category} onChangeText={setCategory} />
+      <TextInput style={s.input} placeholder={copy.text('Requirement name')} value={title} onChangeText={setTitle} />
+      <TextInput style={s.input} placeholder={copy.text('Category (e.g. Insurance)')} value={category} onChangeText={setCategory} />
       <TextInput
         style={[s.input, dueTouched && !dueIso && s.inputInvalid]}
         placeholder={dueDatePlaceholder(locale)}
@@ -92,12 +96,12 @@ export function AddRequirement({
         autoCapitalize="none"
       />
       {dueTouched && !dueIso ? (
-        <Text style={s.errorText}>Enter a real date, for example {dueDatePlaceholder(locale).split('e.g. ')[1]}</Text>
+        <Text style={s.errorText}>{copy.text('Enter a real date, for example')} {locale === 'fr-CA' ? '2026-10-14' : formatDisplayDate('2026-10-14', locale)}</Text>
       ) : (
-        dueIso && <Text style={s.muted}>Saving as {formatDisplayDate(dueIso, locale)}</Text>
+        dueIso && <Text style={s.muted}>{copy.text('Saving as')} {formatDisplayDate(dueIso, locale)}</Text>
       )}
 
-      <Text style={s.monthHeading}>REPEATS</Text>
+      <Text style={s.monthHeading}>{copy.text('REPEATS')}</Text>
       <View style={s.row}>
         {RECURRENCE_OPTIONS.map(option => {
           const selected = recurrence === option.value;
@@ -111,7 +115,7 @@ export function AddRequirement({
               key={option.label}
               style={[s.chip, selected && s.chipSelected, locked && s.primaryDisabled]}
               onPress={() => setRecurrence(option.value)}>
-              <Text style={s.chipText}>{option.label}</Text>
+              <Text style={s.chipText}>{copy.text(option.label)}</Text>
             </TouchableOpacity>
           );
         })}
@@ -172,26 +176,26 @@ export function RequirementDetail({
 
   const statusCopy =
     item.status === 'overdue'
-      ? 'Overdue — action required'
+      ? copy.text('Overdue — action required')
       : item.status === 'upcoming'
-        ? 'Upcoming — prepare to renew'
-        : 'Current — monitored';
+        ? copy.text('Upcoming — prepare to renew')
+        : copy.text('Current — monitored');
 
   return (
-    <ModalShell title="Obligation detail" copy={copy} onClose={onClose}>
+    <ModalShell title={copy.text('Obligation detail')} copy={copy} onClose={onClose}>
       <Text style={s.detailTitle}>{item.title}</Text>
       <Text style={[s.detailStatus, item.status === 'current' && s.detailStatusCurrent]}>{statusCopy}</Text>
       <Text style={s.helper}>
-        {item.category} · Due {formatDisplayDate(item.dueDate, locale)}
-        {item.recurrence ? ` · Repeats ${repeatsLabel(item.recurrence)}` : ''}
+        {item.category} · {copy.text('Due')} {formatDisplayDate(item.dueDate, locale)}
+        {item.recurrence ? ` · ${copy.text('Repeats')} ${copy.text(repeatsLabel(item.recurrence))}` : ''}
       </Text>
 
       <View style={s.detailCard}>
-        <Text style={s.itemTitle}>Next action</Text>
+        <Text style={s.itemTitle}>{copy.text('Next action')}</Text>
         <Text style={s.helper}>
           {item.status === 'overdue'
-            ? 'Resolve this obligation and attach current evidence.'
-            : 'Review the requirement before its due date.'}
+            ? copy.text('Resolve this obligation and attach current evidence.')
+            : copy.text('Review the requirement before its due date.')}
         </Text>
       </View>
 
@@ -255,9 +259,11 @@ export function Paywall({
   copy,
   onClose,
   packagesOverride,
+  isPlus = false,
 }: {
   copy: Copy;
   onClose: () => void;
+  isPlus?: boolean;
   /** Bypasses the RevenueCat fetch. Used for screenshots and tests. */
   packagesOverride?: PurchasesPackage[];
 }) {
@@ -268,6 +274,8 @@ export function Paywall({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [activated, setActivated] = useState(false);
+  const hasAccess = isPlus || activated;
 
   const load = useCallback(async () => {
     if (packagesOverride) return;
@@ -288,13 +296,15 @@ export function Paywall({
   }, [load]);
 
   const buy = async () => {
+    if (hasAccess) return;
     const pkg = packages?.find(p => p.identifier === selected);
     if (!pkg) return;
     setBusy(true);
     setError(null);
     try {
       const info = await purchasePackage(pkg);
-      setNotice(hasPlusEntitlement(info) ? 'Obligio Plus is active.' : 'Purchase completed, but the entitlement is not active yet.');
+      setActivated(hasPlusEntitlement(info));
+      setNotice(hasPlusEntitlement(info) ? copy.text('Obligio Plus is active.') : copy.text('Purchase completed, but the entitlement is not active yet.'));
     } catch (err) {
       setError(message(err));
     } finally {
@@ -307,7 +317,8 @@ export function Paywall({
     setError(null);
     try {
       const info = await restorePurchases();
-      setNotice(hasPlusEntitlement(info) ? 'Obligio Plus restored.' : 'No previous purchase was found for this account.');
+      setActivated(hasPlusEntitlement(info));
+      setNotice(hasPlusEntitlement(info) ? copy.text('Obligio Plus restored.') : copy.text('No previous purchase was found for this account.'));
     } catch (err) {
       setError(message(err));
     } finally {
@@ -317,22 +328,33 @@ export function Paywall({
 
   return (
     <ModalShell title="Obligio Plus" copy={copy} onClose={onClose}>
-      <Text style={s.detailTitle}>Stay ahead with Obligio Plus</Text>
+      {hasAccess ? (
+        <>
+          <Text style={s.detailTitle}>{copy.text('Obligio Plus is active')}</Text>
+          <Text style={s.helper}>{copy.text('Your account has access to unlimited obligations, document evidence and recurring reminders.')}</Text>
+          <Text style={s.helper}>{copy.text('If you have a paid subscription, manage or cancel it in your App Store or Google Play account. Deleting your Obligio account does not cancel a store subscription.')}</Text>
+          <TouchableOpacity accessibilityRole="button" style={s.primary} onPress={onClose}>
+            <Text style={s.primaryText}>{copy.text('Done')}</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <>
+      <Text style={s.detailTitle}>{copy.text('Stay ahead with Obligio Plus')}</Text>
       <Text style={s.helper}>
-        Unlimited obligations, document evidence, recurring reminders, and a clearer compliance view for your business.
+        {copy.text('Unlimited obligations, document evidence, recurring reminders, and a clearer compliance view for your business.')}
       </Text>
 
       {!available ? (
         <View style={s.banner}>
           <Text style={s.bannerText}>
-            Plans are not available in this build. A RevenueCat store key has not been configured yet.
+            {copy.text('Plans are not available in this build. A RevenueCat store key has not been configured yet.')}
           </Text>
         </View>
       ) : packages === null ? (
         <ActivityIndicator color={colors.brand} />
       ) : packages.length === 0 ? (
         <View style={s.banner}>
-          <Text style={s.bannerText}>No subscription plans are currently offered for your store account.</Text>
+          <Text style={s.bannerText}>{copy.text('No subscription plans are currently offered for your store account.')}</Text>
         </View>
       ) : (
         packages.map(pkg => {
@@ -363,7 +385,7 @@ export function Paywall({
         disabled={!selected || busy}
         style={[s.primary, (!selected || busy) && s.primaryDisabled]}
         onPress={buy}>
-        <Text style={s.primaryText}>{busy ? 'Working…' : 'Subscribe'}</Text>
+        <Text style={s.primaryText}>{busy ? copy.text('Working…') : copy.text('Subscribe')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -372,12 +394,14 @@ export function Paywall({
         disabled={!available || busy}
         style={[s.secondary, (!available || busy) && s.primaryDisabled]}
         onPress={restore}>
-        <Text style={s.secondaryText}>Restore purchases</Text>
+        <Text style={s.secondaryText}>{copy.text('Restore purchases')}</Text>
       </TouchableOpacity>
 
       <Text style={s.disclaimer}>
-        Subscriptions are managed through the App Store or Google Play. See Privacy and Terms.
+        {copy.text('Subscriptions are managed through the App Store or Google Play. See Privacy and Terms.')}
       </Text>
+        </>
+      )}
     </ModalShell>
   );
 }
@@ -422,6 +446,7 @@ export function TemplatePicker({
   return (
     <ModalShell title={copy.suggestedTitle} copy={copy} onClose={onClose}>
       <Text style={s.helper}>{copy.suggestedBody}</Text>
+      <Text style={s.helper}>{copy.text(COVERAGE_NOTICE)}</Text>
 
       {templates === undefined ? (
         <ActivityIndicator color={colors.brand} />
@@ -430,20 +455,22 @@ export function TemplatePicker({
           <Text style={s.bannerText}>{copy.suggestedEmpty}</Text>
         </View>
       ) : (
-        templates.map(rule => {
+        templates.map(sourceRule => {
+          const rule = localizeTemplate(sourceRule, locale);
           const open = openId === rule._id;
           return (
             <View key={rule._id} style={s.detailCard}>
               <Text style={s.itemTitle}>{rule.title}</Text>
               <Text style={s.muted}>
                 {rule.category}
-                {rule.recurrence ? ` · Repeats ${repeatsLabel(rule.recurrence)}` : ' · One-off'}
+                {rule.recurrence ? ` · ${copy.text('Repeats')} ${copy.text(repeatsLabel(rule.recurrence))}` : ` · ${copy.text('One-off')}`}
               </Text>
               <Text style={s.helper}>{rule.description}</Text>
               <Text style={s.sourceLine}>
                 {copy.source}: {rule.sourceName} · {copy.reviewed} {formatDisplayDate(rule.reviewedAt, locale)}
               </Text>
 
+              <TouchableOpacity accessibilityRole="link" onPress={async () => {try {await Linking.openURL(rule.sourceUrl);} catch {setError(copy.text('Could not open the official source.'));}}}><Text style={s.centeredLink}>{copy.text('Open official source')}</Text></TouchableOpacity>
               {open ? (
                 <>
                   <TextInput

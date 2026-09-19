@@ -19,3 +19,8 @@ export const SCREENSHOT_MODE = false;
  * a re-capture reproducible after a copy change.
  */
 export const AUTO_ADVANCE_MS = 0;
+
+/** Pin a frame during capture so slow startup cannot shift its caption. */
+export const CAPTURE_FRAME: number | null = null;
+
+export const CAPTURE_LOCALE: import('../i18n').Locale = 'en-US';

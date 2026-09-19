@@ -43,3 +43,13 @@ describe('demo data', () => {
     expect(value).not.toMatch(BRITISH);
   });
 });
+
+describe('Spanish interface', () => {
+  it('translates account, subscription and deletion flows without changing the brand', () => {
+    const es = locales['es-US'];
+    expect(es.appName).toBe('OBLIGIO');
+    expect(es.deleteAccountBody).toContain('no cancela la suscripción');
+    expect(es.text('Restore purchases')).toBe('Restaurar compras');
+    expect(es.suggestedBody).toContain('inglés');
+  });
+});

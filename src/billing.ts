@@ -19,6 +19,38 @@ export const ENTITLEMENT_ID = 'obligio_plus';
  */
 
 let configured = false;
+let billingUserId: string | null = null;
+let requestedUserId: string | null = null;
+let identityTransition: Promise<void> = Promise.resolve();
+
+/** Serialize SDK identity changes so a late login cannot restore an old account. */
+export function identifyBillingUser(userId: string | null): Promise<void> {
+  requestedUserId = userId;
+  billingUserId = null;
+  identityTransition = identityTransition.catch(() => {}).then(async () => {
+    if (!configureBilling()) return;
+    if (userId) {
+      await Purchases.logIn(userId);
+    } else if (!(await Purchases.isAnonymous())) {
+      await Purchases.logOut();
+    }
+    billingUserId = userId;
+  });
+  return identityTransition;
+}
+
+export function isBillingUserReady(userId: string): boolean {
+  return requestedUserId === userId && billingUserId === userId;
+}
+
+async function requireIdentifiedUser() {
+  requireConfigured();
+  await identityTransition;
+  if (!requestedUserId || billingUserId !== requestedUserId) {
+    throw new Error('Sign in and wait for your subscription to load before continuing.');
+  }
+}
+
 
 /** True once a store key is present and the SDK has been configured. */
 export function isBillingAvailable(): boolean {
@@ -58,13 +90,13 @@ export async function getOfferings() {
 }
 
 export async function purchasePackage(pkg: PurchasesPackage): Promise<CustomerInfo> {
-  requireConfigured();
+  await requireIdentifiedUser();
   const result = await Purchases.purchasePackage(pkg);
   return result.customerInfo;
 }
 
 export async function restorePurchases(): Promise<CustomerInfo> {
-  requireConfigured();
+  await requireIdentifiedUser();
   return Purchases.restorePurchases();
 }
 
