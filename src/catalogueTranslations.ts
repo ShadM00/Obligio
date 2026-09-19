@@ -126,22 +126,6 @@ const translations: Translation[] = [
       'Para una sociedad constituida en Columbia Británica: presenta el informe anual dentro de los dos meses del aniversario de constitución. Esta entrada corresponde a sociedades provinciales, no a sociedades federales que solo operen allí. Confirma tu inscripción y el plazo antes de añadirla.',
     ],
   },
-  // The live wording until the City of Perth row is synced to the one above;
-  // remove once it has been.
-  {
-    en: [
-      'City of Perth food premises approval',
-      'For premises inside the City of Perth council area, confirm whether registration or notification is required. New fit-outs and structural changes may need building or planning approval before food-business approval. Contact the City about the form appropriate to your premises. This does not cover the whole Perth metropolitan area.',
-    ],
-    fr: [
-      'Autorisation des locaux alimentaires dans la ville de Perth',
-      'Pour les locaux situés dans le territoire municipal de la ville de Perth, vérifiez si un enregistrement ou une notification est requis. Les nouveaux aménagements et modifications structurelles peuvent nécessiter une autorisation de construction ou d’urbanisme avant l’autorisation alimentaire. Demandez à la Ville le formulaire adapté. Cette exigence ne couvre pas toute l’agglomération de Perth.',
-    ],
-    es: [
-      'Aprobación de locales alimentarios en la ciudad de Perth',
-      'Para locales dentro del municipio de la ciudad de Perth, confirma si se exige registro o notificación. Las instalaciones nuevas y los cambios estructurales pueden requerir permisos de construcción o urbanismo antes de la aprobación alimentaria. Consulta al ayuntamiento sobre el formulario adecuado. Esto no cubre toda el área metropolitana de Perth.',
-    ],
-  },
 ];
 const byEnglish = new Map(
   translations.map(entry => [entry.en[0] + '\n' + entry.en[1], entry]),

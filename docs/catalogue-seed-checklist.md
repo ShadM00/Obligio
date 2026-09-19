@@ -28,12 +28,13 @@ npx convex run --prod seedRules:seedUnitedStatesIndustries '{"reviewedAt":"YYYY-
 
 ## International (already live, nothing to seed)
 
-All ten rows are in production. Seven carry `reviewedAt` 2026-09-18 and three
-carry 2026-09-19 (Companies House, Corporations Canada, Scotland food).
+All ten rows are in production. Six carry `reviewedAt` 2026-09-18 and four
+carry 2026-09-19 (Companies House, Corporations Canada, Scotland food, City of
+Perth).
 
 | Row | Status | Open item |
 |---|---|---|
-| AU-WA City of Perth food business registration | FIX (live), in code | Retitled and rewritten in code, listing fee types without amounts. The row carries `replaces: 'City of Perth food premises approval'`, so `seedInternational:seed` renames the live row in place; nothing to delete. Not yet deployed or synced. |
+| AU-WA City of Perth food business registration | SEED (live) | Retitled and rewritten, listing fee types without amounts; synced in place on 19 Sep (same row, `reviewedAt` 2026-09-19). |
 | CA-BC BC company annual report | SEED (live) | The URL is legacy Corporate Online help and may move to bcregistry.gov.bc.ca. Watch it. |
 | AU ASIC company annual review | SEED (live) | Optional: the Form 485 notice within 7 days for a negative solvency resolution. |
 | The other seven | SEED (live) | None. |
@@ -76,5 +77,4 @@ requests, and the FAQ cited doesn't state the due date.
 1. Seed the SEED states and Construction, after reading each source.
 2. Read and seed AR, DC, Healthcare and Transport, now fixed in code.
 3. After 1 October 2026: swap Utah's source and seed it.
-4. Take the Perth fix to the owner (live rule).
-5. Clear the BLOCK states one at a time, by reading the official page.
+4. Clear the BLOCK states one at a time, by reading the official page.
