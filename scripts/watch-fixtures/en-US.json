@@ -1,0 +1,90 @@
+{
+  "version": 2,
+  "locale": "en-US",
+  "strings": {
+    "title": "Obligio",
+    "deadline": "Deadline",
+    "synced": "Synced {ago}",
+    "lastSynced": "Last synced {time}",
+    "noObligations": "No obligations yet. Add one on your phone.",
+    "signInOnPhone": "Open Obligio on your phone and sign in to sync your obligations.",
+    "refresh": "Refresh",
+    "connecting": "Connecting…",
+    "markComplete": "Mark complete",
+    "saving": "Saving…",
+    "confirmTitle": "Complete this obligation?",
+    "complete": "Complete",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "back": "Back",
+    "completedStatus": "Completed",
+    "completedFeedback": "Completed. Your phone will sync the next deadline if this obligation repeats.",
+    "openPhone": "Open Obligio on your paired phone and keep it nearby.",
+    "phoneUnavailable": "Phone unavailable. Open Obligio on your phone and try again.",
+    "noReply": "No reply. Refresh before retrying to check whether the item completed.",
+    "itemGone": "This obligation is no longer available. Refresh your watch.",
+    "accountChanged": "Your phone account changed. Refresh Obligio on your watch."
+  },
+  "businessId": "screenshot-business",
+  "ownerId": "screenshot-owner",
+  "businessName": "Harbor Street Bakery",
+  "updatedAt": 0,
+  "totalCount": 6,
+  "truncationNote": "",
+  "items": [
+    {
+      "id": "screenshot-4",
+      "title": "Food handler certification",
+      "dueDate": "2026-08-28",
+      "status": "overdue",
+      "recurrence": "annual",
+      "dueLabel": "Due Aug 28, 2026",
+      "repeatsLabel": "Repeats annual"
+    },
+    {
+      "id": "screenshot-2",
+      "title": "Estimated federal tax payment",
+      "dueDate": "2026-09-15",
+      "status": "upcoming",
+      "recurrence": "quarterly",
+      "dueLabel": "Due Sep 15, 2026",
+      "repeatsLabel": "Repeats quarterly"
+    },
+    {
+      "id": "screenshot-1",
+      "title": "General liability insurance",
+      "dueDate": "2026-10-14",
+      "status": "upcoming",
+      "recurrence": "annual",
+      "dueLabel": "Due Oct 14, 2026",
+      "repeatsLabel": "Repeats annual"
+    },
+    {
+      "id": "screenshot-5",
+      "title": "Fire safety inspection",
+      "dueDate": "2026-11-09",
+      "status": "upcoming",
+      "recurrence": "annual",
+      "dueLabel": "Due Nov 9, 2026",
+      "repeatsLabel": "Repeats annual"
+    },
+    {
+      "id": "screenshot-3",
+      "title": "Business license renewal",
+      "dueDate": "2026-12-31",
+      "status": "current",
+      "recurrence": "annual",
+      "dueLabel": "Due Dec 31, 2026",
+      "repeatsLabel": "Repeats annual"
+    },
+    {
+      "id": "screenshot-6",
+      "title": "Workers' compensation review",
+      "dueDate": "2027-01-20",
+      "status": "current",
+      "recurrence": "annual",
+      "dueLabel": "Due Jan 20, 2027",
+      "repeatsLabel": "Repeats annual"
+    }
+  ]
+}

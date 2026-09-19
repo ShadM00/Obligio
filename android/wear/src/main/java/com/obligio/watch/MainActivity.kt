@@ -2,6 +2,8 @@ package com.obligio.watch
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.pm.ApplicationInfo
+import android.util.Base64
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,6 +23,7 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
   private var pending: String? = null
   private var completing: String? = null
   private var selected: String? = null
+  private var fixture = false
   private val handler = Handler(Looper.getMainLooper())
   private val mint = Color.rgb(140, 214, 180)
 
@@ -44,9 +47,24 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
   private fun s(key: String): String =
     snapshot.optJSONObject("strings")?.optString(key)?.takeIf { it.isNotEmpty() } ?: fallback[key] ?: key
   private fun snapshotLocale(): Locale = Locale.forLanguageTag(snapshot.optString("locale").ifEmpty { "en-US" })
-  override fun onCreate(state: Bundle?) { super.onCreate(state); render() }
+  override fun onCreate(state: Bundle?) {
+    super.onCreate(state)
+    // Store screenshots: show sample data the phone's own code produced
+    // (scripts/watch-fixtures) instead of waiting for a paired phone. Base64,
+    // because `adb shell am start` mangles quotes and accents. Ignored by any
+    // build that is not debuggable.
+    if ((applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+      intent.getStringExtra("fixture64")?.let { encoded ->
+        snapshot = JSONObject(String(Base64.decode(encoded, Base64.DEFAULT), Charsets.UTF_8))
+        selected = intent.getStringExtra("open")
+        fixture = true
+      }
+    }
+    render()
+  }
   override fun onResume() {
     super.onResume()
+    if (fixture) return
     Wearable.getDataClient(this).addListener(this)
     Wearable.getMessageClient(this).addListener(this)
     Wearable.getDataClient(this).dataItems.addOnSuccessListener { buffer ->
@@ -54,6 +72,7 @@ class MainActivity : Activity(), DataClient.OnDataChangedListener, MessageClient
     }.addOnFailureListener { notice(s("openPhone")) }
   }
   override fun onPause() {
+    if (fixture) { super.onPause(); return }
     Wearable.getDataClient(this).removeListener(this)
     Wearable.getMessageClient(this).removeListener(this)
     super.onPause()

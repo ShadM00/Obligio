@@ -1,0 +1,90 @@
+{
+  "version": 2,
+  "locale": "es-US",
+  "strings": {
+    "title": "Obligio",
+    "deadline": "Plazo",
+    "synced": "Sincronizado {ago}",
+    "lastSynced": "Última sincronización: {time}",
+    "noObligations": "Aún no hay obligaciones. Agrega una en tu teléfono.",
+    "signInOnPhone": "Abre Obligio en tu teléfono e inicia sesión para sincronizar tus obligaciones.",
+    "refresh": "Actualizar",
+    "connecting": "Conectando…",
+    "markComplete": "Marcar como completada",
+    "saving": "Guardando…",
+    "confirmTitle": "¿Completar esta obligación?",
+    "complete": "Completar",
+    "cancel": "Cancelar",
+    "ok": "OK",
+    "back": "Atrás",
+    "completedStatus": "Completada",
+    "completedFeedback": "Completada. Tu teléfono sincronizará el próximo plazo si esta obligación se repite.",
+    "openPhone": "Abre Obligio en tu teléfono vinculado y mantenlo cerca.",
+    "phoneUnavailable": "Teléfono no disponible. Abre Obligio en tu teléfono e inténtalo de nuevo.",
+    "noReply": "Sin respuesta. Actualiza antes de reintentar para comprobar si se completó.",
+    "itemGone": "Esta obligación ya no está disponible. Actualiza tu reloj.",
+    "accountChanged": "La cuenta de tu teléfono cambió. Actualiza Obligio en tu reloj."
+  },
+  "businessId": "screenshot-business",
+  "ownerId": "screenshot-owner",
+  "businessName": "Harbor Street Bakery",
+  "updatedAt": 0,
+  "totalCount": 6,
+  "truncationNote": "",
+  "items": [
+    {
+      "id": "screenshot-4",
+      "title": "Certificación de manipulación de alimentos",
+      "dueDate": "2026-08-28",
+      "status": "overdue",
+      "recurrence": "annual",
+      "dueLabel": "Vence: 28 ago 2026",
+      "repeatsLabel": "Repetición anual"
+    },
+    {
+      "id": "screenshot-2",
+      "title": "Pago estimado de impuestos federales",
+      "dueDate": "2026-09-15",
+      "status": "upcoming",
+      "recurrence": "quarterly",
+      "dueLabel": "Vence: 15 sep 2026",
+      "repeatsLabel": "Repetición trimestral"
+    },
+    {
+      "id": "screenshot-1",
+      "title": "Seguro de responsabilidad civil",
+      "dueDate": "2026-10-14",
+      "status": "upcoming",
+      "recurrence": "annual",
+      "dueLabel": "Vence: 14 oct 2026",
+      "repeatsLabel": "Repetición anual"
+    },
+    {
+      "id": "screenshot-5",
+      "title": "Inspección de seguridad contra incendios",
+      "dueDate": "2026-11-09",
+      "status": "upcoming",
+      "recurrence": "annual",
+      "dueLabel": "Vence: 9 nov 2026",
+      "repeatsLabel": "Repetición anual"
+    },
+    {
+      "id": "screenshot-3",
+      "title": "Renovación de licencia comercial",
+      "dueDate": "2026-12-31",
+      "status": "current",
+      "recurrence": "annual",
+      "dueLabel": "Vence: 31 dic 2026",
+      "repeatsLabel": "Repetición anual"
+    },
+    {
+      "id": "screenshot-6",
+      "title": "Revisión del seguro de accidentes laborales",
+      "dueDate": "2027-01-20",
+      "status": "current",
+      "recurrence": "annual",
+      "dueLabel": "Vence: 20 ene 2027",
+      "repeatsLabel": "Repetición anual"
+    }
+  ]
+}

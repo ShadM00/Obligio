@@ -46,6 +46,8 @@ final class WatchStore: NSObject, ObservableObject, WCSessionDelegate {
   @Published var snapshot: Snapshot?
   @Published var busy = false
   @Published var feedback: String?
+  /// Opens straight onto one obligation. Only ever set for store screenshots.
+  var openOnLaunch: String?
 
   func t(_ key: String) -> String { snapshot?.strings?[key] ?? Fallback.strings[key] ?? key }
 
@@ -61,6 +63,18 @@ final class WatchStore: NSObject, ObservableObject, WCSessionDelegate {
 
   override init() {
     super.init()
+    #if DEBUG
+    // Store screenshots: show sample data the phone's own code produced
+    // (scripts/watch-fixtures) instead of waiting for a paired phone.
+    // Compiled out of release builds.
+    let env = ProcessInfo.processInfo.environment
+    if let fixture = env["OBLIGIO_WATCH_FIXTURE"], let data = fixture.data(using: .utf8),
+       let value = try? JSONDecoder().decode(Snapshot.self, from: data) {
+      snapshot = value
+      openOnLaunch = env["OBLIGIO_WATCH_OPEN"]
+      return
+    }
+    #endif
     WCSession.default.delegate = self
     WCSession.default.activate()
     accept(WCSession.default.receivedApplicationContext)
@@ -113,8 +127,9 @@ struct ObligioWatchApp: App {
 }
 struct WatchHome: View {
   @EnvironmentObject var store: WatchStore
+  @State private var path: [String] = []
   var body: some View {
-    NavigationStack {
+    NavigationStack(path: $path) {
       List {
         if let snapshot = store.snapshot, !snapshot.ownerId.isEmpty {
           Text(snapshot.businessName).font(.headline).foregroundStyle(.mint)
@@ -125,7 +140,7 @@ struct WatchHome: View {
           if snapshot.items.isEmpty { Text(verbatim: store.t("noObligations")) }
           // The phone sends items already ordered: open deadlines by date, completed last.
           ForEach(snapshot.items) { item in
-            NavigationLink { WatchDetail(itemId: item.id) } label: {
+            NavigationLink(value: item.id) {
               VStack(alignment: .leading, spacing: 4) {
                 Text(verbatim: item.title).font(.headline)
                 Text(verbatim: item.status == "current" ? store.t("completedStatus") : (item.dueLabel ?? item.dueDate))
@@ -138,10 +153,12 @@ struct WatchHome: View {
         }
         Button(store.busy ? store.t("connecting") : store.t("refresh"), action: store.refresh).disabled(store.busy)
       }.navigationTitle(store.t("title"))
+        .navigationDestination(for: String.self) { WatchDetail(itemId: $0) }
         .alert(store.t("title"), isPresented: Binding(get: { store.feedback != nil }, set: { if !$0 { store.feedback = nil } })) {
           Button(store.t("ok")) { store.feedback = nil }
         } message: { Text(verbatim: store.feedback ?? "") }
     }.tint(.mint)
+      .onAppear { if let id = store.openOnLaunch { path = [id]; store.openOnLaunch = nil } }
   }
 }
 struct WatchDetail: View {
