@@ -23,9 +23,9 @@ REMINDERS THAT ARRIVE IN TIME
 
 Renewal paperwork takes longer to gather than a single last-minute alert allows. Obligio reminds you 30 days out, again at 14 and 7, and once more the day before. Enough notice to act, and a final catch if you deferred it.
 
-SUGGESTED OBLIGATIONS FOR YOUR STATE AND INDUSTRY
+SUGGESTED FEDERAL OBLIGATIONS
 
-Tell Obligio your location and industry and it suggests the obligations that commonly apply — each one linked to the authority it comes from, with the date it was last reviewed, so you can check the source rather than take our word for it. You choose which to track and set your own dates, because the real deadline depends on your entity type and filing history.
+Start with selected US federal obligations, each linked to its official source and showing when it was last reviewed. Coverage is limited; add your own state, local and industry requirements. You choose what to track and set your own dates, because applicability and deadlines depend on your business and filing history.
 
 KEEP THE EVIDENCE WITH THE DEADLINE
 
@@ -35,9 +35,9 @@ COMPLIANCE HEALTH AT A GLANCE
 
 A single view showing what is current, what is upcoming, and what is overdue — so you know where you stand without opening a filing cabinet.
 
-WORKS IN LIGHT AND DARK
+BUILT FOR SMALL BUSINESS OWNERS
 
-Follows your device theme.
+Keep track of contractor licenses, restaurant permits, salon renewals, clinic certifications and trucking paperwork. Whether you work alone or run a team, bring the deadlines you are responsible for into one business compliance calendar. Suggested rules have limited coverage; you can add your own obligations for any industry.
 
 FREE AND PLUS
 
@@ -47,7 +47,7 @@ Obligio Plus adds unlimited obligations, document evidence, and recurring obliga
 
 PRIVACY
 
-Obligio contains no analytics, no advertising and no crash-reporting software. We do not track you across other apps or websites and we do not sell personal information.
+No advertising or cross-app tracking. We use subscription information to manage Plus access and understand subscription performance. We do not sell personal information. See our privacy policy for details.
 
 NOT LEGAL OR TAX ADVICE
 
