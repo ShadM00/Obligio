@@ -37,13 +37,15 @@ LIGHT = {"bg": (0xD8, 0xE9, 0xDF), "ink": (0x13, 0x25, 0x1D), "sub": (0x3F, 0x5A
 DARK = {"bg": (0x14, 0x2A, 0x22), "ink": (0xEC, 0xF3, 0xEF), "sub": (0x8F, 0xB8, 0xA2)}
 
 # Caption per frame slug. Kept short: on a store card these are read at a
-# glance, at roughly a third of this size.
+# glance, at roughly a third of this size. A frame with no caption here is not
+# composed at all, which is how the paywall capture stays out of the listing:
+# App Store guideline 2.3.7 treats prices, and "free", as metadata references.
 CAPTIONS = {
     "dashboard": ("Every obligation,", "one clear view"),
     "calendar": ("Grouped by month,", "never by surprise"),
     "documents": ("Proof attached", "to the obligation"),
     "suggested": ("Federal deadlines,", "with the source"),
-    "paywall": ("Three free to start,", "unlimited with Plus"),
+    "detail": ("Mark it done,", "the next one is set"),
 }
 
 CAPTION_TOP = round(150 * SCALE)

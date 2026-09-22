@@ -1,6 +1,6 @@
-import {NativeModules} from 'react-native';
-import {spanish} from './spanish';
-import {french} from './french';
+import { NativeModules } from 'react-native';
+import { spanish } from './spanish';
+import { french } from './french';
 
 export type Locale = 'en-US' | 'en-GB' | 'es-US' | 'fr-CA';
 
@@ -44,6 +44,7 @@ type Copy = {
   signInTitle: string;
   signInBody: string;
   signInCta: string;
+  signInWithApple: string;
   signingIn: string;
   authUnavailable: string;
   authUnavailableBody: string;
@@ -100,13 +101,15 @@ const shared = {
   privacyAndData: 'Privacy & data',
   helpAndSupport: 'Help & support',
   deleteAccount: 'Delete account',
-  deleteAccountHint: 'Permanently removes your businesses, obligations and documents',
+  deleteAccountHint:
+    'Permanently removes your businesses, obligations and documents',
   deleteAccountTitle: 'Delete your account?',
   deleteAccountBody:
     'This permanently deletes your businesses, every obligation you track and every document you have attached. It cannot be undone.\n\nA paid subscription is billed by the App Store or Google Play, so cancel it there as well — deleting your account here does not stop it.',
   deleteAccountConfirm: 'Delete everything',
   deleteAccountCancel: 'Cancel',
-  deleteAccountFailed: 'Account deletion did not finish. Some app data may already have been removed. Retry to finish deleting your sign-in account, or contact privacy@obligio.com.',
+  deleteAccountFailed:
+    'Account deletion did not finish. Some app data may already have been removed. Retry to finish deleting your sign-in account, or contact privacy@obligio.com.',
   complianceHealth: 'Compliance health',
   scoreHintClear: 'Everything is on track.',
   scoreHint: (outstanding: number) =>
@@ -122,9 +125,11 @@ const shared = {
   signIn: 'Sign in',
   tryAgain: 'Try again',
   close: 'Close',
-  noRequirements: 'No obligations tracked yet. Add your first one to get started.',
+  noRequirements:
+    'No obligations tracked yet. Add your first one to get started.',
   signInTitle: 'Your business obligations, under control.',
   signInCta: 'Sign in to get started',
+  signInWithApple: 'Sign in with Apple',
   signingIn: 'Opening sign-in…',
   authUnavailable: 'Sign-in is unavailable in this build',
   authUnavailableBody:
@@ -146,7 +151,8 @@ const shared = {
     'Common obligations for your location and industry. Each links to the authority it comes from — check that source before you rely on it.',
   suggestedEmpty:
     'No suggestions are published for your location and industry yet. You can still add obligations yourself.',
-  suggestedDateHint: 'Deadlines vary by entity type and filing history, so you set the date that applies to you.',
+  suggestedDateHint:
+    'Deadlines vary by entity type and filing history, so you set the date that applies to you.',
   trackThis: 'Track this',
   source: 'Source',
   reviewed: 'reviewed',
@@ -178,16 +184,20 @@ export const locales: Record<Locale, Copy> = {
   'en-US': {
     ...shared,
     organisational: 'organizational',
-    disclaimer: 'Obligio provides organizational tools, not legal or tax advice.',
-    signInBody: 'Track licenses, insurance, filings, inspections, and documents in one calm place.',
+    disclaimer:
+      'Obligio provides organizational tools, not legal or tax advice.',
+    signInBody:
+      'Track licenses, insurance, filings, inspections, and documents in one calm place.',
     documentsHelper:
       'Upload insurance certificates, licenses, permits, and training records. They stay linked to the obligation they support — open an obligation to attach its evidence.',
   },
   'en-GB': {
     ...shared,
     organisational: 'organisational',
-    disclaimer: 'Obligio provides organisational tools, not legal or tax advice.',
-    signInBody: 'Track licences, insurance, filings, inspections, and documents in one calm place.',
+    disclaimer:
+      'Obligio provides organisational tools, not legal or tax advice.',
+    signInBody:
+      'Track licences, insurance, filings, inspections, and documents in one calm place.',
     documentsHelper:
       'Upload insurance certificates, licences, permits, and training records. They stay linked to the obligation they support — open an obligation to attach its evidence.',
   },
@@ -197,11 +207,18 @@ export const locales: Record<Locale, Copy> = {
 export function dueDatePlaceholder(locale: Locale): string {
   if (locale === 'fr-CA') return 'Échéance (AAAA-MM-JJ)';
   if (locale === 'es-US') return 'Fecha límite (p. ej., 14 oct 2026)';
-  return locale === 'en-GB' ? 'Due date (e.g. 14 Oct 2026)' : 'Due date (e.g. Oct 14, 2026)';
+  return locale === 'en-GB'
+    ? 'Due date (e.g. 14 Oct 2026)'
+    : 'Due date (e.g. Oct 14, 2026)';
 }
 
 export const localeOrder: Locale[] = ['en-US', 'en-GB', 'es-US', 'fr-CA'];
-export const localeLabels: Record<Locale, string> = {'en-US': 'US', 'en-GB': 'UK', 'es-US': 'ES', 'fr-CA': 'FR'};
+export const localeLabels: Record<Locale, string> = {
+  'en-US': 'US',
+  'en-GB': 'UK',
+  'es-US': 'ES',
+  'fr-CA': 'FR',
+};
 let currentLocale: Locale | undefined;
 export function initialLocale(): Locale {
   if (currentLocale) return currentLocale;
@@ -210,8 +227,14 @@ export function initialLocale(): Locale {
   try {
     const device = Intl.DateTimeFormat().resolvedOptions().locale;
     if (device.startsWith('fr')) return 'fr-CA';
-    return device.startsWith('es') ? 'es-US' : device === 'en-GB' ? 'en-GB' : 'en-US';
-  } catch { return 'en-US'; }
+    return device.startsWith('es')
+      ? 'es-US'
+      : device === 'en-GB'
+      ? 'en-GB'
+      : 'en-US';
+  } catch {
+    return 'en-US';
+  }
 }
 
 export function saveLocale(locale: Locale): void {

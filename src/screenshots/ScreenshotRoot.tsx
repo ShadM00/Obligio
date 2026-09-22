@@ -6,7 +6,7 @@ import {AUTO_ADVANCE_MS, CAPTURE_FRAME, CAPTURE_LOCALE} from './config';
 import {locales} from '../i18n';
 import {useAppTheme} from '../theme';
 import {CalendarScreen, DocumentsScreen, Home, ScreenScroll} from '../screens';
-import {Paywall, TemplatePicker} from '../modals';
+import {Paywall, RequirementDetail, TemplatePicker} from '../modals';
 import {screenshotPackages, screenshotRequirements, screenshotTemplates, spanishScreenshotRequirements} from './fixtures';
 
 /**
@@ -26,7 +26,11 @@ import {screenshotPackages, screenshotRequirements, screenshotTemplates, spanish
 const LOCALE = CAPTURE_LOCALE;
 const requirements = LOCALE === 'es-US' ? spanishScreenshotRequirements : screenshotRequirements;
 
-const FRAMES = ['dashboard', 'calendar', 'documents', 'suggested', 'paywall'] as const;
+// The paywall is captured last and deliberately: App Store Connect wants a
+// review screenshot for each in-app purchase, and that one shows the prices.
+// It is not a listing screenshot -- guideline 2.3.7 keeps price references out
+// of those -- so build-store-screenshots.py composes every frame but this one.
+const FRAMES = ['dashboard', 'calendar', 'documents', 'suggested', 'detail', 'paywall'] as const;
 type Frame = (typeof FRAMES)[number];
 
 function Chrome({title, children}: {title: string; children: React.ReactNode}) {
@@ -83,7 +87,7 @@ export default function ScreenshotRoot() {
       <SafeAreaView style={s.safe}>
         <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
         <Pressable style={s.safe} onPress={() => setIndex(i => i + 1)}>
-          {(frame === 'dashboard' || frame === 'suggested' || frame === 'paywall') && (
+          {(frame === 'dashboard' || frame === 'suggested' || frame === 'detail' || frame === 'paywall') && (
             <Chrome title={copy.dashboard}>
               <Home
                 copy={copy}
@@ -112,6 +116,19 @@ export default function ScreenshotRoot() {
               templates={screenshotTemplates}
               onClose={noop}
               onAdopt={async () => undefined}
+            />
+          )}
+          {frame === 'detail' && (
+            <RequirementDetail
+              item={requirements[0]}
+              copy={copy}
+              locale={LOCALE}
+              onClose={noop}
+              onComplete={async () => undefined}
+              onAttach={async () => undefined}
+              onDelete={async () => undefined}
+              onEdit={noop}
+              onViewEvidence={async () => undefined}
             />
           )}
           {frame === 'paywall' && (

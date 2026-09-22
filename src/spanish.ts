@@ -18,7 +18,7 @@ export const spanish = {
   documentsHelper: 'Sube certificados de seguro, licencias, permisos y registros de formación. Quedan vinculados a su obligación; abre una obligación para adjuntar documentos.',
   signInTitle: 'Las obligaciones de tu negocio, bajo control.',
   signInBody: 'Organiza licencias, seguros, declaraciones, inspecciones y documentos en un solo lugar.',
-  signInCta: 'Inicia sesión para comenzar', signingIn: 'Abriendo inicio de sesión…',
+  signInCta: 'Inicia sesión para comenzar', signInWithApple: 'Iniciar sesión con Apple', signingIn: 'Abriendo inicio de sesión…',
   authUnavailable: 'El inicio de sesión no está disponible',
   authUnavailableBody: 'Esta versión no puede acceder a tu cuenta. Lo que se muestra son datos de ejemplo.',
   signOut: 'Cerrar sesión', checkingSession: 'Comprobando tu sesión…',

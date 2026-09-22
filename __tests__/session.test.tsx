@@ -4,14 +4,15 @@ import ReactTestRenderer from 'react-test-renderer';
 const mockNativeAuth = {
   getToken: jest.fn(),
   signIn: jest.fn(),
+  signInWithApple: jest.fn(),
   signOut: jest.fn(),
   isSignedIn: jest.fn(),
 };
 const mockRefreshConvexAuth = jest.fn();
 
 jest.mock('react-native', () => ({
-  NativeModules: {ObligioAuth: mockNativeAuth},
-  Platform: {OS: 'ios'},
+  NativeModules: { ObligioAuth: mockNativeAuth },
+  Platform: { OS: 'ios' },
 }));
 jest.mock('../src/convexClient', () => ({
   refreshConvexAuth: mockRefreshConvexAuth,
@@ -19,7 +20,9 @@ jest.mock('../src/convexClient', () => ({
   convexUrl: 'https://example.convex.cloud',
 }));
 
-const {useSession}: typeof import('../src/session') = require('../src/session');
+const {
+  useSession,
+}: typeof import('../src/session') = require('../src/session');
 type Session = ReturnType<typeof useSession>;
 
 /** Mounts the hook and exposes its latest value, without a testing library. */
@@ -94,4 +97,39 @@ test('still re-authenticates Convex when sign-out fails part way', async () => {
 
   expect(session().error).toBe('Revocation failed');
   expect(mockRefreshConvexAuth).toHaveBeenCalled();
+});
+
+test('signs in with Apple and refreshes Convex auth', async () => {
+  mockNativeAuth.isSignedIn
+    .mockResolvedValueOnce(false)
+    .mockResolvedValue(true);
+  mockNativeAuth.signInWithApple.mockResolvedValue(undefined);
+  const session = await mountSession();
+
+  expect(session().appleAvailable).toBe(true);
+  await ReactTestRenderer.act(async () => {
+    await session().signInWithApple();
+  });
+
+  expect(mockNativeAuth.signInWithApple).toHaveBeenCalled();
+  expect(mockRefreshConvexAuth).toHaveBeenCalled();
+  expect(session().status).toBe('signed-in');
+  expect(session().error).toBeNull();
+});
+
+test('treats a cancelled Apple sheet as a choice, not an error', async () => {
+  mockNativeAuth.isSignedIn.mockResolvedValue(false);
+  mockNativeAuth.signInWithApple.mockRejectedValue(
+    Object.assign(new Error('Sign in cancelled.'), {
+      code: 'CLERK_SIGN_IN_CANCELLED',
+    }),
+  );
+  const session = await mountSession();
+
+  await ReactTestRenderer.act(async () => {
+    await session().signInWithApple();
+  });
+
+  expect(session().error).toBeNull();
+  expect(session().status).toBe('signed-out');
 });

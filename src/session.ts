@@ -1,6 +1,6 @@
-import {useCallback, useEffect, useState} from 'react';
-import {authBridge} from './nativeAuth';
-import {refreshConvexAuth} from './convexClient';
+import { useCallback, useEffect, useState } from 'react';
+import { authBridge } from './nativeAuth';
+import { refreshConvexAuth } from './convexClient';
 
 export type SessionStatus =
   /** Asking the native bridge whether a session exists. */
@@ -14,12 +14,26 @@ export type Session = {
   status: SessionStatus;
   error: string | null;
   signIn: () => Promise<void>;
+  signInWithApple: () => Promise<void>;
+  /** Whether to offer the Apple button beside the hosted sign-in. */
+  appleAvailable: boolean;
   signOut: () => Promise<void>;
   clearError: () => void;
 };
 
+function isCancellation(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    (error as { code?: string }).code === 'CLERK_SIGN_IN_CANCELLED'
+  );
+}
+
 function message(error: unknown): string {
-  return error instanceof Error ? error.message : 'Authentication failed. Please try again.';
+  return error instanceof Error
+    ? error.message
+    : 'Authentication failed. Please try again.';
 }
 
 /**
@@ -30,7 +44,9 @@ function message(error: unknown): string {
  * authenticate instead of offering a sign-in button that could never work.
  */
 export function useSession(): Session {
-  const [status, setStatus] = useState<SessionStatus>(authBridge.available ? 'checking' : 'unavailable');
+  const [status, setStatus] = useState<SessionStatus>(
+    authBridge.available ? 'checking' : 'unavailable',
+  );
   const [error, setError] = useState<string | null>(null);
 
   const sync = useCallback(async () => {
@@ -63,6 +79,20 @@ export function useSession(): Session {
     }
   }, [sync]);
 
+  const signInWithApple = useCallback(async () => {
+    setError(null);
+    try {
+      await authBridge.signInWithApple();
+      refreshConvexAuth();
+      await sync();
+    } catch (err) {
+      // A cancelled Apple sheet is the user changing their mind, not a
+      // failure worth a banner.
+      if (!isCancellation(err)) setError(message(err));
+      await sync();
+    }
+  }, [sync]);
+
   const signOut = useCallback(async () => {
     setError(null);
     try {
@@ -79,5 +109,13 @@ export function useSession(): Session {
 
   const clearError = useCallback(() => setError(null), []);
 
-  return {status, error, signIn, signOut, clearError};
+  return {
+    status,
+    error,
+    signIn,
+    signInWithApple,
+    appleAvailable: authBridge.appleAvailable,
+    signOut,
+    clearError,
+  };
 }

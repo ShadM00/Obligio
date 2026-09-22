@@ -1,6 +1,7 @@
 import Foundation
 @preconcurrency import React
 import ClerkKit
+import AuthenticationServices
 
 @objc(ObligioAuth)
 final class ObligioAuth: NSObject {
@@ -35,6 +36,24 @@ final class ObligioAuth: NSObject {
     Task { @MainActor in
       do { _ = try await Clerk.shared.auth.startHostedAuth(mode: .signIn); callbacks.resolve(nil) }
       catch { callbacks.reject("CLERK_SIGN_IN_ERROR", error.localizedDescription, error) }
+    }
+  }
+
+  /// Sign in with Apple, presented natively rather than through the hosted
+  /// page. App Store guideline 4.8 wants it offered wherever a third-party
+  /// login is, and offered at least as prominently.
+  @objc(signInWithApple:rejecter:)
+  func signInWithApple(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
+    let callbacks = PromiseBox(resolve, reject)
+    Task { @MainActor in
+      do { _ = try await Clerk.shared.auth.signInWithApple(); callbacks.resolve(nil) }
+      catch {
+        if (error as NSError).code == ASAuthorizationError.canceled.rawValue {
+          callbacks.reject("CLERK_SIGN_IN_CANCELLED", "Sign in cancelled.", nil)
+        } else {
+          callbacks.reject("CLERK_SIGN_IN_ERROR", error.localizedDescription, error)
+        }
+      }
     }
   }
 
