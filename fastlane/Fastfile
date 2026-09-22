@@ -36,6 +36,11 @@ platform :ios do
       # machine has no Apple account signed into Xcode — without the key
       # arguments below it fails with "No Accounts" and "No profiles for
       # com.obligio.app were found" even though the archive itself succeeded.
+      # build_app adds the API key arguments itself, so passing them here
+      # too makes xcodebuild refuse the duplicate. When a new capability is
+      # added, delete the cached profile in
+      # ~/Library/Developer/Xcode/UserData/Provisioning Profiles so this run
+      # fetches one that includes it.
       xcargs: '-allowProvisioningUpdates',
       export_xcargs: "-allowProvisioningUpdates " \
                      "-authenticationKeyPath #{File.expand_path(ENV.fetch('ASC_KEY_FILEPATH'))} " \
