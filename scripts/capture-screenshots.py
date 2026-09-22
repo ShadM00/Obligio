@@ -44,7 +44,8 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
-FRAMES = ["dashboard", "calendar", "documents", "suggested", "paywall"]
+# Must match FRAMES in src/screenshots/ScreenshotRoot.tsx, in order.
+FRAMES = ["dashboard", "calendar", "documents", "suggested", "detail", "paywall"]
 ADVANCE_S = float(os.environ.get("ADVANCE_S", "3.5"))
 SAMPLE_S = 0.5
 BUNDLE = "com.obligio.app"

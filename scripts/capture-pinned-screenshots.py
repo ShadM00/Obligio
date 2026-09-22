@@ -7,7 +7,7 @@ Run Metro and install the debug app first, then:
 
 The debug app must already use this Metro server. This enables the development
 harness temporarily, pins each frame, and restores config in a finally block.
-An optional final argument selects one frame (0–4) for a targeted recapture.
+An optional final argument selects one frame (0–5) for a targeted recapture.
 Inspect every result before store upload: a slow/disconnected device can still
 capture a loading screen. Run each platform separately to reduce memory pressure.
 """
@@ -32,8 +32,8 @@ def main():
     if locale not in ('en-US', 'en-GB', 'es-US', 'fr-CA'):
         raise SystemExit('Unsupported capture locale')
     only_frame = int(sys.argv[4]) if len(sys.argv) == 5 else None
-    if only_frame is not None and only_frame not in range(5):
-        raise SystemExit("Frame must be 0–4")
+    if only_frame is not None and only_frame not in range(6):
+        raise SystemExit("Frame must be 0–5")
     root = Path(__file__).resolve().parents[1]
     config = root / 'src/screenshots/config.ts'
     original = config.read_text()
@@ -42,7 +42,8 @@ def main():
     base = re.sub(r'SCREENSHOT_MODE = (true|false)', 'SCREENSHOT_MODE = true', original)
     base = re.sub(r'AUTO_ADVANCE_MS = \d+', 'AUTO_ADVANCE_MS = 0', base)
     base = re.sub(r"(CAPTURE_LOCALE:.*?= )'[^']+'", rf"\g<1>'{locale}'", base)
-    frames = ['dashboard', 'calendar', 'documents', 'suggested', 'paywall']
+    # Must match FRAMES in src/screenshots/ScreenshotRoot.tsx, in order.
+    frames = ['dashboard', 'calendar', 'documents', 'suggested', 'detail', 'paywall']
     try:
         for i, name in enumerate(frames):
             if only_frame is not None and i != only_frame:
