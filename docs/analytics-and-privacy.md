@@ -28,6 +28,12 @@ name, email, date, document, or user id, and the app never calls `setUserId`.
 
 Debug builds report nothing: collection is switched off when `__DEV__` is true.
 
+Crashlytics starts collecting when the JavaScript starts, not before: React
+Native Firebase deliberately writes `FirebaseCrashlyticsCollectionEnabled = NO`
+into the iOS Info.plist, and `initAnalytics` turns collection on in every
+non-debug build. The setting then persists, so the only crash that can be
+missed is one that happens before the JavaScript loads on the very first launch.
+
 ### Switched off on purpose (`firebase.json`, `ios/Podfile`)
 
 - **Advertising ID / IDFA.** iOS links the analytics variant without ad-id
@@ -133,6 +139,25 @@ Firebase apps registered 2 October 2026 (display name "Obligio"): iOS
 `com.obligio.app`, Android `com.obligio.app`. Data streams exist for both.
 The `.screenshots` Android variant has a different applicationId and builds
 with Firebase off.
+
+## Building and shipping
+
+- **Version.** Firebase and OneSignal first ship in iOS **1.2**. App Store
+  Connect closes a version's train once it is submitted, so a new build for 1.1
+  (in review) is refused with "must contain a higher version"; 1.2 is the next
+  number. Create a 1.2 version record in App Store Connect when submitting.
+- **Signing a release archive on this machine.** fastlane's archive step passes
+  no API-key arguments, so after the cached provisioning profile is deleted
+  (needed whenever a capability is added) it falls back to a wildcard profile
+  with no entitlements and fails. Archive with the key passed once instead:
+  `xcodebuild -workspace ios/ComplianceCalendar.xcworkspace -scheme ComplianceCalendar
+  -configuration Release -destination generic/platform=iOS -archivePath <path>
+  -allowProvisioningUpdates -authenticationKeyPath <p8> -authenticationKeyID <id>
+  -authenticationKeyIssuerID <issuer> archive`, then `xcodebuild -exportArchive`
+  with `method app-store-connect`, `signingStyle automatic` and the same three
+  key arguments, then `bundle exec fastlane ios upload` with `IPA_PATH` set.
+- **Confirm the push entitlement before uploading.** The exported IPA should
+  show `aps-environment` = `production` (`codesign -d --entitlements :-`).
 
 ## Push notifications (OneSignal)
 
