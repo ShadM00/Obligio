@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import {recordError} from './analytics';
 import {locales} from './i18n';
 import {useAppTheme} from './theme';
 
@@ -12,9 +13,12 @@ import {useAppTheme} from './theme';
  * looking at a blank screen with no way forward — and since the app carries no
  * crash reporting, the first anyone would hear of it is a one-star review.
  *
- * This deliberately reports nowhere. Adding a crash SDK would change what the
- * App Privacy label and Play data-safety answers have to say, so it is a
- * decision to make openly rather than a side effect of handling errors.
+ * It reports to Crashlytics. That used to be deliberately not so, because a
+ * crash SDK changes what the App Privacy label and Play Data Safety answers
+ * have to say; that decision was made openly when Firebase was added, and the
+ * answers are in docs/analytics-and-privacy.md. A render error caught here
+ * never reaches Crashlytics' global handler, so without this call the most
+ * common kind of JavaScript crash would be invisible.
  */
 
 function Fallback({onRetry}: {onRetry: () => void}) {
@@ -47,9 +51,8 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error) {
-    // No reporting endpoint by design; the log is all a developer gets, and it
-    // is at least visible in Xcode and logcat when reproducing a report.
     console.error('Unhandled render error', error);
+    recordError(error, 'render');
   }
 
   render() {

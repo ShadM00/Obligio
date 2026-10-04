@@ -14,8 +14,28 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+# Analytics without the advertising identifier. Linking the ad-id support
+# subspec would make the app able to read the IDFA, which needs an App Tracking
+# Transparency prompt and a very different App Privacy answer. docs/analytics-and-privacy.md
+$RNFirebaseAnalyticsWithoutAdIdSupport = true
+
+# React Native Firebase 26 resolves Firebase through Swift Package Manager by
+# default, which cannot be combined with this project's static linkage. Take
+# Firebase from CocoaPods instead.
+$RNFirebaseDisableSPM = true
+
 target 'ComplianceCalendar' do
   config = use_native_modules!
+
+  # AppDelegate.swift imports FirebaseCore, so its dependency chain has to
+  # expose Clang modules.
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'FirebaseCoreExtension', :modular_headers => true
+  pod 'FirebaseInstallations', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'GoogleDataTransport', :modular_headers => true
+  pod 'nanopb', :modular_headers => true
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -30,5 +50,43 @@ target 'ComplianceCalendar' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    # React Native's privacy-manifest step adds the phone app's
+    # PrivacyInfo.xcprivacy to every target in the project, including the
+    # watch app, which has no React Native and none of those declarations.
+    user_project = installer.aggregate_targets.map(&:user_project).compact.first
+    watch = user_project&.targets&.find { |target| target.name == 'ObligioWatch' }
+    if watch
+      phase = watch.resources_build_phase
+      phase.files.select { |file| file.file_ref&.path&.end_with?('PrivacyInfo.xcprivacy') }.each do |file|
+        phase.remove_build_file(file)
+      end
+      user_project.save
+    end
   end
+end
+
+# CocoaPods adds React Native Firebase's Crashlytics build phase after
+# post_install, so the guard has to be applied here. That phase reads the app
+# id from GoogleService-Info.plist and fails the build without it; the file is
+# not in the repository (docs/analytics-and-privacy.md), so skip the upload
+# when it is missing instead of breaking a fresh clone.
+post_integrate do |installer|
+  marker = '# obligio: skip without GoogleService-Info.plist'
+  project = Xcodeproj::Project.open(File.join(__dir__, 'ComplianceCalendar.xcodeproj'))
+  changed = false
+  project.targets.each do |target|
+    target.shell_script_build_phases.each do |phase|
+      next unless phase.name == '[CP-User] [RNFB] Crashlytics Configuration'
+      next if phase.shell_script.include?(marker)
+      guard = "#{marker}\n" \
+        "if [ ! -f \"${PROJECT_DIR}/ComplianceCalendar/GoogleService-Info.plist\" ]; then\n" \
+        "  echo \"warning: GoogleService-Info.plist not found, skipping Crashlytics dSYM upload\"\n" \
+        "  exit 0\n" \
+        "fi\n"
+      phase.shell_script = guard + phase.shell_script
+      changed = true
+    end
+  end
+  project.save if changed
 end

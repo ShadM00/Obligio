@@ -33,9 +33,15 @@ deleted?** Yes — `privacy@obligio.com`, stated on the privacy policy page.
 | Photos and videos → Photos, Videos | Yes | No | App functionality | Optional |
 | Audio files → Voice or sound recordings, Music files, Other audio files | Yes | No | App functionality | Optional |
 | App activity → Other user-generated content | Yes | No | App functionality | Required for business setup; obligations entered voluntarily |
-| App activity → Other actions | No | — | — | — |
-| App info and performance → Crash logs | No | — | — | — |
-| App info and performance → Diagnostics | No | — | — | — |
+| App activity → App interactions | Yes (from 2 Oct 2026) | No | Analytics | Required |
+| App info and performance → Crash logs | Yes (from 2 Oct 2026) | No | App functionality, Analytics | Required |
+| App info and performance → Diagnostics | Yes (from 2 Oct 2026) | No | App functionality, Analytics | Required |
+
+**Firebase Analytics and Crashlytics were added on 2 October 2026**, which
+changes the three rows above and adds Analytics as a purpose for Device or
+other IDs and Approximate location. The full delta, for Apple as well, is in
+[analytics-and-privacy.md](analytics-and-privacy.md). The rows above are not
+final until that build is the one being declared.
 
 Notes on the ones people usually get wrong:
 
@@ -52,8 +58,9 @@ Notes on the ones people usually get wrong:
   DPA describes configurable IP/device and usage data. Do not infer that
   absence of an advertising SDK means there are no authentication identifiers.
 
-- **Crash logs and diagnostics are "No".** The app has no analytics,
-  advertising, or crash-reporting SDK. The npm dependency set is notifee, the
+- **Crash logs and diagnostics were "No" until 2 October 2026**, when
+  Firebase Crashlytics and Analytics were added (no advertising SDK, and the
+  advertising ID is disabled). Before that the npm dependency set was notifee, the
   document picker, Convex, RevenueCat and safe-area-context; Clerk is a native
   pod (ClerkKit) rather than an npm package, and it is the component that
   actually handles the email address, so do not overlook it when reasoning

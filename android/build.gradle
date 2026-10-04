@@ -18,6 +18,10 @@ buildscript {
         // Clerk's Android sign-in UI is Jetpack Compose. From Kotlin 2.0 the
         // Compose compiler ships as a Kotlin plugin, versioned with Kotlin.
         classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion")
+        // Firebase Analytics and Crashlytics. Versions are the ones
+        // @react-native-firebase 26.4.0 was built against.
+        classpath("com.google.gms:google-services:4.5.0")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:3.0.8")
     }
 }
 

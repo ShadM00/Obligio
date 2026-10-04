@@ -17,6 +17,11 @@ import { pick, types } from '@react-native-documents/picker';
 import { api } from './convex/_generated/api';
 import { PRIVACY_URL, SUPPORT_URL } from './src/config';
 import {
+  logObligationAdded,
+  logPaywallViewed,
+  type PaywallReason,
+} from './src/analytics';
+import {
   locales,
   localeOrder,
   localeLabels,
@@ -97,6 +102,10 @@ export default function App() {
   const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState<Requirement | null>(null);
   const [paywall, setPaywall] = useState(false);
+  const openPaywall = useCallback((reason: PaywallReason) => {
+    logPaywallViewed(reason);
+    setPaywall(true);
+  }, []);
   const [profileOpen, setProfileOpen] = useState(false);
   const [profileError, setProfileError] = useState<string | null>(null);
   const [profileBusy, setProfileBusy] = useState(false);
@@ -224,6 +233,7 @@ export default function App() {
       } catch {
         // Reminder scheduling is best-effort.
       }
+      logObligationAdded('manual', Boolean(item.recurrence));
       setAdding(false);
     },
     [business, copy.signInRequired, createRequirement],
@@ -243,6 +253,7 @@ export default function App() {
       } catch {
         // Reminder scheduling is best-effort.
       }
+      logObligationAdded('template', Boolean(rule.recurrence));
     },
     [business, copy.signInRequired, createFromTemplate, locale],
   );
@@ -405,7 +416,7 @@ export default function App() {
     async (item: Requirement) => {
       if (!item._id) return;
       if (!subscription.isPlus) {
-        setPaywall(true);
+        openPaywall('evidence');
         throw new Error(copy.evidenceIsPlus);
       }
       let picked;
@@ -426,6 +437,7 @@ export default function App() {
       attachDocument,
       copy.evidenceIsPlus,
       generateUploadUrl,
+      openPaywall,
       subscription.isPlus,
     ],
   );
@@ -596,7 +608,7 @@ export default function App() {
             <TouchableOpacity
               accessibilityRole="button"
               style={s.banner}
-              onPress={() => setPaywall(true)}
+              onPress={() => openPaywall('banner')}
             >
               <Text style={s.bannerText}>
                 {copy.freeLimitReached(FREE_REQUIREMENT_LIMIT)}
@@ -612,7 +624,7 @@ export default function App() {
             onAdd={() => {
               if (canAddRequirement(subscription.isPlus, items.length))
                 setAdding(true);
-              else setPaywall(true);
+              else openPaywall('free_limit');
             }}
             onSelect={setSelected}
             onBrowseTemplates={
@@ -647,7 +659,7 @@ export default function App() {
                 : undefined
             }
             copy={copy}
-            onSubscribe={() => setPaywall(true)}
+            onSubscribe={() => openPaywall('settings')}
             onEnableNotifications={enableNotifications}
             onTestReminder={sendTestReminder}
             onCheckTestReminder={checkTestReminder}

@@ -96,3 +96,11 @@ fastlane/.env.*
 
 # Local Netlify folder
 .netlify
+
+# Firebase client configuration for the shared "royal-nation-llc" project.
+# They are not private keys, but this repository is public and the project
+# serves many apps, so the project-level API key stays out of it. Regenerate
+# with the commands in docs/analytics-and-privacy.md. Builds without them
+# still work: Firebase simply does not start.
+**/google-services.json
+**/GoogleService-Info.plist

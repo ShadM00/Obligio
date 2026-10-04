@@ -3,10 +3,12 @@
  */
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
 
-import {ErrorBoundary} from '../src/ErrorBoundary';
-import {locales} from '../src/i18n';
+import { recordError as recordCrashlyticsError } from '@react-native-firebase/crashlytics';
+
+import { ErrorBoundary } from '../src/ErrorBoundary';
+import { locales } from '../src/i18n';
 
 const copy = locales['en-US'];
 
@@ -17,7 +19,11 @@ function Boom(): React.ReactElement {
 function texts(tree: ReactTestRenderer.ReactTestRenderer): string[] {
   return tree.root
     .findAllByType('Text' as never)
-    .flatMap(node => node.children.filter((child): child is string => typeof child === 'string'));
+    .flatMap(node =>
+      node.children.filter(
+        (child): child is string => typeof child === 'string',
+      ),
+    );
 }
 
 describe('ErrorBoundary', () => {
@@ -54,6 +60,20 @@ describe('ErrorBoundary', () => {
     expect(shown).toContain(copy.tryAgain);
   });
 
+  it('reports the render error to Crashlytics, which the global handler never sees', () => {
+    ReactTestRenderer.act(() => {
+      ReactTestRenderer.create(
+        <ErrorBoundary>
+          <Boom />
+        </ErrorBoundary>,
+      );
+    });
+    expect(recordCrashlyticsError).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ message: 'render exploded' }),
+    );
+  });
+
   it('reassures that nothing was lost, because the data is not on the device', () => {
     expect(copy.crashBody).toMatch(/nothing has been lost/i);
   });
@@ -77,7 +97,9 @@ describe('ErrorBoundary', () => {
     expect(texts(tree)).toContain(copy.crashTitle);
 
     shouldThrow = false;
-    const retry = tree.root.findAll(node => node.props.accessibilityRole === 'button')[0];
+    const retry = tree.root.findAll(
+      node => node.props.accessibilityRole === 'button',
+    )[0];
     ReactTestRenderer.act(() => retry.props.onPress());
     expect(texts(tree)).toContain('recovered');
   });

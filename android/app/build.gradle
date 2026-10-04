@@ -3,6 +3,17 @@ apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "org.jetbrains.kotlin.plugin.compose"
 apply plugin: "com.facebook.react"
 
+// google-services.json is not in the repository (docs/analytics-and-privacy.md),
+// and the Google Services plugin fails the build when it is missing. Without
+// it the app builds with Firebase off. The screenshot variant gets a different
+// applicationId that the file does not list, and never reports anything.
+def firebaseConfigured = file("google-services.json").exists() &&
+        providers.gradleProperty("obligioScreenshots").orNull != "true"
+if (firebaseConfigured) {
+    apply plugin: "com.google.gms.google-services"
+    apply plugin: "com.google.firebase.crashlytics"
+}
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
