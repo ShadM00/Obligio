@@ -86,20 +86,18 @@ is encrypted in transit. Advertising ID is **not** collected.
 
 ### Public privacy policy (`web/privacy.html`)
 
-Line 40 currently says: *"Obligio does not use advertising or general-purpose
-behavioral analytics software."* That is no longer true. Suggested replacement
-(your wording to approve; this is a legal page and has not been edited):
+Edited on 4 October 2026 to cover Firebase and OneSignal: two new paragraphs
+under "What we collect" (usage and crash reports; push notifications), a
+corrected "What we do not collect" (the old sentence said no behavioral
+analytics), the two providers added to "Who processes your data", and the date.
+It says OneSignal's software "may also record in-app purchase events", the
+cautious reading of the purchase-tracker finding below.
 
-> Obligio uses Google's Firebase Analytics to count how often a few actions
-> happen (saving an obligation, opening the subscription screen) and Firebase
-> Crashlytics to receive crash reports. They process an app-instance
-> identifier, device and operating-system model, app version, the approximate
-> region derived from a masked IP address, and crash diagnostics. We do not
-> send them your obligation titles, business details, dates or documents, we do
-> not use the advertising identifier, and we do not use this data for
-> advertising or share it with other apps or websites.
-
-Also update the "providers" list in the same page to name Google (Firebase).
+**It is not live.** The site is deployed by hand, so the edit publishes only
+when you run `netlify deploy --prod --dir=web --no-build`. Deploy it when the
+build that contains Firebase and OneSignal is submitted, not before: until
+then the live apps do not use either, and Apple compares the policy with what
+the binary does.
 
 ### Property settings to check in Google Analytics
 
@@ -220,6 +218,20 @@ What it means for the answers:
   None recorded means your answer ("not used for purchases") holds for what
   actually happens; any recorded purchase means declare it shared, as OneSignal
   advises.
+
+### Rules for sending pushes
+
+- **Marketing needs consent in the app.** Apple's guideline 4.5.4 forbids using
+  push for promotions or direct marketing unless people explicitly opted in
+  through consent language shown in the app's own UI. Today the only thing the
+  user has agreed to is deadline reminders (the system permission prompt, shown
+  when they set up reminders). So send deadline and service messages only. If
+  you want to send product news or offers, add an opt-in switch first; a
+  OneSignal tag such as `marketing_opt_in` is the usual way to segment on it.
+- Push must never be required for the app to work: it isn't. Local reminders
+  carry the core feature and need no network.
+- Sending requires the OneSignal dashboard or REST key. That key is never to be
+  added to this repository.
 
 ### Not included: Notification Service Extension
 
