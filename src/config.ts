@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 /** Convex deployment the native app talks to. */
 export const CONVEX_URL = 'https://greedy-parakeet-883.convex.cloud';
@@ -11,7 +11,7 @@ export const CONVEX_URL = 'https://greedy-parakeet-883.convex.cloud';
  * billing on that platform: the paywall reports that plans are unavailable
  * rather than configuring the SDK with a bad key and crashing on first use.
  */
-const REVENUECAT_KEYS: {ios: string | null; android: string | null} = {
+const REVENUECAT_KEYS: { ios: string | null; android: string | null } = {
   // RevenueCat project Obligio, app "Obligio (App Store)" (app3b3ac2cefb).
   ios: 'appl_SIBIzGDFokrIPHVzuFUEEaDSbLl',
   // RevenueCat project Obligio, app "Obligio (Play Store)" (app6413bd9f3e).
@@ -22,8 +22,20 @@ export const revenueCatApiKey: string | null =
   Platform.OS === 'ios'
     ? REVENUECAT_KEYS.ios
     : Platform.OS === 'android'
-      ? REVENUECAT_KEYS.android
-      : null;
+    ? REVENUECAT_KEYS.android
+    : null;
+
+/**
+ * OneSignal app id for push notifications.
+ *
+ * An app id identifies the app to OneSignal and ships inside the binary; it is
+ * not a secret and cannot send anything by itself (sending needs the REST API
+ * key, which never touches this repository). The APNs key and the FCM service
+ * account that deliver the pushes are uploaded to OneSignal, not kept here.
+ * Dashboard app "Obligio", Royal Nation LLC.
+ */
+export const ONESIGNAL_APP_ID: string | null =
+  'c47bc000-7f1e-42f5-aa7c-ee57b75c8a89';
 
 /**
  * Public pages the app links out to.

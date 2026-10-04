@@ -40,8 +40,11 @@ deleted?** Yes — `privacy@obligio.com`, stated on the privacy policy page.
 **Firebase Analytics and Crashlytics were added on 2 October 2026**, which
 changes the three rows above and adds Analytics as a purpose for Device or
 other IDs and Approximate location. The full delta, for Apple as well, is in
-[analytics-and-privacy.md](analytics-and-privacy.md). The rows above are not
-final until that build is the one being declared.
+[analytics-and-privacy.md](analytics-and-privacy.md), which also covers the
+OneSignal push SDK added on 4 October 2026 (OneSignal's own Play guidance is
+to declare app interactions as *shared*, unlike the rows above, and purchase
+history too; the app sends it no purchases, but its SDKs include automatic
+purchase trackers, so see the "Purchases" note there before answering). The rows above are not final until that build is the one being declared.
 
 Notes on the ones people usually get wrong:
 

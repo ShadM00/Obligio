@@ -11,8 +11,10 @@ import { convexClient } from './src/convexClient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorBoundary } from './src/ErrorBoundary';
 import { initAnalytics } from './src/analytics';
+import { initPush } from './src/push';
 
 initAnalytics();
+initPush();
 
 function Root() {
   // The boundary sits outside the providers so it survives a failure in
