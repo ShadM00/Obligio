@@ -1,0 +1,1 @@
+Obligio can now send you notifications if you allow them. We also added crash and usage reports, which are not tied to you, so we can find and fix problems faster.
