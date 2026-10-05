@@ -165,6 +165,19 @@ with Firebase off.
   added, because the app does not ask for location. After changing the flag,
   reinstall pods with `bundle exec pod install` (plain `pod install` is a
   different CocoaPods version and rewrites the whole lockfile).
+- **Android advertising ID.** Firebase Analytics merges the `AD_ID` permission
+  into the manifest. Play refuses a release that carries it while the Console
+  declares that the app does not use an advertising ID ("Invalid request - This
+  release includes the com.google.android.gms.permission.AD_ID permission").
+  The app does not read it, so `android/app/src/main/AndroidManifest.xml` removes
+  `AD_ID` and `ACCESS_ADSERVICES_AD_ID` with `tools:node="remove"`; keep the
+  Console answer at "No". Check the merged manifest after adding an SDK.
+- **Uploading to Play.** Use the service account in `PLAY_JSON_KEY_FILE`
+  (`fastlane/.env`, outside the repository), not the console:
+  `bundle exec fastlane run upload_to_play_store track:internal release_status:completed
+  aab:android/app/build/outputs/bundle/release/app-release.aab skip_upload_metadata:true
+  skip_upload_images:true skip_upload_screenshots:true skip_upload_changelogs:true`.
+  A version code can be used once, even for a draft that was never rolled out.
 - **Confirm the push entitlement before uploading.** The exported IPA should
   show `aps-environment` = `production` (`codesign -d --entitlements :-`).
 
