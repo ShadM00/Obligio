@@ -1,0 +1,1 @@
+Obligio ahora puede enviarte notificaciones si lo permites. También añadimos informes de fallos y de uso, que no están vinculados a ti, para encontrar y corregir problemas más rápido.
