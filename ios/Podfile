@@ -14,6 +14,12 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+# The app never reads the device's location, so leave OneSignal's location
+# module out. With it, the binary references CoreLocation and App Store Connect
+# warns about a missing NSLocationWhenInUseUsageDescription (ITMS-90683).
+# react-native-onesignal's podspec reads this variable while pods resolve.
+ENV['ONESIGNAL_DISABLE_LOCATION'] = 'true'
+
 # Analytics without the advertising identifier. Linking the ad-id support
 # subspec would make the app able to read the IDFA, which needs an App Tracking
 # Transparency prompt and a very different App Privacy answer. docs/analytics-and-privacy.md

@@ -156,6 +156,15 @@ with Firebase off.
   -authenticationKeyIssuerID <issuer> archive`, then `xcodebuild -exportArchive`
   with `method app-store-connect`, `signingStyle automatic` and the same three
   key arguments, then `bundle exec fastlane ios upload` with `IPA_PATH` set.
+- **No location module.** OneSignal's SDK bundles a location module that links
+  CoreLocation, and App Store Connect answered build 202610042310 with
+  ITMS-90683 (missing `NSLocationWhenInUseUsageDescription`). The app never reads
+  location, so `ios/Podfile` sets `ONESIGNAL_DISABLE_LOCATION` and
+  `android/gradle.properties` sets `onesignal.disableLocation=true`; from build
+  202610051205 the binary no longer links CoreLocation. No purpose string was
+  added, because the app does not ask for location. After changing the flag,
+  reinstall pods with `bundle exec pod install` (plain `pod install` is a
+  different CocoaPods version and rewrites the whole lockfile).
 - **Confirm the push entitlement before uploading.** The exported IPA should
   show `aps-environment` = `production` (`codesign -d --entitlements :-`).
 
