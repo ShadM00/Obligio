@@ -616,12 +616,14 @@ export function SettingsScreen({
   onEditProfile,
   onSubscribe,
   onEnableNotifications,
+  onToggleMarketing,
   onTestReminder,
   onCheckTestReminder,
   onOpenPrivacy,
   onOpenSupport,
   onDeleteAccount,
   notificationsEnabled,
+  marketingEnabled,
   billingAvailable,
   isPlus,
   onSignOut,
@@ -631,12 +633,15 @@ export function SettingsScreen({
   onEditProfile?: () => void;
   onSubscribe: () => void;
   onEnableNotifications: () => void;
+  /** Opt in or out of product news and offers; the row is hidden without it. */
+  onToggleMarketing?: () => void;
   onTestReminder?: () => void;
   onCheckTestReminder?: () => void;
   onOpenPrivacy: () => void;
   onOpenSupport: () => void;
   onDeleteAccount: () => void;
   notificationsEnabled: boolean;
+  marketingEnabled?: boolean;
   billingAvailable: boolean;
   isPlus: boolean;
   onSignOut: () => void;
@@ -657,6 +662,17 @@ export function SettingsScreen({
         : copy.text('Tap to enable deadline reminders'),
       onPress: onEnableNotifications,
     },
+    ...(onToggleMarketing
+      ? [
+          {
+            label: copy.text('Product news and offers'),
+            hint: marketingEnabled
+              ? copy.text('On — tap to turn off')
+              : copy.text('Off — tap to choose'),
+            onPress: onToggleMarketing,
+          },
+        ]
+      : []),
     {
       label: copy.text('Send test reminder'),
       hint: copy.text('Check delivery in one minute'),

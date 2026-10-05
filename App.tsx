@@ -16,6 +16,7 @@ import { pick, types } from '@react-native-documents/picker';
 
 import { api } from './convex/_generated/api';
 import { PRIVACY_URL, SUPPORT_URL } from './src/config';
+import { marketingOptIn, setMarketingOptIn } from './src/push';
 import {
   logObligationAdded,
   logPaywallViewed,
@@ -116,6 +117,7 @@ export default function App() {
   const session = useSession();
   const [actionError, setActionError] = useState<string | null>(null);
   const [notificationsOn, setNotificationsOn] = useState(false);
+  const [marketingOn, setMarketingOn] = useState(false);
 
   const copy = useMemo(() => locales[locale], [locale]);
 
@@ -162,6 +164,10 @@ export default function App() {
     notificationsAllowed()
       .then(setNotificationsOn)
       .catch(() => setNotificationsOn(false));
+  }, []);
+
+  useEffect(() => {
+    marketingOptIn().then(setMarketingOn);
   }, []);
 
   // Requirements come from Convex once a business is signed in. The sample rows
@@ -452,6 +458,50 @@ export default function App() {
     }
   }, []);
 
+  // Promotional pushes need an explicit in-app opt-in (App Store guideline
+  // 4.5.4). Turning it on shows what is being agreed to; turning it off needs
+  // no confirmation. Deadline reminders never depend on this.
+  const toggleMarketing = useCallback(() => {
+    if (marketingOn) {
+      setMarketingOptIn(false);
+      setMarketingOn(false);
+      return;
+    }
+    Alert.alert(
+      copy.text('Product news and offers'),
+      copy.text(
+        'Send me occasional news and offers about Obligio as notifications. Deadline reminders are separate and never need this. You can turn it off here at any time.',
+      ),
+      [
+        { text: copy.text('Not now'), style: 'cancel' },
+        {
+          text: copy.text('Turn on'),
+          onPress: async () => {
+            setActionError(null);
+            try {
+              if (!(await notificationsAllowed())) await prepareNotifications();
+              const allowed = await notificationsAllowed();
+              setNotificationsOn(allowed);
+              if (!allowed) {
+                Alert.alert(
+                  copy.text('Notifications are off'),
+                  copy.text(
+                    'Allow notifications for Obligio in your phone settings to receive news and offers.',
+                  ),
+                );
+                return;
+              }
+              setMarketingOptIn(true);
+              setMarketingOn(true);
+            } catch (error) {
+              setActionError(message(error));
+            }
+          },
+        },
+      ],
+    );
+  }, [marketingOn, copy]);
+
   const sendTestReminder = useCallback(async () => {
     setActionError(null);
     try {
@@ -661,6 +711,8 @@ export default function App() {
             copy={copy}
             onSubscribe={() => openPaywall('settings')}
             onEnableNotifications={enableNotifications}
+            onToggleMarketing={toggleMarketing}
+            marketingEnabled={marketingOn}
             onTestReminder={sendTestReminder}
             onCheckTestReminder={checkTestReminder}
             onOpenPrivacy={() => openExternal(PRIVACY_URL)}

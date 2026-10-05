@@ -270,11 +270,15 @@ What it means for the answers:
 
 - **Marketing needs consent in the app.** Apple's guideline 4.5.4 forbids using
   push for promotions or direct marketing unless people explicitly opted in
-  through consent language shown in the app's own UI. Today the only thing the
-  user has agreed to is deadline reminders (the system permission prompt, shown
-  when they set up reminders). So send deadline and service messages only. If
-  you want to send product news or offers, add an opt-in switch first; a
-  OneSignal tag such as `marketing_opt_in` is the usual way to segment on it.
+  through consent language shown in the app's own UI. Build 1.2 has no such
+  switch, so **from 1.2 send deadline and service messages only**. The next
+  release adds Settings → "Product news and offers": off by default, turning it
+  on shows a dialog stating what is being agreed to (and asks for the system
+  notification permission if it is not yet granted), and it tags the device
+  `marketing_opt_in = true` in OneSignal (`src/push.ts`). Once that release is
+  live, a promotional push must target only the segment
+  "tag marketing_opt_in is true"; never send one to All Users. Devices on 1.2
+  or earlier are not opted in and must never receive promotions.
 - Push must never be required for the app to work: it isn't. Local reminders
   carry the core feature and need no network.
 - Sending requires the OneSignal dashboard or REST key. That key is never to be

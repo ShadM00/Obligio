@@ -1,12 +1,18 @@
 import { OneSignal } from 'react-native-onesignal';
 
 import { ONESIGNAL_APP_ID } from '../src/config';
-import { initPush } from '../src/push';
+import {
+  initPush,
+  marketingOptIn,
+  MARKETING_TAG,
+  setMarketingOptIn,
+} from '../src/push';
 
 const mocked = OneSignal as unknown as {
   initialize: jest.Mock;
   login: jest.Mock;
   Notifications: { requestPermission: jest.Mock };
+  User: { addTag: jest.Mock; removeTag: jest.Mock; getTags: jest.Mock };
 };
 
 const realDev = (globalThis as { __DEV__?: boolean }).__DEV__;
@@ -68,5 +74,39 @@ describe('push notifications', () => {
     });
 
     expect(() => initPush()).not.toThrow();
+  });
+});
+
+describe('marketing opt-in (App Store guideline 4.5.4)', () => {
+  it('is off unless the device was tagged in a release build', async () => {
+    asRelease();
+    mocked.User.getTags.mockResolvedValueOnce({});
+    expect(await marketingOptIn()).toBe(false);
+
+    mocked.User.getTags.mockResolvedValueOnce({ [MARKETING_TAG]: 'true' });
+    expect(await marketingOptIn()).toBe(true);
+  });
+
+  it('reads as off if OneSignal cannot be reached', async () => {
+    asRelease();
+    mocked.User.getTags.mockRejectedValueOnce(new Error('offline'));
+    expect(await marketingOptIn()).toBe(false);
+  });
+
+  it('tags the device on opt-in and removes the tag on opt-out', () => {
+    asRelease();
+    setMarketingOptIn(true);
+    expect(mocked.User.addTag).toHaveBeenCalledWith(MARKETING_TAG, 'true');
+
+    setMarketingOptIn(false);
+    expect(mocked.User.removeTag).toHaveBeenCalledWith(MARKETING_TAG);
+  });
+
+  it('never touches OneSignal in a debug build', async () => {
+    expect(await marketingOptIn()).toBe(false);
+    setMarketingOptIn(true);
+
+    expect(mocked.User.getTags).not.toHaveBeenCalled();
+    expect(mocked.User.addTag).not.toHaveBeenCalled();
   });
 });

@@ -32,3 +32,32 @@ export function initPush(appId: string | null = ONESIGNAL_APP_ID): void {
     // Push is best-effort.
   }
 }
+
+/**
+ * The device-level tag that records an in-app opt-in to product news and
+ * offers. Apple's guideline 4.5.4 forbids promotional pushes unless people
+ * explicitly agreed in the app's own UI, so this is off until the owner turns
+ * it on in Settings, and a promotional message must be sent only to devices
+ * tagged `marketing_opt_in = true`. Deadline reminders do not depend on it.
+ */
+export const MARKETING_TAG = 'marketing_opt_in';
+
+export async function marketingOptIn(): Promise<boolean> {
+  if (__DEV__) return false;
+  try {
+    const tags = await OneSignal.User.getTags();
+    return tags?.[MARKETING_TAG] === 'true';
+  } catch {
+    return false;
+  }
+}
+
+export function setMarketingOptIn(on: boolean): void {
+  if (__DEV__) return;
+  try {
+    if (on) OneSignal.User.addTag(MARKETING_TAG, 'true');
+    else OneSignal.User.removeTag(MARKETING_TAG);
+  } catch {
+    // Push is best-effort.
+  }
+}

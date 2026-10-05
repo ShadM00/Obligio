@@ -96,3 +96,31 @@ describe('SettingsScreen', () => {
     expect(row(tree, copy.businessProfile)!.props.disabled).toBe(true);
   });
 });
+
+describe('SettingsScreen marketing opt-in', () => {
+  it('has no news-and-offers row unless the app supports it', () => {
+    const {tree} = render();
+
+    expect(row(tree, 'Product news and offers')).toBeUndefined();
+  });
+
+  it('shows the choice as off and lets the owner change it', () => {
+    const onToggleMarketing = jest.fn();
+    const {tree} = render({onToggleMarketing, marketingEnabled: false});
+
+    const news = row(tree, 'Product news and offers')!;
+    expect(textsOf(news)).toContain('Off — tap to choose');
+    ReactTestRenderer.act(() => news.props.onPress());
+
+    expect(onToggleMarketing).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows when it is on', () => {
+    const {tree} = render({onToggleMarketing: jest.fn(), marketingEnabled: true});
+
+    expect(textsOf(row(tree, 'Product news and offers')!)).toContain(
+      'On — tap to turn off',
+    );
+  });
+});
+
