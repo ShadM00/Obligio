@@ -300,3 +300,23 @@ Push entitlement is `development` in the source file; Xcode substitutes
 change to capabilities, delete the cached profile for the app in
 `~/Library/Developer/Xcode/UserData/Provisioning Profiles` before archiving
 (see the note in `fastlane/Fastfile`).
+
+## Correction: the consent defaults were not applied in 1.2
+
+`firebase.json` first named the three consent defaults
+`google_analytics_default_allow_ad_storage`, `..._ad_user_data` and
+`..._ad_personalization_signals`. React Native Firebase reads them as
+`analytics_default_allow_*` (no `google_analytics_` prefix) and silently ignores
+a key it does not know, so on both platforms builds up to and including iOS 1.2
+and Android 1.2 (15) ran with those three defaults at the SDK's own default,
+"allowed". A Release run on the simulator showed `non_personalized_ads = 0` in
+GA4 DebugView, which is how it was found.
+
+What did not change: no advertising ID is read (the ad-ID subspec is excluded on
+iOS, the `AD_ID` permission is removed on Android), Google signals is off on the
+GA4 property, and the app is not linked to any Google Ads account, so the
+App Privacy and Data Safety answers ("no tracking", no advertising ID) stay
+true. What did: the SDK was not asking Google to treat ad storage, ad user data
+and ad personalization as denied. The keys are fixed in `firebase.json` and take
+effect from the next build, and `__tests__/firebaseConfig.test.ts` now fails if
+any key in `firebase.json` is not one the installed SDK reads.
