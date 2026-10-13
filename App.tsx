@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Alert,
   Linking,
@@ -17,6 +23,7 @@ import { pick, types } from '@react-native-documents/picker';
 import { api } from './convex/_generated/api';
 import { PRIVACY_URL, SUPPORT_URL } from './src/config';
 import { marketingOptIn, setMarketingOptIn } from './src/push';
+import { askForReview, shouldAskForReview } from './src/review';
 import {
   logObligationAdded,
   logPaywallViewed,
@@ -118,6 +125,7 @@ export default function App() {
   const [actionError, setActionError] = useState<string | null>(null);
   const [notificationsOn, setNotificationsOn] = useState(false);
   const [marketingOn, setMarketingOn] = useState(false);
+  const reviewAsked = useRef(false);
 
   const copy = useMemo(() => locales[locale], [locale]);
 
@@ -542,6 +550,30 @@ export default function App() {
     [updateStatus],
   );
 
+  // A rating is asked for right after a successful completion on the phone,
+  // never after a failed one (the await below throws first) and at most once a
+  // session. The watch path calls completeRequirement directly and never asks.
+  const completeFromDetail = useCallback(
+    async (item: Requirement) => {
+      if (item.recurrence) await completeRequirement(item);
+      else await markStatusCurrent(item);
+      if (
+        !reviewAsked.current &&
+        shouldAskForReview({
+          accountCreatedAt: business?._creationTime,
+          now: Date.now(),
+          obligationCount: items.length,
+        })
+      ) {
+        reviewAsked.current = true;
+        setTimeout(() => {
+          askForReview();
+        }, 1500);
+      }
+    },
+    [business, completeRequirement, items.length, markStatusCurrent],
+  );
+
   if (!previewOnly && session.status !== 'signed-in') {
     return (
       <SignIn
@@ -752,9 +784,7 @@ export default function App() {
           copy={copy}
           locale={locale}
           onClose={() => setSelected(null)}
-          onComplete={
-            selected.recurrence ? completeRequirement : markStatusCurrent
-          }
+          onComplete={completeFromDetail}
           onAttach={attachEvidence}
           onDelete={deleteRequirement}
           onEdit={setEditing}

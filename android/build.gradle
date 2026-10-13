@@ -6,6 +6,9 @@ buildscript {
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
         kotlinVersion = "2.2.0"
+        // Read by react-native-in-app-review, which has no defaults for them.
+        playReviewVersion = "2.0.2"
+        playServicesVersion = "18.9.0"
     }
     repositories {
         google()

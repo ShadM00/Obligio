@@ -92,3 +92,21 @@ Source: Apple, *App Store asset best practices* (developer.apple.com/app-store/a
 - **Consistency:** all assets share one palette, typeface and tone.
 
 **Specs.** Use Apple's universal templates (Figma, Photoshop, Pixelmator, Sketch), linked from the best-practices page. Take exact pixel sizes from App Store Connect Help: *Screenshot specifications* and *App preview specifications*. Don't guess dimensions.
+
+
+---
+
+## Implementation status (13 Oct 2026)
+
+| Item | Status |
+|---|---|
+| Promo text | **Live** on 1.2 in en-US and es-MX (restored from `fastlane/metadata`). |
+| Keywords (en-US) | New set in `fastlane/metadata/en-US/keywords.txt`, 94/100. **Ships with the next version**: keywords cannot change on a live version. |
+| Subtitle | Unchanged; already claims licences and permits. |
+| Rating prompt | Built (`src/review.ts`, wired in `App.tsx`): after a successful completion on the phone, account at least 7 days old, at least 3 obligations, once per session; the OS rate-limits the rest. Compiles on iOS and Android. **Ships with the next version.** |
+| es-MX screenshots | The old files were raw captures with no background or caption. `scripts/build-store-screenshots.py` now composes per locale with Spanish captions; the federal-forms frame is left out of es-MX (4 shots). **Upload with the next version.** |
+| "Sample data" label | Added under every phone frame, in both locales. **Upload with the next version.** |
+| Universal creative ("Renews in 14 days") | **Not started.** New design asset, submitted separately through Asset Library. |
+| Re-check impressions | Due 2-3 weeks after the keyword change is live. |
+
+`fastlane/screenshots` is git-ignored (generated); rebuild with the compositor script.
