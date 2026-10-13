@@ -1,1 +1,1 @@
-Obligio can now send you notifications if you allow them. We also added crash and usage reports, which are not tied to you, so we can find and fix problems faster.
+Small improvements and fixes. If Obligio is helping you keep on top of your deadlines, we may now ask you for a rating.
