@@ -1,7 +1,7 @@
 # Analytics, crash reporting and what they change for privacy
 
 Added 2 and 4 October 2026: Firebase Analytics and Firebase Crashlytics, in the
-existing `royal-nation-llc` Firebase project, and OneSignal push notifications. Nothing below has been submitted to either
+existing `royal-nation-llc` Firebase project, and push notifications (OneSignal until 1.3, Krontelli from 1.4). Nothing below has been submitted to either
 store. **The public privacy policy, Apple's App Privacy label and Google Play's
 Data Safety form all have to be updated before a build containing this ships.**
 
@@ -181,116 +181,36 @@ with Firebase off.
 - **Confirm the push entitlement before uploading.** The exported IPA should
   show `aps-environment` = `production` (`codesign -d --entitlements :-`).
 
-## Push notifications (OneSignal)
+## Push notifications (Krontelli)
 
-The app connects to the OneSignal app "Obligio" (id in `src/config.ts`; an app
-id is public, sending needs a REST key that is not in this repository). The APNs
-key and Firebase service account that deliver pushes were uploaded to OneSignal
-in its dashboard and are not kept here.
+Since 1.4 the app connects to Krontelli, our own push server (public key in `src/config.ts`; it can only register an
+installation, and sending needs a server key that is not in this repository). The APNs key and Firebase service account
+that deliver pushes are held by Krontelli. Crash reports also go to GlitchTip, our own error server (`src/errors.ts`):
+no user, no breadcrumbs, no screenshots.
 
 What the app does and does not do (`src/push.ts`):
 
-- **Does not ask for permission.** Initialization never prompts. The existing
-  reminder flow asks once (`prepareNotifications`), the operating system has a
-  single notification permission, and OneSignal registers a push token as soon
-  as it is granted. Until then there is no push subscription.
-- **Does not identify anyone.** It never calls `login`, so a device is not tied
-  to the Clerk account or an email. Pushes go to all devices or to segments of
-  devices, not to a named person.
+- **Does not ask for permission.** Initialization never prompts. The existing reminder flow asks once
+  (`prepareNotifications`), and the token is reported as soon as permission is granted.
+- **Does not identify anyone.** It never calls `login`, so a device is not tied to the Clerk account or an email.
+- **Sends no usage events** (`events.automatic` is false). The only records are whether a push arrived and was opened.
 - **Does nothing in debug builds.**
 - Local deadline reminders (Notifee) are untouched and need no network.
 
-What OneSignal collects by default, per its own disclosures
-([Apple](https://documentation.onesignal.com/docs/en/apple-app-privacy-requirements),
-[Play](https://documentation.onesignal.com/docs/en/google-play-data-safety-requirements)):
-a push token and a OneSignal-assigned id (not linked to identity by default),
-device type, OS and app version, language and time zone, session counts and
-durations, and notification opens. It does not collect location, email or
-contacts unless the app sends them, and the app does not.
+Krontelli receives a push token, a random installation id, OS and app version, language, time zone, and the marketing
+opt-in. IP is used for rate limiting and not stored; traffic goes through Cloudflare.
 
-### Further changes for push
-
-**Apple App Privacy:** nothing new beyond the Firebase table above, because the
-types are the same. Notification interactions fall under Usage Data → Product
-Interaction (Analytics, already listed); the push token and OneSignal id fall
-under Device ID (already declared, linked). Add the purpose **App Functionality**
-to Product Interaction if you want delivery itself covered. Purchases: OneSignal
-may record consumable purchase events; the subscriptions are not consumable, and
-Purchase History already lists Analytics.
-
-**Google Play Data Safety:** OneSignal's published guidance differs from the
-Firebase case and from the answers already in the draft:
-
-| Data type | OneSignal's guidance | Purposes |
-| --- | --- | --- |
-| App activity → App interactions | Collected **and shared** | Analytics, Developer communications |
-| Financial info → Purchase history | OneSignal says collected and shared. **The app sends it nothing**; see "Purchases" below | Analytics |
-| Device or other IDs | Collected (push token, OneSignal id) | App functionality, Analytics |
-
-Judgment call: your draft says nothing is shared, on the reasoning that
-processors acting on your behalf are not "sharing" in Play's sense, and that
-reasoning is sound for a pure service provider. OneSignal's own documentation
-nonetheless says Yes. Following the vendor's guidance is the conservative
-choice; Google, not this document, decides what counts.
-
-**Privacy policy:** add OneSignal to the list of providers and mention push
-tokens alongside the Firebase wording above.
-
-### Purchases: the app does not use OneSignal for them, but the SDKs may see them
-
-The app never sends OneSignal a purchase, and subscriptions are handled by
-RevenueCat. That is the intended design and it is accurate for the code in this
-repository. One fact to know before answering the stores: **both OneSignal SDKs
-carry their own automatic purchase tracker**, independent of anything the app
-calls.
-
-- iOS: `OneSignalTrackIAP` / `startTrackIAP` / `sendPurchases:` (StoreKit
-  payment queue observer), present in `OneSignalFramework` in `ios/Pods`.
-- Android: `TrackGooglePurchase` and `TrackPurchaseOperation` (Play Billing),
-  present in `com.onesignal:core`.
-
-No public setting turns either off. What is **not** established is whether they
-actually capture the subscription purchases RevenueCat makes (RevenueCat uses
-StoreKit 2 on iOS, which a StoreKit 1 queue observer may not see). Nobody has
-made a purchase with this SDK present, so treat the question as open.
-
-What it means for the answers:
-
-- **Purchase History is already declared** on both stores, collected, with
-  Analytics, because of RevenueCat. No new row is needed for OneSignal.
-- The only open point is Play's **Shared** flag on that row. If you want the
-  answer to rest on evidence rather than on the vendor's default, make one
-  sandbox purchase on a release build, then check the device in OneSignal
-  (Audience → Users & subscriptions) for any recorded purchase or amount spent.
-  None recorded means your answer ("not used for purchases") holds for what
-  actually happens; any recorded purchase means declare it shared, as OneSignal
-  advises.
+**Store answers.** No new data types. The earlier notes about OneSignal's automatic purchase trackers no longer apply:
+those SDKs are gone, and Krontelli is our own service, so nothing here is shared with a third party.
 
 ### Rules for sending pushes
 
-- **Marketing needs consent in the app.** Apple's guideline 4.5.4 forbids using
-  push for promotions or direct marketing unless people explicitly opted in
-  through consent language shown in the app's own UI. Build 1.2 has no such
-  switch, so **from 1.2 send deadline and service messages only**. The next
-  release adds Settings → "Product news and offers": off by default, turning it
-  on shows a dialog stating what is being agreed to (and asks for the system
-  notification permission if it is not yet granted), and it tags the device
-  `marketing_opt_in = true` in OneSignal (`src/push.ts`). Once that release is
-  live, a promotional push must target only the segment
-  "tag marketing_opt_in is true"; never send one to All Users. Devices on 1.2
-  or earlier are not opted in and must never receive promotions.
-- Push must never be required for the app to work: it isn't. Local reminders
-  carry the core feature and need no network.
-- Sending requires the OneSignal dashboard or REST key. That key is never to be
-  added to this repository.
-
-### Not included: Notification Service Extension
-
-OneSignal's guide also lists a Notification Service Extension and an App Group.
-They only add confirmed-delivery receipts, images in notifications and badge
-counts. They need a new Xcode target and new Apple identifiers and profiles,
-so they were left out. Plain text pushes work without them. Adding them later
-is self-contained.
+- **Marketing needs consent in the app.** Apple's guideline 4.5.4 forbids using push for promotions unless people
+  opted in through the app's own UI: Settings, "Product news and offers", off by default. Send promotions as a
+  `campaign` message, which reaches only those who consented. Never send one as `transactional`.
+- People who opted in under OneSignal are not carried over: the tag lived there. They are off until they opt in again.
+- Push must never be required for the app to work: it isn't. Local reminders carry the core feature.
+- Sending requires the Krontelli dashboard or server key. That key is never to be added to this repository.
 
 ### Before the first push is sent
 

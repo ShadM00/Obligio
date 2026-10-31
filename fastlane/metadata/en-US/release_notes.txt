@@ -1,1 +1,1 @@
-Small improvements and fixes. If Obligio is helping you keep on top of your deadlines, we may now ask you for a rating.
+Reminders and news now come through our own notification service, with better crash reporting behind them. Reliability improvements.

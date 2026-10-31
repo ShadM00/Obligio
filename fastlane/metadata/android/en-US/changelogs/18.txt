@@ -1,0 +1,1 @@
+Reminders and news now come through our own notification service, with better crash reporting behind them. Reliability improvements.

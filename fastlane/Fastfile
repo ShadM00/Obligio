@@ -12,6 +12,27 @@ def app_store_connect_api_key!
   )
 end
 
+# Upload the JS source maps of the build just made to GlitchTip, so errors read properly.
+# Opt-in: it only runs when SENTRY_URL, SENTRY_ORG, SENTRY_PROJECT and SENTRY_AUTH_TOKEN are all set.
+# Non-fatal: a GlitchTip outage must never block a store release.
+def upload_glitchtip_sourcemaps!(platform)
+  missing = %w[SENTRY_URL SENTRY_ORG SENTRY_PROJECT SENTRY_AUTH_TOKEN].select { |key| ENV[key].to_s.empty? }
+  unless missing.empty?
+    UI.message("Skipping GlitchTip source map upload (not set: #{missing.join(', ')})")
+    return
+  end
+  script = File.expand_path('../scripts/upload-glitchtip-sourcemaps.sh', __dir__)
+  if platform == :ios
+    sh(script, 'ios', lane_context[SharedValues::XCODEBUILD_ARCHIVE].to_s)
+  else
+    gradle_file = File.read(File.expand_path('../android/app/build.gradle', __dir__))
+    code = gradle_file[/versionCode\s+(\d+)/, 1]
+    sh(script, 'android', "com.obligio.app@#{gradle_file[/versionName\s+"([^"]+)"/, 1]}+#{code}", code)
+  end
+rescue => e
+  UI.important("GlitchTip source map upload failed (non-fatal): #{e.message}")
+end
+
 platform :ios do
   desc 'Build a signed App Store archive and upload it to TestFlight'
   lane :release do
@@ -50,6 +71,8 @@ platform :ios do
         signingStyle: 'automatic',
       },
     )
+
+    upload_glitchtip_sourcemaps!(:ios)
 
     # TestFlight, not App Store submission. upload_to_app_store (deliver) is
     # for pushing a listing, and does not accept
@@ -124,16 +147,20 @@ end
 platform :android do
   desc 'Build a signed Android App Bundle and upload it to the chosen Play track'
   lane :release do
-    gradle(task: 'clean', project_dir: 'android')
-    # `bundleRelease` is the release *build type*. An earlier version passed
-    # `flavor: 'Release'`, which Gradle resolves as a product flavour — this
-    # project has none, so that task never existed.
-    gradle(task: 'bundleRelease', project_dir: 'android')
+    unless ENV['USE_BUILT_AAB'] == 'yes'
+      gradle(task: 'clean', project_dir: 'android')
+      # `bundleRelease` is the release *build type*. An earlier version passed
+      # `flavor: 'Release'`, which Gradle resolves as a product flavour — this
+      # project has none, so that task never existed.
+      gradle(task: 'bundleRelease', project_dir: 'android')
+    end
+    upload_glitchtip_sourcemaps!(:android)
 
     upload_to_play_store(
       track: ENV.fetch('PLAY_TRACK', 'internal'),
       aab: 'android/app/build/outputs/bundle/release/app-release.aab',
       release_status: ENV.fetch('PLAY_RELEASE_STATUS', 'draft'),
+      rollout: ENV['PLAY_ROLLOUT'],
       skip_upload_metadata: true,
       skip_upload_images: true,
       skip_upload_screenshots: true,

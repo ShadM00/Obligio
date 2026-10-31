@@ -26,6 +26,9 @@
       android:theme="@style/AppTheme"
       android:usesCleartextTraffic="${usesCleartextTraffic}"
       android:supportsRtl="true">
+      <!-- Pushes from Krontelli. Deadline reminders are local and have their own channel. -->
+      <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="obligio-news" />
+      <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification" />
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

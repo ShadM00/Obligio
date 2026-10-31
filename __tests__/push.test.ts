@@ -1,112 +1,113 @@
-import { OneSignal } from 'react-native-onesignal';
+const mockInit = jest.fn((_: unknown) => Promise.resolve());
+const mockLogin = jest.fn();
+const mockRequest = jest.fn(() => Promise.resolve('granted'));
+const mockConsent = jest.fn((_: boolean) => Promise.resolve());
+const mockStorage = new Map<string, string>();
 
-import { ONESIGNAL_APP_ID } from '../src/config';
-import {
-  initPush,
-  marketingOptIn,
-  MARKETING_TAG,
-  setMarketingOptIn,
-} from '../src/push';
+jest.mock('@krontelli/sdk-react-native', () => ({
+  __esModule: true,
+  default: {
+    init: (options: unknown) => mockInit(options),
+    login: (token: string) => mockLogin(token),
+    requestPermission: () => mockRequest(),
+    setMarketingConsent: (on: boolean) => mockConsent(on),
+  },
+}));
+jest.mock('@krontelli/sdk-react-native-bare', () => ({
+  createBarePlatform: () => ({
+    storage: {
+      getItem: async (key: string) => mockStorage.get(key) ?? null,
+      setItem: async (key: string, value: string) => void mockStorage.set(key, value),
+    },
+  }),
+}));
 
-const mocked = OneSignal as unknown as {
-  initialize: jest.Mock;
-  login: jest.Mock;
-  Notifications: { requestPermission: jest.Mock };
-  User: { addTag: jest.Mock; removeTag: jest.Mock; getTags: jest.Mock };
-};
+import { KRONTELLI_PUBLIC_KEY } from '../src/config';
 
 const realDev = (globalThis as { __DEV__?: boolean }).__DEV__;
-beforeEach(() => jest.clearAllMocks());
+function load(release: boolean): typeof import('../src/push') {
+  (globalThis as { __DEV__?: boolean }).__DEV__ = release ? false : realDev;
+  let push!: typeof import('../src/push');
+  jest.isolateModules(() => {
+    push = require('../src/push');
+  });
+  return push;
+}
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  mockStorage.clear();
+});
 afterEach(() => {
   (globalThis as { __DEV__?: boolean }).__DEV__ = realDev;
 });
 
-function asRelease() {
-  (globalThis as { __DEV__?: boolean }).__DEV__ = false;
-}
-
 describe('push notifications', () => {
-  it('has an app id that looks like a OneSignal one', () => {
-    expect(ONESIGNAL_APP_ID).toMatch(
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
+  it('has a public key, never a server key', () => {
+    expect(KRONTELLI_PUBLIC_KEY).toMatch(/^kt_pub_/);
+  });
+
+  it('connects to Krontelli in a release build, sending no usage events', () => {
+    load(true).initPush();
+
+    expect(mockInit).toHaveBeenCalledWith(
+      expect.objectContaining({ publicKey: KRONTELLI_PUBLIC_KEY, requestPermissionOnInit: false, events: { automatic: false } }),
     );
   });
 
-  it('connects to OneSignal in a release build', () => {
-    asRelease();
-    initPush();
-
-    expect(mocked.initialize).toHaveBeenCalledWith(ONESIGNAL_APP_ID);
-  });
-
   it('does nothing in a debug build, so development never joins the audience', () => {
-    // Jest runs with __DEV__ true, as a debug build does.
-    initPush();
+    load(false).initPush();
 
-    expect(mocked.initialize).not.toHaveBeenCalled();
+    expect(mockInit).not.toHaveBeenCalled();
   });
 
-  it('does nothing without an app id', () => {
-    asRelease();
-    initPush(null);
+  it('does nothing without a key', () => {
+    load(true).initPush(null);
 
-    expect(mocked.initialize).not.toHaveBeenCalled();
-  });
-
-  it('never asks for permission itself: the reminder flow already does', () => {
-    asRelease();
-    initPush();
-
-    expect(mocked.Notifications.requestPermission).not.toHaveBeenCalled();
+    expect(mockInit).not.toHaveBeenCalled();
   });
 
   it('never ties the device to an account', () => {
-    asRelease();
-    initPush();
+    load(true).initPush();
 
-    expect(mocked.login).not.toHaveBeenCalled();
+    expect(mockLogin).not.toHaveBeenCalled();
   });
 
   it('never lets a failure reach the user', () => {
-    asRelease();
-    mocked.initialize.mockImplementationOnce(() => {
+    mockInit.mockImplementationOnce(() => {
       throw new Error('native module missing');
     });
 
-    expect(() => initPush()).not.toThrow();
+    expect(() => load(true).initPush()).not.toThrow();
   });
 });
 
-describe('marketing opt-in (App Store guideline 4.5.4)', () => {
-  it('is off unless the device was tagged in a release build', async () => {
-    asRelease();
-    mocked.User.getTags.mockResolvedValueOnce({});
-    expect(await marketingOptIn()).toBe(false);
+describe('product news opt-in', () => {
+  it('is off until the owner turns it on', async () => {
+    const push = load(true);
+    push.initPush();
 
-    mocked.User.getTags.mockResolvedValueOnce({ [MARKETING_TAG]: 'true' });
-    expect(await marketingOptIn()).toBe(true);
+    await expect(push.marketingOptIn()).resolves.toBe(false);
   });
 
-  it('reads as off if OneSignal cannot be reached', async () => {
-    asRelease();
-    mocked.User.getTags.mockRejectedValueOnce(new Error('offline'));
-    expect(await marketingOptIn()).toBe(false);
+  it('records the choice on the device and as marketing consent', async () => {
+    const push = load(true);
+    push.initPush();
+
+    push.setMarketingOptIn(true);
+    await expect(push.marketingOptIn()).resolves.toBe(true);
+    expect(mockConsent).toHaveBeenLastCalledWith(true);
+
+    push.setMarketingOptIn(false);
+    await expect(push.marketingOptIn()).resolves.toBe(false);
+    expect(mockConsent).toHaveBeenLastCalledWith(false);
   });
 
-  it('tags the device on opt-in and removes the tag on opt-out', () => {
-    asRelease();
-    setMarketingOptIn(true);
-    expect(mocked.User.addTag).toHaveBeenCalledWith(MARKETING_TAG, 'true');
+  it('does nothing in a debug build', async () => {
+    const push = load(false);
+    push.setMarketingOptIn(true);
 
-    setMarketingOptIn(false);
-    expect(mocked.User.removeTag).toHaveBeenCalledWith(MARKETING_TAG);
-  });
-
-  it('never touches OneSignal in a debug build', async () => {
-    expect(await marketingOptIn()).toBe(false);
-    setMarketingOptIn(true);
-
-    expect(mocked.User.getTags).not.toHaveBeenCalled();
-    expect(mocked.User.addTag).not.toHaveBeenCalled();
+    expect(mockConsent).not.toHaveBeenCalled();
+    await expect(push.marketingOptIn()).resolves.toBe(false);
   });
 });

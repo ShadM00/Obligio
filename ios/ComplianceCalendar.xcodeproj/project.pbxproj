@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C4CA34F96B196FDB0DD35AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A321AD46228324E839B5E6F3 /* Foundation.framework */; };
 		0C80B921A6F3F58F76C31292 /* libPods-ComplianceCalendar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-ComplianceCalendar.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2A89D9141FF48C20FC2FB446 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650DA69ECBB19FE09FF0045C /* Foundation.framework */; };
@@ -15,6 +16,8 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		78EEB5DD3C80DC500CCA82CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3D7136BB5DC3D62E93D672 /* Assets.xcassets */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9919610BDBCE0FA49F6B6031 /* KrontelliNSE.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7781006C245A6ED4F98C169C /* KrontelliNSE.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B575241D8E9B37CC780F86E2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1BC94FB4E60A852C8F16B8 /* NotificationService.swift */; };
 		BB902070B4474ACAB0000001 /* ObligioAuthBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB902070B4474ACAB0000002 /* ObligioAuthBridge.mm */; };
 		CA47A8D3D1B246BE63A2F29A /* ObligioWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4C327E50B65497E4FF4F76 /* ObligioWatch.swift */; };
 		D092792D34E1A6FBC0F606E8 /* ObligioAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A6539E28F93FDE53F8DA38 /* ObligioAuth.swift */; };
@@ -30,6 +33,13 @@
 			remoteGlobalIDString = 2F059581733D26CD81C6EC3D;
 			remoteInfo = ObligioWatch;
 		};
+		9C7C1E83F996C85EA5C90628 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65C85D0D8A403DB26E93EADD;
+			remoteInfo = KrontelliNSE;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +52,17 @@
 				E311A49CFA86924FD66E4878 /* ObligioWatch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9E7C934A15F67BD83A57868 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9919610BDBCE0FA49F6B6031 /* KrontelliNSE.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -59,8 +80,12 @@
 		5B3D7136BB5DC3D62E93D672 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ObligioWatch/Assets.xcassets; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-ComplianceCalendar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ComplianceCalendar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		650DA69ECBB19FE09FF0045C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		6F1BC94FB4E60A852C8F16B8 /* NotificationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ComplianceCalendar/AppDelegate.swift; sourceTree = "<group>"; };
+		7781006C245A6ED4F98C169C /* KrontelliNSE.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KrontelliNSE.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ComplianceCalendar/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A321AD46228324E839B5E6F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		AC5A33CF4AAF99CC43D08868 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB902070B4474ACAB0000002 /* ObligioAuthBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ComplianceCalendar/ObligioAuthBridge.mm; sourceTree = "<group>"; };
 		CB4C327E50B65497E4FF4F76 /* ObligioWatch.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObligioWatch.swift; path = ComplianceCalendar/ObligioWatch.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -81,6 +106,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A89D9141FF48C20FC2FB446 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7924DF9F430D54233013D739 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C4CA34F96B196FDB0DD35AB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,8 +140,17 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-ComplianceCalendar.a */,
 				72A6ACF15B712BA0642EF982 /* watchOS */,
+				4F49F20E650E37AFF42981A7 /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4F49F20E650E37AFF42981A7 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A321AD46228324E839B5E6F3 /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		72A6ACF15B712BA0642EF982 /* watchOS */ = {
@@ -138,6 +180,7 @@
 				37D3C19EE441A07E7DB214F7 /* ObligioWatchBridge.mm */,
 				3C5F5EB18634256C46F4C080 /* ObligioWatchApp.swift */,
 				5B3D7136BB5DC3D62E93D672 /* Assets.xcassets */,
+				D3708C93B376B11D63DEA937 /* KrontelliNSE */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +192,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* ComplianceCalendar.app */,
 				0E56F6E2BBD7894180ED0DAB /* ObligioWatch.app */,
+				7781006C245A6ED4F98C169C /* KrontelliNSE.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,6 +206,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D3708C93B376B11D63DEA937 /* KrontelliNSE */ = {
+			isa = PBXGroup;
+			children = (
+				6F1BC94FB4E60A852C8F16B8 /* NotificationService.swift */,
+				AC5A33CF4AAF99CC43D08868 /* Info.plist */,
+			);
+			name = KrontelliNSE;
+			path = KrontelliNSE;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -172,6 +226,7 @@
 				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				C9E7C934A15F67BD83A57868 /* Embed Foundation Extensions */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				3B8284A9E820B791AC1C248F /* Copy Firebase config (if present) */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
@@ -185,6 +240,7 @@
 			);
 			dependencies = (
 				384C0026F90AEF27307493AF /* PBXTargetDependency */,
+				47F31763F64331676230D0AD /* PBXTargetDependency */,
 			);
 			name = ComplianceCalendar;
 			packageProductDependencies = (
@@ -210,6 +266,23 @@
 			productName = ObligioWatch;
 			productReference = 0E56F6E2BBD7894180ED0DAB /* ObligioWatch.app */;
 			productType = "com.apple.product-type.application";
+		};
+		65C85D0D8A403DB26E93EADD /* KrontelliNSE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C6EB1AC4030D115B170651C /* Build configuration list for PBXNativeTarget "KrontelliNSE" */;
+			buildPhases = (
+				111BFBEDEC9D92216CB4A080 /* Sources */,
+				7924DF9F430D54233013D739 /* Frameworks */,
+				839753EBB93D0649BC9E745E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KrontelliNSE;
+			productName = KrontelliNSE;
+			productReference = 7781006C245A6ED4F98C169C /* KrontelliNSE.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -242,6 +315,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* ComplianceCalendar */,
 				2F059581733D26CD81C6EC3D /* ObligioWatch */,
+				65C85D0D8A403DB26E93EADD /* KrontelliNSE */,
 			);
 		};
 /* End PBXProject section */
@@ -262,6 +336,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				78EEB5DD3C80DC500CCA82CF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		839753EBB93D0649BC9E745E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +470,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		111BFBEDEC9D92216CB4A080 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B575241D8E9B37CC780F86E2 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13B07F871A680F5B00A75B9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -418,6 +507,12 @@
 			target = 2F059581733D26CD81C6EC3D /* ObligioWatch */;
 			targetProxy = 2F7FE9EA5EC32356BD04B00E /* PBXContainerItemProxy */;
 		};
+		47F31763F64331676230D0AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KrontelliNSE;
+			target = 65C85D0D8A403DB26E93EADD /* KrontelliNSE */;
+			targetProxy = 9C7C1E83F996C85EA5C90628 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -438,7 +533,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -470,7 +565,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -498,7 +593,7 @@
 				INFOPLIST_KEY_WKApplication = YES;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.obligio.app;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.obligio.app.watchkitapp;
 				PRODUCT_NAME = ObligioWatch;
 				SDKROOT = watchos;
@@ -509,6 +604,57 @@
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
+		};
+		3ABA5C3D8D9F28ED463D1D15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 202610132213;
+				DEVELOPMENT_TEAM = 2KBXMW6U9N;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KrontelliNSE/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.obligio.app.KrontelliNSE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6DAFB574259969A84FF5EBEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 202610132213;
+				DEVELOPMENT_TEAM = 2KBXMW6U9N;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KrontelliNSE/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.obligio.app.KrontelliNSE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -679,7 +825,7 @@
 				INFOPLIST_KEY_WKApplication = YES;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.obligio.app;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.obligio.app.watchkitapp;
 				PRODUCT_NAME = ObligioWatch;
 				SDKROOT = watchos;
@@ -700,6 +846,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C6EB1AC4030D115B170651C /* Build configuration list for PBXNativeTarget "KrontelliNSE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DAFB574259969A84FF5EBEE /* Release */,
+				3ABA5C3D8D9F28ED463D1D15 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

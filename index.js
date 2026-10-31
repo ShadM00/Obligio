@@ -11,9 +11,11 @@ import { convexClient } from './src/convexClient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorBoundary } from './src/ErrorBoundary';
 import { initAnalytics } from './src/analytics';
+import { initErrors, wrapRoot } from './src/errors';
 import { initPush } from './src/push';
 
 initAnalytics();
+initErrors();
 initPush();
 
 function Root() {
@@ -33,7 +35,7 @@ function Root() {
 // The screenshot harness renders real screens against fixture data for store
 // listings and the App Store per-product review screenshot. It lives behind
 // __DEV__, so Metro strips it and its fixtures from release bundles.
-let Entry = Root;
+let Entry = wrapRoot(Root);
 if (__DEV__ && require('./src/screenshots/config').SCREENSHOT_MODE) {
   Entry = require('./src/screenshots/ScreenshotRoot').default;
 }

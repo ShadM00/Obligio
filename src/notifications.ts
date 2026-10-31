@@ -1,6 +1,7 @@
 import {initialLocale} from './i18n';
 import notifee, {AndroidImportance, AuthorizationStatus, TriggerType} from '@notifee/react-native';
 import {isIsoDate} from './dates';
+import {reportPushPermission} from './push';
 
 const CHANNEL_ID = 'obligio-deadlines';
 /**
@@ -15,6 +16,7 @@ const REMINDER_HOUR = 9;
 
 export async function prepareNotifications(): Promise<string> {
   await notifee.requestPermission();
+  reportPushPermission();
   return notifee.createChannel({
     id: CHANNEL_ID,
     name: initialLocale() === 'fr-CA' ? 'Échéances des obligations' : initialLocale() === 'es-US' ? 'Plazos de obligaciones' : 'Obligation deadlines',

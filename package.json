@@ -10,16 +10,18 @@
     "test": "jest"
   },
   "dependencies": {
+    "@krontelli/sdk-react-native": "file:krontelli-sdk/krontelli-sdk-react-native-0.1.7.tgz",
+    "@krontelli/sdk-react-native-bare": "file:krontelli-sdk/krontelli-sdk-react-native-bare-0.1.0.tgz",
     "@notifee/react-native": "^9.1.8",
     "@react-native-documents/picker": "^12.0.2",
     "@react-native-firebase/analytics": "26.4.0",
     "@react-native-firebase/app": "26.4.0",
     "@react-native-firebase/crashlytics": "26.4.0",
+    "@sentry/react-native": "8.33.0",
     "convex": "^1.25.4",
     "react": "19.2.3",
     "react-native": "0.87.1",
     "react-native-in-app-review": "4.4.2",
-    "react-native-onesignal": "5.5.14",
     "react-native-purchases": "^9.6.0",
     "react-native-safe-area-context": "^5.5.2"
   },
