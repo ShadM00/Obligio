@@ -53,6 +53,7 @@ trap 'rm -rf "${stage:?}"' EXIT
 cp "$bundle" "$stage/$name"
 cp "$map" "$stage/$name.map"
 
-"$cli" releases new "$release"
+# Android and iOS can share a build number, and so a release; GlitchTip answers 500 to creating one twice.
+"$cli" releases new "$release" || echo "release $release may already exist; uploading anyway"
 "$cli" sourcemaps upload --release "$release" --dist "$dist" --url-prefix 'app:///' "$stage"
 echo "Uploaded source maps for $release (dist $dist) to $SENTRY_URL"
