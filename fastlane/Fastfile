@@ -12,15 +12,34 @@ def app_store_connect_api_key!
   )
 end
 
-# Upload the JS source maps of the build just made to GlitchTip, so errors read properly.
-# Opt-in: it only runs when SENTRY_URL, SENTRY_ORG, SENTRY_PROJECT and SENTRY_AUTH_TOKEN are all set.
+# A missing upload costs nothing today and an unreadable crash report later, so it has to be hard to miss.
+def glitchtip_warning(what, detail)
+  UI.important('!' * 78)
+  UI.important("GLITCHTIP: #{what} NOT UPLOADED. The release carries on; this build's crash reports will be unreadable.")
+  UI.important(detail.to_s)
+  UI.important('!' * 78)
+end
+
+# Upload the dSYMs of the archive just built to GlitchTip, so native iOS crashes read properly. The release is read
+# from the archive, because it must be exactly what the Sentry SDK reports: <bundle id>@<version>+<build>.
 # Non-fatal: a GlitchTip outage must never block a store release.
+def upload_glitchtip_dsyms!(archive = lane_context[SharedValues::XCODEBUILD_ARCHIVE])
+  krontelli = File.expand_path('~/Dev/Krontelli')
+  script = File.join(krontelli, 'infra/scripts/upload-native-symbols.py')
+  missing = [script, File.join(krontelli, '.secrets/glitchtip-api-token')].reject { |path| File.exist?(path) }
+  UI.user_error!("Not on this machine: #{missing.join(', ')}") unless missing.empty?
+  info = Dir[File.join(archive.to_s, 'Products/Applications/*.app/Info.plist')].first
+  UI.user_error!("No app in the archive: #{archive}") unless info
+  read = ->(key) { sh('/usr/libexec/PlistBuddy', '-c', "Print :#{key}", info, log: false).strip }
+  release = "#{read.call('CFBundleIdentifier')}@#{read.call('CFBundleShortVersionString')}+#{read.call('CFBundleVersion')}"
+  sh('python3', script, '--slug', 'obligio', '--release', release, '--archive', archive.to_s)
+rescue => e
+  glitchtip_warning('iOS dSYMs', e.message)
+end
+
+# Upload the JS source maps of the build just made to GlitchTip, so errors read properly.
+# The script finds the credentials itself. Non-fatal: a GlitchTip outage must never block a store release.
 def upload_glitchtip_sourcemaps!(platform)
-  missing = %w[SENTRY_URL SENTRY_ORG SENTRY_PROJECT SENTRY_AUTH_TOKEN].select { |key| ENV[key].to_s.empty? }
-  unless missing.empty?
-    UI.message("Skipping GlitchTip source map upload (not set: #{missing.join(', ')})")
-    return
-  end
   script = File.expand_path('../scripts/upload-glitchtip-sourcemaps.sh', __dir__)
   if platform == :ios
     sh(script, 'ios', lane_context[SharedValues::XCODEBUILD_ARCHIVE].to_s)
@@ -30,7 +49,7 @@ def upload_glitchtip_sourcemaps!(platform)
     sh(script, 'android', "com.obligio.app@#{gradle_file[/versionName\s+"([^"]+)"/, 1]}+#{code}", code)
   end
 rescue => e
-  UI.important("GlitchTip source map upload failed (non-fatal): #{e.message}")
+  glitchtip_warning('JS source maps', e.message)
 end
 
 platform :ios do
@@ -73,6 +92,7 @@ platform :ios do
     )
 
     upload_glitchtip_sourcemaps!(:ios)
+    upload_glitchtip_dsyms!
 
     # TestFlight, not App Store submission. upload_to_app_store (deliver) is
     # for pushing a listing, and does not accept

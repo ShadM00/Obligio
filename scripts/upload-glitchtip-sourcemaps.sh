@@ -13,8 +13,15 @@
 set -euo pipefail
 
 platform="${1:?usage: $0 android <release> <dist> | ios <xcarchive>}"
-: "${SENTRY_URL:?SENTRY_URL is not set}" "${SENTRY_ORG:?SENTRY_ORG is not set}" \
-  "${SENTRY_PROJECT:?SENTRY_PROJECT is not set}" "${SENTRY_AUTH_TOKEN:?SENTRY_AUTH_TOKEN is not set}"
+# Resolved here so a release does not depend on the operator's shell. A token in the environment only counts
+# when SENTRY_URL is set too: an app's .env can still hold an old sentry.io token, which GlitchTip refuses.
+token_file="$HOME/Dev/Krontelli/.secrets/glitchtip-api-token"
+if [ -z "${SENTRY_URL:-}" ] && [ -r "$token_file" ]; then
+  SENTRY_AUTH_TOKEN="$(tr -d '[:space:]' < "$token_file")"
+fi
+export SENTRY_URL="${SENTRY_URL:-https://errors.krontelli.com}" SENTRY_ORG="${SENTRY_ORG:-krown}" \
+  SENTRY_PROJECT="${SENTRY_PROJECT:-obligio}" SENTRY_AUTH_TOKEN="${SENTRY_AUTH_TOKEN:-}"
+[ -n "$SENTRY_AUTH_TOKEN" ] || { echo "SENTRY_AUTH_TOKEN is not set and $token_file cannot be read" >&2; exit 1; }
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 cli="$root/node_modules/.bin/sentry-cli"
