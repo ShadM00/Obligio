@@ -2,6 +2,7 @@ const mockInit = jest.fn((_: unknown) => Promise.resolve());
 const mockLogin = jest.fn();
 const mockRequest = jest.fn(() => Promise.resolve('granted'));
 const mockConsent = jest.fn((_: boolean) => Promise.resolve());
+const mockTrack = jest.fn();
 const mockStorage = new Map<string, string>();
 
 jest.mock('@krontelli/sdk-react-native', () => ({
@@ -11,6 +12,7 @@ jest.mock('@krontelli/sdk-react-native', () => ({
     login: (token: string) => mockLogin(token),
     requestPermission: () => mockRequest(),
     setMarketingConsent: (on: boolean) => mockConsent(on),
+    track: (name: string, props?: unknown) => mockTrack(name, props),
   },
 }));
 jest.mock('@krontelli/sdk-react-native-bare', () => ({
@@ -25,13 +27,21 @@ jest.mock('@krontelli/sdk-react-native-bare', () => ({
 import { KRONTELLI_PUBLIC_KEY } from '../src/config';
 
 const realDev = (globalThis as { __DEV__?: boolean }).__DEV__;
-function load(release: boolean): typeof import('../src/push') {
+function loadWithAnalytics(release: boolean): {
+  push: typeof import('../src/push');
+  analytics: typeof import('../src/analytics');
+} {
   (globalThis as { __DEV__?: boolean }).__DEV__ = release ? false : realDev;
   let push!: typeof import('../src/push');
+  let analytics!: typeof import('../src/analytics');
   jest.isolateModules(() => {
     push = require('../src/push');
+    analytics = require('../src/analytics');
   });
-  return push;
+  return { push, analytics };
+}
+function load(release: boolean): typeof import('../src/push') {
+  return loadWithAnalytics(release).push;
 }
 
 beforeEach(() => {
@@ -47,12 +57,35 @@ describe('push notifications', () => {
     expect(KRONTELLI_PUBLIC_KEY).toMatch(/^kt_pub_/);
   });
 
-  it('connects to Krontelli in a release build, sending no usage events', () => {
+  it('connects to Krontelli in a release build, with its automatic app-open and session events', () => {
     load(true).initPush();
 
     expect(mockInit).toHaveBeenCalledWith(
-      expect.objectContaining({ publicKey: KRONTELLI_PUBLIC_KEY, requestPermissionOnInit: false, events: { automatic: false } }),
+      expect.objectContaining({ publicKey: KRONTELLI_PUBLIC_KEY, requestPermissionOnInit: false, events: { automatic: true } }),
     );
+    expect(mockInit.mock.calls[0][0]).not.toHaveProperty('consentRequired');
+  });
+
+  it('mirrors the Firebase usage events to Krontelli once connected', () => {
+    const { push, analytics } = loadWithAnalytics(true);
+    push.initPush();
+
+    analytics.logObligationAdded('manual', true);
+    analytics.logPaywallViewed('evidence');
+
+    expect(mockTrack.mock.calls).toEqual([
+      ['obligation_added', { source: 'manual', recurring: 1 }],
+      ['paywall_viewed', { reason: 'evidence' }],
+    ]);
+  });
+
+  it('sends no events to Krontelli in a debug build, where Firebase does not collect either', () => {
+    const { push, analytics } = loadWithAnalytics(false);
+    push.initPush();
+
+    analytics.logObligationAdded('manual', false);
+
+    expect(mockTrack).not.toHaveBeenCalled();
   });
 
   it('does nothing in a debug build, so development never joins the audience', () => {

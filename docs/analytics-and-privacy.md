@@ -193,14 +193,21 @@ What the app does and does not do (`src/push.ts`):
 - **Does not ask for permission.** Initialization never prompts. The existing reminder flow asks once
   (`prepareNotifications`), and the token is reported as soon as permission is granted.
 - **Does not identify anyone.** It never calls `login`, so a device is not tied to the Clerk account or an email.
-- **Sends no usage events** (`events.automatic` is false). The only records are whether a push arrived and was opened.
+- **Sends the same usage events as Firebase, for now** (from 4 November 2026, next release). `src/analytics.ts`
+  mirrors `obligation_added` and `paywall_viewed` to Krontelli with the same parameters, and `events.automatic` is
+  true, so the SDK also sends `first_open`, `app_open`, `app_update`, `session_start`, `push_received` and
+  `push_opened`. This is so the two can be compared for one release before Firebase Analytics is removed. No consent
+  step (`consentRequired` is not set): the app has no analytics opt-out and Firebase collects in every release build
+  too. Krontelli keeps events for 13 months; no advertising ID; nothing sold or shared. `__tests__/analytics.test.ts`
+  and `__tests__/push.test.ts` check the mirror and the init options.
 - **Does nothing in debug builds.**
 - Local deadline reminders (Notifee) are untouched and need no network.
 
-Krontelli receives a push token, a random installation id, OS and app version, language, time zone, and the marketing
-opt-in. IP is used for rate limiting and not stored; traffic goes through Cloudflare.
+Krontelli receives a push token, a random installation id, OS and app version, language, time zone, the marketing
+opt-in, and the usage events above. IP is used for rate limiting and not stored; traffic goes through Cloudflare.
 
-**Store answers.** No new data types. The earlier notes about OneSignal's automatic purchase trackers no longer apply:
+**Store answers.** No new data types: the usage events are the Product Interaction / App interactions already
+declared for Firebase (Analytics, not linked), and Krontelli is our own service, so nothing is shared. The earlier notes about OneSignal's automatic purchase trackers no longer apply:
 those SDKs are gone, and Krontelli is our own service, so nothing here is shared with a third party.
 
 ### Rules for sending pushes

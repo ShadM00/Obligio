@@ -10,6 +10,8 @@ import {
   setCrashlyticsCollectionEnabled,
 } from '@react-native-firebase/crashlytics';
 
+import { trackKrontelli } from './krontelliEvents';
+
 /**
  * Everything the app reports, in one place.
  *
@@ -23,6 +25,11 @@ import {
  * logged a second time here. The SDK also sends a few automatic events of its
  * own (session_start, user_engagement, app_update); docs/analytics-and-privacy.md
  * lists them.
+ *
+ * The two events also go to Krontelli, our own server, with the same name and
+ * parameters, so the two can be compared for a release before Firebase
+ * Analytics is removed. Krontelli only receives them in release builds (push.ts
+ * connects it there), the same builds in which Firebase collects.
  *
  * Parameters are fixed vocabularies and numbers. Nothing here ever carries an
  * obligation title, a business name, an email, a due date, a document or a user
@@ -70,16 +77,17 @@ export function logObligationAdded(
   source: ObligationSource,
   recurring: boolean,
 ): void {
-  safely(() =>
-    logEvent(getAnalytics(), 'obligation_added', {
-      source,
-      recurring: recurring ? 1 : 0,
-    }),
-  );
+  report('obligation_added', { source, recurring: recurring ? 1 : 0 });
 }
 
 export function logPaywallViewed(reason: PaywallReason): void {
-  safely(() => logEvent(getAnalytics(), 'paywall_viewed', { reason }));
+  report('paywall_viewed', { reason });
+}
+
+/** One event, to Firebase and to Krontelli, with the same parameters. */
+function report(name: string, params: Record<string, string | number>): void {
+  trackKrontelli(name, params);
+  safely(() => logEvent(getAnalytics(), name, params));
 }
 
 /**
