@@ -1,4 +1,37 @@
+require_relative 'krontelli_release'
+
 default_platform(:ios)
+
+# Krontelli app id (not a secret). The release key is read from ~/.config/krontelli/release-keys/<this id>.
+KRONTELLI_APP_ID = '00ef0fb0-c5eb-405d-917c-d770d4f553b5'
+
+# Tell Krontelli an IPA reached TestFlight, with the version and build read from the IPA itself.
+# Non-fatal, like the helper: a report must never fail a lane.
+def report_testflight_upload!(ipa, source)
+  KrontelliRelease.report(
+    app_id: KRONTELLI_APP_ID, platform: 'ios',
+    version: FastlaneCore::IpaFileAnalyser.fetch_app_version(ipa),
+    build: FastlaneCore::IpaFileAnalyser.fetch_app_build(ipa),
+    track: 'testflight', status: 'uploaded', source: source,
+  )
+rescue => e
+  UI.important("Krontelli release report skipped: #{e.message}")
+end
+
+# Tell Krontelli what `android release` just did on Play, with the version read from android/app/build.gradle (the
+# same values the build and the GlitchTip release use). A draft is only uploaded, a halted release is halted; for a
+# completed or in-progress release the helper works the status out from the track and rollout.
+def report_play_upload!(track, release_status, rollout, source)
+  gradle_file = File.read(File.expand_path('../android/app/build.gradle', __dir__))
+  status = { 'draft' => 'uploaded', 'halted' => 'halted' }[release_status.to_s]
+  KrontelliRelease.report(
+    app_id: KRONTELLI_APP_ID, platform: 'android',
+    version: gradle_file[/versionName\s+"([^"]+)"/, 1], build: gradle_file[/versionCode\s+(\d+)/, 1],
+    track: track, status: status, rollout: rollout, source: source,
+  )
+rescue => e
+  UI.important("Krontelli release report skipped: #{e.message}")
+end
 
 # Authentication uses an App Store Connect API key rather than an Apple ID and
 # password: it is 2FA-proof and non-interactive. The .p8 stays outside the
@@ -102,6 +135,7 @@ platform :ios do
       api_key: api_key,
       skip_waiting_for_build_processing: true,
     )
+    report_testflight_upload!(lane_context[SharedValues::IPA_OUTPUT_PATH], 'ios release')
   end
 
   desc 'Upload an already-built IPA to TestFlight, without rebuilding'
@@ -121,6 +155,7 @@ platform :ios do
       ipa: ipa,
       skip_waiting_for_build_processing: true,
     )
+    report_testflight_upload!(ipa, 'ios upload')
   end
 
   desc 'Submit an already-uploaded build for review: fastlane ios submit_existing version:1.4 build:202610311240'
@@ -138,6 +173,10 @@ platform :ios do
       phased_release: true,
       precheck_include_in_app_purchases: false,
       submission_information: { add_id_info_uses_idfa: false, export_compliance_uses_encryption: false },
+    )
+    KrontelliRelease.report(
+      app_id: KRONTELLI_APP_ID, platform: 'ios', version: options[:version], build: options[:build],
+      track: 'app_store', status: 'in_review', source: 'ios submit_existing',
     )
   end
 
@@ -203,6 +242,8 @@ platform :android do
       skip_upload_images: true,
       skip_upload_screenshots: true,
     )
+    report_play_upload!(ENV.fetch('PLAY_TRACK', 'internal'), ENV.fetch('PLAY_RELEASE_STATUS', 'draft'),
+                        ENV['PLAY_ROLLOUT'], 'android release')
   end
 
   desc 'Push Play listing metadata from fastlane/metadata/android without uploading a build'
