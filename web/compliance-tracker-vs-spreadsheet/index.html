@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compliance Tracking Spreadsheet vs Tracker App | Obligio</title>
+<meta name="description" content="A compliance tracking spreadsheet that flags due dates itself: copyable formulas, color rules, an email reminder script, and when to switch to an app.">
+<link rel="canonical" href="https://obligio.com/compliance-tracker-vs-spreadsheet/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#163e31">
+<link rel="icon" type="image/png" sizes="80x80" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Obligio">
+<meta property="og:title" content="Compliance Tracking Spreadsheet vs Tracker App | Obligio">
+<meta property="og:description" content="A compliance tracking spreadsheet that flags due dates itself: copyable formulas, color rules, an email reminder script, and when to switch to an app.">
+<meta property="og:url" content="https://obligio.com/compliance-tracker-vs-spreadsheet/">
+<meta property="og:image" content="https://obligio.com/assets/obligio-logo.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="Obligio calendar and checkmark logo">
+<meta property="article:modified_time" content="2026-11-07">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Compliance Tracking Spreadsheet vs Tracker App | Obligio">
+<meta name="twitter:description" content="A compliance tracking spreadsheet that flags due dates itself: copyable formulas, color rules, an email reminder script, and when to switch to an app.">
+<meta name="twitter:image" content="https://obligio.com/assets/obligio-logo.png">
+<link rel="stylesheet" href="/styles.css">
+<style>.page h3{font-size:19px;margin:28px 0 8px;letter-spacing:-.3px}.page ul,.page ol{padding-left:22px}.page li{margin:6px 0}.wrap{overflow-x:auto;margin:20px 0}.grid{border-collapse:collapse;width:100%;font-size:15px;line-height:1.55;color:var(--green)}.grid th,.grid td{border:1px solid #d6dfd0;padding:10px;text-align:left;vertical-align:top}.grid th{background:#e6eedf;font-weight:650}.grid caption{caption-side:top;text-align:left;font-size:13px;color:var(--muted);padding:0 0 10px}.grid code,.page pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}.grid code{word-break:break-all}.page pre{background:#f1f5ee;border:1px solid #d6dfd0;padding:14px;overflow-x:auto;line-height:1.5;white-space:pre}.note{font-size:14px;color:var(--muted)}.page details{border-top:1px solid #d6dfd0;padding:16px 0}.page summary{cursor:pointer;font-weight:600;font-size:17px;line-height:1.5}.sources-list{font-size:14px}@media print{header,footer,.skip-link,.actions{display:none}.page{padding:0;max-width:none}.grid{font-size:11px}}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://obligio.com/compliance-tracker-vs-spreadsheet/#article", "headline": "Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch", "description": "A compliance tracking spreadsheet that flags due dates itself: copyable formulas, color rules, an email reminder script, and when to switch to an app.", "url": "https://obligio.com/compliance-tracker-vs-spreadsheet/", "mainEntityOfPage": "https://obligio.com/compliance-tracker-vs-spreadsheet/", "datePublished": "2026-11-07", "dateModified": "2026-11-07", "inLanguage": "en-US", "image": "https://obligio.com/assets/obligio-logo.png", "author": {"@type": "Organization", "name": "Royal Nation LLC", "url": "https://obligio.com/"}, "publisher": {"@type": "Organization", "@id": "https://obligio.com/#organization", "name": "Obligio", "legalName": "Royal Nation LLC", "url": "https://obligio.com/", "logo": {"@type": "ImageObject", "url": "https://obligio.com/assets/obligio-logo.png"}}}, {"@type": "FAQPage", "@id": "https://obligio.com/compliance-tracker-vs-spreadsheet/#faq", "mainEntity": [{"@type": "Question", "name": "Can Google Sheets send me a reminder when a date is near?", "acceptedAnswer": {"@type": "Answer", "text": "Not on its own. Google's notification settings for Sheets cover comments, edits by other people and form submissions, not dates in cells. To get an email when a date is near you need a short Apps Script with a time-driven trigger, like the one on this page."}}, {"@type": "Question", "name": "Does the template work in Excel?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The formulas use IF, DAYS, MAX and TODAY, which exist in both Excel and Google Sheets. The email script is Google Sheets only; in Excel, put the reminder dates in your calendar instead."}}, {"@type": "Question", "name": "Should I calculate the next expiry date with a formula?", "acceptedAnswer": {"@type": "Answer", "text": "Only as a placeholder. EDATE(expiry, cycle in months) gives a date the same number of months later, but the date that counts is the one printed on the renewed license or policy. Replace the placeholder with that date when the new document arrives."}}]}]}</script>
+</head><body><a class="skip-link" href="#main">Skip to content</a><header><nav aria-label="Main navigation"><a class="brand" href="/" aria-label="Obligio home"><img src="/assets/obligio-logo.png" width="44" height="44" alt=""><span>Obligio</span></a><div class="navlinks"><a href="/#features">Features</a><a href="/#plans">Free &amp; Plus</a><a href="/support">Support</a></div></nav></header><main id="main" class="page">
+<p class="kicker">GUIDE</p>
+<h1>Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch</h1>
+<p>A spreadsheet is a good compliance tracker for a small business if it does three things without you remembering to look: counts the days left on every license, permit and policy, turns a row red or amber when a date is close, and sends you a reminder. Neither Google Sheets nor Excel does the third by default; a dated cell never notifies anyone. Below are the formulas and color rules to copy (they work in both), a free template file, a short script that makes Google Sheets email you, and a rule for when the spreadsheet has done its job and something else should take over.</p>
+
+<h2>What a spreadsheet does well, and the one thing it does not do</h2>
+<p>A spreadsheet is free, you already know it, everyone can open it, and you control every column. For five or ten dated obligations it is often all you need. What it cannot do by itself is tell you a date is coming. Google's help page lists what Sheets can notify you about: comments, changes made by other people ("Any changes are made"), and form submissions. You "won't get notifications when you make changes" yourself, and nothing on the page covers a date in a cell (<a href="https://support.google.com/docs/answer/91588?hl=en">Google Docs Editors Help, Manage your notifications</a>). So a spreadsheet tracker works only as long as someone opens it. The formulas below make that look quick; the script removes the need.</p>
+
+<h2>The columns and formulas (copy them)</h2>
+<p>For what each column means and why it is there, see the <a href="/business-licence-renewal-tracker/">business license renewal tracker</a> guide. This sheet adds three calculated columns on the right. Put your headings in row 1 and your first obligation in row 2, then fill the formulas down.</p>
+<div class="wrap">
+<table class="grid">
+<caption>Columns A to J. A to G are typed in; H, I and J are formulas (shown for row 2).</caption>
+<thead><tr><th scope="col">Column</th><th scope="col">Heading</th><th scope="col">What goes in it</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>Obligation</td><td>Business license, reseller permit, liability policy, annual report</td></tr>
+<tr><td>B</td><td>Agency / portal</td><td>Who issues it and where you renew</td></tr>
+<tr><td>C</td><td>Expires on</td><td>The date printed on the document, entered as a date</td></tr>
+<tr><td>D</td><td>Cycle (months)</td><td>12, 24, 48, 60</td></tr>
+<tr><td>E</td><td>Window opens (days before expiry)</td><td>How early the agency lets you renew. Blank if it does not say</td></tr>
+<tr><td>F</td><td>Owner</td><td>The one person who renews it</td></tr>
+<tr><td>G</td><td>Proof stored</td><td>Where the current certificate lives</td></tr>
+<tr><td>H</td><td>Days left</td><td><code>=IF(C2="","",DAYS(C2,TODAY()))</code></td></tr>
+<tr><td>I</td><td>Status</td><td><code>=IF(C2="","",IF(H2&lt;0,"Overdue",IF(H2&lt;=30,"Due within 30 days",IF(H2&lt;=IF(E2="",90,E2),"Window open","Current"))))</code></td></tr>
+<tr><td>J</td><td>Next reminder</td><td><code>=IF(C2="","",IF(TODAY()&lt;=C2-IF(E2="",90,MAX(E2,30)),C2-IF(E2="",90,MAX(E2,30)),IF(TODAY()&lt;=C2-30,C2-30,IF(TODAY()&lt;=C2-7,C2-7,"Now"))))</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>How they work:</p>
+<ul>
+<li><strong>Days left</strong> uses DAYS(end, start), which returns a plain number in both programs, so a negative number means overdue.</li>
+<li><strong>Status</strong> gives one of four words. "Window open" uses your column E; if E is blank it uses 90 days, the default first reminder in the renewal tracker guide.</li>
+<li><strong>Next reminder</strong> gives the next of three dates: the day the window opens (never later than 30 days out), 30 days before expiry, and 7 days before. Format column J as a date. "Now" means all three have passed and the renewal should already be under way.</li>
+</ul>
+<p>Prefer not to type them? <a href="/compliance-tracker-vs-spreadsheet/compliance-tracker-template.csv" download>Download the template (CSV)</a> with these headings, the formulas filled in, and three example rows to replace. Open it in Excel, or in Google Sheets with File, Import. If a formula shows as text, paste it from the table above.</p>
+
+<h2>Color rules: red for overdue, amber for 30 days</h2>
+<p>Select A2:J200, then add two rules that use a formula. In Google Sheets: Format, Conditional formatting, "Custom formula is" (<a href="https://support.google.com/docs/answer/78413?hl=en">Google, Use conditional formatting rules</a>). In Excel: Home, Conditional Formatting, New Rule, "Use a formula to determine which cells to format"; the formula "must return True or False" (<a href="https://support.microsoft.com/en-us/excel/use-conditional-formatting-to-highlight-information-in-excel">Microsoft, Use conditional formatting</a>).</p>
+<ul>
+<li>Red fill: <code>=AND($H2&lt;&gt;"",$H2&lt;0)</code></li>
+<li>Amber fill: <code>=AND($H2&lt;&gt;"",$H2&gt;=0,$H2&lt;=30)</code></li>
+</ul>
+<p>The dollar sign before H keeps every cell in the row looking at its own Days left, so the whole row changes color. The <code>$H2&lt;&gt;""</code> part stops blank rows turning red. Then sort by column H, smallest first, so the most urgent row is always at the top.</p>
+
+<h2>Make Google Sheets email you</h2>
+<p>Google Apps Script can run a function on a timer: "Time-driven triggers allow scripts to execute at specific times or intervals" (<a href="https://developers.google.com/apps-script/guides/triggers/installable">Google, Installable triggers</a>). This one checks the sheet once a day and emails you any row due within 30 days or already overdue. It works out the days itself, so it does not rely on the sheet having recalculated.</p>
+<ol>
+<li>Name the tab <strong>Tracker</strong> (bottom of the sheet). Keep the columns in the order above.</li>
+<li>Extensions, Apps Script. Delete what is there, paste the code below, and put your email address in SEND_TO.</li>
+<li>Save, then click Run once. Google asks you to authorize the script to read the sheet and send email as you; that prompt is expected.</li>
+<li>Open Triggers (the clock icon), Add Trigger, choose <code>emailDueSoon</code>, event source Time-driven, and a daily timer.</li>
+</ol>
+<pre><code>// Emails you every row that expires within 30 days or has expired.
+var SHEET_NAME = 'Tracker';
+var SEND_TO = 'you@example.com'; // your address
+
+function emailDueSoon() {
+  var rows = SpreadsheetApp.getActiveSpreadsheet()
+    .getSheetByName(SHEET_NAME).getDataRange().getValues();
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var lines = [];
+  for (var i = 1; i &lt; rows.length; i++) {
+    var name = rows[i][0], expires = rows[i][2], owner = rows[i][5];
+    if (!name || !(expires instanceof Date)) continue;
+    var daysLeft = Math.round((expires - today) / 86400000);
+    if (daysLeft &lt;= 30) {
+      lines.push(name + ': ' + (daysLeft &lt; 0 ? 'OVERDUE by ' + (-daysLeft) + ' days'
+        : daysLeft + ' days left') + ' (owner: ' + owner + ')');
+    }
+  }
+  if (lines.length) {
+    MailApp.sendEmail(SEND_TO, lines.length + ' compliance item(s) due within 30 days',
+      lines.join('\n'));
+  }
+}</code></pre>
+<p>Three limits to know. A free Google account can send email to 100 recipients a day from scripts, far more than this needs (<a href="https://developers.google.com/apps-script/guides/services/quotas">Google, Apps Script quotas</a>). Triggers always run "under the creator's account", so if that person leaves, the emails stop (<a href="https://developers.google.com/apps-script/guides/triggers/installable">Google, Installable triggers</a>). And set the sheet's time zone (File, Settings) and the script's (Project Settings) to the same place, or a date can be a day out. Excel has no equivalent built in; there, put the dates from column J in your calendar.</p>
+
+<h2>Spreadsheet, phone app or audit platform: which fits</h2>
+<div class="wrap">
+<table class="grid">
+<thead><tr><th scope="col"></th><th scope="col">Spreadsheet (this page)</th><th scope="col">Compliance tracker app</th><th scope="col">Audit / framework platform</th></tr></thead>
+<tbody>
+<tr><th scope="row">Built for</th><td>A list of dated obligations you control</td><td>Licenses, permits, policies and filings for one business</td><td>Controls, risks and evidence for frameworks such as SOC 2 and ISO 27001</td></tr>
+<tr><th scope="row">Reminders</th><td>Only with the script, or by copying dates to a calendar</td><td>The main reason to use one; check that it reaches your phone</td><td>Through the platform's automations, once you set them up</td></tr>
+<tr><th scope="row">Documents</th><td>A file path or link in a cell</td><td>Depends on the app; check before you choose</td><td>Evidence linked to each control</td></tr>
+<tr><th scope="row">Recurring dates</th><td>You type the new date after each renewal</td><td>Depends on the app; check before you choose</td><td>Depends on how the base is built</td></tr>
+<tr><th scope="row">Cost</th><td>Free</td><td>Check the store listing; some have a free tier</td><td>Check the vendor</td></tr>
+<tr><th scope="row">Fits</th><td>One person, up to about ten items, a desk routine</td><td>Owner-operators who live on their phone, or several staff renewals</td><td>Companies preparing for a formal audit</td></tr>
+</tbody>
+</table>
+</div>
+<p class="note">Example of the third column, checked November 7, 2026: Airtable's compliance tracking template describes SOC 2 and ISO 27001 tabs, a risk register and a corrective action log (<a href="https://www.airtable.com/templates/compliance-tracking/exptcjSBc8Bc49xAe">Airtable</a>). It suits a team running audits; a café renewing a food permit and a liability policy needs far less.</p>
+
+<h2>When to stop using the spreadsheet: a rule</h2>
+<p>Keep the spreadsheet while all of these are true:</p>
+<ul>
+<li>One person owns it and opens it at least weekly, or the script is running.</li>
+<li>There are fewer than about ten rows, so a glance shows everything.</li>
+<li>Nobody needs the certificate from their phone at the counter or on a job site.</li>
+</ul>
+<p>Switch when any one stops being true, and especially when renewals are shared between people, when the script's owner may leave, or when you have missed a date the sheet knew about. The sheet was right; nobody was looking. That is the failure a reminder tool exists for.</p>
+<p>One option is <a href="/">Obligio</a>, our app for iPhone and Android. It holds the same rows and sends reminders 30, 14, 7 and 1 days before each date, with notifications on. The Free plan tracks three obligations; Plus adds unlimited obligations, attached documents and recurring obligations that roll forward when completed (<a href="/#plans">Free and Plus</a>). It does not import a spreadsheet, so moving means typing each row once. It does not tell you which licenses your business needs or file anything for you. If your sheet is working, keep it.</p>
+
+<h2>When this page does not apply</h2>
+<ul>
+<li>If you do not yet know which licenses and filings your business needs, start with the SBA's <a href="https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits">licenses and permits guide</a> and your state's Secretary of State. A tracker only holds what you put in it.</li>
+<li>For federal tax filing dates by entity type, use the <a href="/small-business-compliance-calendar/">small business compliance calendar</a>.</li>
+<li>If a date in your sheet has already passed, read <a href="/what-happens-if-a-business-licence-expires/">what happens if a business license expires</a> and contact the agency today.</li>
+<li>For questions about what a rule requires of your business, ask a licensed attorney or accountant. This page is organizational guidance, not legal or tax advice.</li>
+</ul>
+
+<h2>Questions</h2>
+<details><summary>Can Google Sheets send me a reminder when a date is near?</summary><p>Not on its own. Google's notification settings for Sheets cover comments, edits by other people and form submissions, not dates in cells. To get an email when a date is near you need a short Apps Script with a time-driven trigger, like the one above.</p></details>
+<details><summary>Does the template work in Excel?</summary><p>Yes. The formulas use IF, DAYS, MAX and TODAY, which exist in both Excel and Google Sheets. The email script is Google Sheets only; in Excel, put the reminder dates in your calendar instead.</p></details>
+<details><summary>Should I calculate the next expiry date with a formula?</summary><p>Only as a placeholder. <code>=EDATE(C2,D2)</code> gives a date D2 months after C2 (<a href="https://support.microsoft.com/en-us/office/edate-function-3c920eb2-6e66-44e7-a1f5-753ae47ee4f5">Microsoft, EDATE</a>; <a href="https://support.google.com/docs/answer/3092974?hl=en">Google, EDATE</a>), but the date that counts is the one printed on the renewed license or policy. Replace the placeholder with that date when the new document arrives.</p></details>
+
+<h2>Sources</h2>
+<ul class="sources-list">
+<li><a href="https://support.google.com/docs/answer/91588?hl=en">Google Docs Editors Help, Manage your notifications</a></li>
+<li><a href="https://support.google.com/docs/answer/78413?hl=en">Google Docs Editors Help, Use conditional formatting rules in Google Sheets</a></li>
+<li><a href="https://support.google.com/docs/answer/3092974?hl=en">Google Docs Editors Help, EDATE</a></li>
+<li><a href="https://developers.google.com/apps-script/guides/triggers/installable">Google Apps Script, Installable triggers</a></li>
+<li><a href="https://developers.google.com/apps-script/guides/services/quotas">Google Apps Script, Quotas for Google Services</a></li>
+<li><a href="https://support.microsoft.com/en-us/excel/use-conditional-formatting-to-highlight-information-in-excel">Microsoft Support, Use conditional formatting to highlight information in Excel</a></li>
+<li><a href="https://support.microsoft.com/en-us/office/edate-function-3c920eb2-6e66-44e7-a1f5-753ae47ee4f5">Microsoft Support, EDATE function</a></li>
+<li><a href="https://www.airtable.com/templates/compliance-tracking/exptcjSBc8Bc49xAe">Airtable, Compliance tracking template</a></li>
+<li><a href="https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits">U.S. Small Business Administration, Apply for licenses and permits</a></li>
+</ul>
+<p class="note">All sources were read on November 7, 2026. Menus in Google Sheets and Excel move between versions; the help pages linked above have the current steps.</p>
+
+<p>If you would rather have the reminders on your phone than in a script, Obligio is free for your first three obligations: <a href="https://apps.apple.com/app/id6808265621">download on the App Store</a> or <a href="https://play.google.com/store/apps/details?id=com.obligio.app">get it on Google Play</a>. Questions about the app go to <a href="/support">support</a>.</p>
+</main><footer><div><a class="brand" href="/"><img src="/assets/obligio-logo.png" width="32" height="32" alt="">Obligio</a><p>© 2026 Royal Nation LLC. Organizational tools, not legal or tax advice.</p></div><div class="footer-links"><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></footer></body></html>
