@@ -31,6 +31,13 @@ def norm(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().lower()
 
 
+# States whose research is "partial" but whose published part is fully evidenced.
+# Only entries that pass every gate are kept; the note is shown on the page.
+PARTIAL_OK = {
+    "TN": "This page covers corporations. The Tennessee pages we read do not state when an LLC's "
+          "annual report is due; check with the Secretary of State.",
+}
+
 # State-run hosts outside .gov: Arkansas's state portal (ark.org) and the
 # Tennessee Secretary of State's file server (tnsosfiles.com).
 STATE_RUN = ("ark.org", "tnsosfiles.com")
@@ -57,21 +64,23 @@ def main(research: pathlib.Path) -> None:
         bad_hosts = [s["url"] for s in sources if not official(s["url"])]
         sources = [s for s in sources if official(s["url"])]
         corpus = ""
+        texts = []  # normalised text per source, same order as `sources`
         for s in sources:
             p = research / (s.get("text_file") or "__none__")
-            if p.is_file():
-                corpus += " " + norm(p.read_text(errors="replace"))
+            texts.append(norm(p.read_text(errors="replace")) if p.is_file() else "")
+            corpus += " " + texts[-1]
         if bad_hosts:
             log.append(f"{d['region']}: dropped non-official sources {bad_hosts}")
         entries = []
         for x in d.get("entries", []):
             ev = x.get("evidence") or {}
-            kept = {"evidence": {}}
+            kept = {"evidence": {}, "evidence_source": {}}
             for k in FACTS:
                 v, snip = x.get(k), ev.get(k)
                 if v and snip and len(snip.split()) >= 3 and norm(snip) in corpus:
                     kept[k] = v.strip()
                     kept["evidence"][k] = snip.strip()
+                    kept["evidence_source"][k] = next(i for i, t in enumerate(texts) if norm(snip) in t)
                 else:
                     kept[k] = None
                     if v:
@@ -83,7 +92,8 @@ def main(research: pathlib.Path) -> None:
                 entries.append(kept)
         # The researcher's own status is a gate too: "partial" means the official
         # pages disagree or leave the due date out, and those states wait.
-        status = ("verified" if d.get("status") == "verified" and entries and sources and corpus.strip()
+        research_ok = d.get("status") == "verified" or d["region"] in PARTIAL_OK
+        status = ("verified" if research_ok and entries and sources and corpus.strip()
                   else "not_published")
         if d["region"] in confirm["needs_confirmation"] and confirm["results"].get(d["region"], {}).get("result") != "all":
             status = "not_published"
@@ -96,7 +106,8 @@ def main(research: pathlib.Path) -> None:
                        "entries": entries,
                        "sources": [{"name": s["name"], "url": s["url"], "source_updated": s.get("source_updated")}
                                    for s in sources],
-                       "read_on": d.get("read_on"), "draft_differences": d.get("draft_differences")})
+                       "read_on": d.get("read_on"), "draft_differences": d.get("draft_differences"),
+                       "scope_note": PARTIAL_OK.get(d["region"])})
     out = {"_about": "Facts for the state pages on obligio.com. Each fact has a verbatim snippet that was found "
                      "in the official page as fetched on read_on. Built by site/import_verified.py; see CONTENT_RULES.md.",
            "states": states, "not_published": sorted(not_published)}

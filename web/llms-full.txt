@@ -111,6 +111,8 @@ Organisational guidance, not legal or tax advice. Check the official page before
  Domestic benefit corporations Within 120 days of the end of the corporation's fiscal year. 
  South Carolina Annual report (Schedule D of the SC Corporate Tax return)
  Generally every domestic corporation, every foreign corporation qualified to… Due with the corporate tax return, by the return due date: C corporations (SC1120) by April 15 for calendar-year filers, otherwise the 15th day of the 4th month after the tax year ends; S corporations (SC1120S) by March 15, otherwise the 15th day of the 3rd month after the tax year ends. 
+ Tennessee Annual report (corporation)
+ Corporations Due on or before the first day of the fourth month after the close of the corporation's fiscal year. If no fiscal-year close month was given in the charter, the Division of Business Services records December by default. 
  Texas Annual Franchise Tax Report, plus Public Information Report (Form 05-102) or Ownership Information Report (Form 05-167)
  Each taxable entity formed or organized in Texas or doing business in Texas Due May 15 each year; if May 15 falls on a weekend or holiday, due the next business day. 
  Utah Annual report for division
@@ -134,7 +136,7 @@ Organisational guidance, not legal or tax advice. Check the official page before
 
 ## States not on this page yet
 
-We publish a state only when its official page could be read and quoted. Not covered yet: Idaho, Illinois, Indiana, Iowa, Louisiana, Massachusetts, Oklahoma, South Dakota, Tennessee. Check those states' Secretary of State websites directly. 
+We publish a state only when its official page could be read and quoted. Not covered yet: Idaho, Illinois, Indiana, Iowa, Louisiana, Massachusetts, Oklahoma, South Dakota. Check those states' Secretary of State websites directly. 
 
 ## Turn a due date into reminders
 
@@ -410,7 +412,7 @@ From the official Arkansas Secretary of State page, read on 20 November 2026. Yo
 ## Who has to file the Arkansas Franchise Tax / Annual Report (Arkansas Corporate Franchise Tax Act of 1979)?
 
 Corporations, LLCs, banks and insurance companies registered in Arkansas. 
-The official page says: “requires all Corporations, LLC's, Banks, and Insurance Companies registered in Arkansas” ( Arkansas Secretary of State — State Franchise Tax and Annual Report Filing System ) 
+The official page says: “requires all Corporations, LLC's, Banks, and Insurance Companies registered in Arkansas” ( Arkansas Secretary of State — Franchise Tax / Annual Report Forms ) 
 
 ## When is the Arkansas annual report due?
 
@@ -420,12 +422,12 @@ The official page says: “Filing due on or before May 1 to avoid penalties” (
 ## How much does it cost to file in Arkansas?
 
 Varies by entity type: LLC or PLLC $150; corporations with stock minimum $150; corporations without stock $300; banks minimum $150; online card payments add a processing fee (page states $5.00 for credit card, $3 for electronic check). 
-The official page says: “Limited Liability Company LLC or PLLC N/A $150 $150” ( Arkansas Secretary of State — State Franchise Tax and Annual Report Filing System ) 
+The official page says: “Limited Liability Company LLC or PLLC N/A $150 $150” ( Arkansas Secretary of State — Franchise Tax / Annual Report Forms ) 
 
 ## What happens if the Arkansas report is late?
 
 Failure to pay can bring additional fees, penalties and interest, or revocation of the authorization to do business; franchise taxes keep accruing even for revoked businesses; further BCS filings are prohibited for entities that fail to pay. 
-The official page says: “or even revocation of the authorization to do business” ( Arkansas Secretary of State — State Franchise Tax and Annual Report Filing System ) 
+The official page says: “or even revocation of the authorization to do business” ( Arkansas Secretary of State — Franchise Tax / Annual Report Forms ) 
 
 File online through the state's filing service . 
 
@@ -571,12 +573,12 @@ The official page says: “filed two months prior to the Periodic Report month o
 ## How much does it cost to file in Colorado?
 
 $25.00 (online). 
-The official page says: “Periodic Report $25.00 n/a Periodic Report Late Filing Penalty $50.00” ( Colorado Secretary of State — Business FAQs: Periodic reports ) 
+The official page says: “Periodic Report $25.00 n/a Periodic Report Late Filing Penalty $50.00” ( Colorado Secretary of State — Business Organizations Fee Schedule (linked from the FAQ) ) 
 
 ## What happens if the Colorado report is late?
 
 $50.00 Periodic Report late filing penalty. The entity's status becomes 'Delinquent' if the report is not filed. 
-The official page says: “Periodic Report Late Filing Penalty $50.00” ( Colorado Secretary of State — Business FAQs: Periodic reports ) 
+The official page says: “Periodic Report Late Filing Penalty $50.00” ( Colorado Secretary of State — Business Organizations Fee Schedule (linked from the FAQ) ) 
 
 File online through the state's filing service . 
 
@@ -757,22 +759,22 @@ File online through the state's filing service .
 ### Who files it
 
 Domestic and foreign LLCs, limited partnerships and general partnerships formed or registered in Delaware. They file no annual report. 
-The official page says: “All Domestic and Foreign Limited Liability Companies, Limited Partnerships, and General Partnerships” ( Delaware Division of Corporations — Annual Report and Tax Instructions ) 
+The official page says: “All Domestic and Foreign Limited Liability Companies, Limited Partnerships, and General Partnerships” ( Delaware Division of Corporations — LLC/LP/GP Franchise Tax Instructions ) 
 
 ### When it is due
 
 Pay the annual tax for the prior year on or before June 1 each year. It is filed every year. 
-The official page says: “The annual taxes for the prior year are due on or before June 1st.” ( Delaware Division of Corporations — Annual Report and Tax Instructions ) 
+The official page says: “The annual taxes for the prior year are due on or before June 1st.” ( Delaware Division of Corporations — LLC/LP/GP Franchise Tax Instructions ) 
 
 ### What it costs
 
 $400 annual tax (no proration). 
-The official page says: “they must pay the $400 yearly tax on or before June 1st” ( Delaware Division of Corporations — Annual Report and Tax Instructions ) 
+The official page says: “they must pay the $400 yearly tax on or before June 1st” ( Delaware Division of Corporations — LLC/LP/GP Franchise Tax Instructions ) 
 
 ### If it is late
 
 $200 penalty plus 1.5% interest per month on tax and penalty. 
-The official page says: “Failure to pay the required annual taxes will result in a penalty of $200.00” ( Delaware Division of Corporations — Annual Report and Tax Instructions ) 
+The official page says: “Failure to pay the required annual taxes will result in a penalty of $200.00” ( Delaware Division of Corporations — LLC/LP/GP Franchise Tax Instructions ) 
 
 File online through the state's filing service . 
 
@@ -903,7 +905,7 @@ The official page says: “may not prosecute or maintain any action in any court
 ### Who files it
 
 Florida LLCs and registered foreign LLCs. 
-The official page says: “A limited liability company or a registered foreign limited liability company” ( Florida Senate — 2026 Florida Statutes § 607.1622, Annual report for department ) 
+The official page says: “A limited liability company or a registered foreign limited liability company” ( Florida Senate — 2026 Florida Statutes § 605.0212, Annual report for department (LLCs) ) 
 
 ### When it is due
 
@@ -917,7 +919,7 @@ The state's page we read does not state the fee. The state shows it when you fil
 ### If it is late
 
 Until the report is filed and all fees and penalties are paid, the LLC cannot maintain or defend a lawsuit in a Florida court, and it can be dissolved or have its certificate of authority cancelled. 
-The official page says: “may not maintain or defend any action in a court of this state” ( Florida Senate — 2026 Florida Statutes § 607.1622, Annual report for department ) 
+The official page says: “may not maintain or defend any action in a court of this state” ( Florida Senate — 2026 Florida Statutes § 605.0212, Annual report for department (LLCs) ) 
 
 ## Put the date in your calendar
 
@@ -1286,12 +1288,12 @@ From the official Maryland Business Express page, read on 20 November 2026. Your
 ## Who has to file the Maryland Annual Report (SDAT Form 1 — annual report/personal property return)?
 
 All entities that existed as of January 1 (including LLCs and corporations), whether or not they own property or did business. 
-The official page says: “All entities are required to file a Form 1” ( Maryland Business Express — Maintain Good Standing Status ) 
+The official page says: “All entities are required to file a Form 1” ( Maryland Business Express — Business FAQ (same site) ) 
 
 ## When is the Maryland annual report due?
 
 Due by April 15 each year for every entity that existed on January 1. The first filing is due the year after the business is formed (e.g. formed any time in 2024, first Annual Report due by April 15, 2025). It is filed every year. 
-The official page says: “by April 15th if they existed as of January 1st.” ( Maryland Business Express — Maintain Good Standing Status ) 
+The official page says: “by April 15th if they existed as of January 1st.” ( Maryland Business Express — Business FAQ (same site) ) 
 
 ## How much does it cost to file in Maryland?
 
@@ -1300,7 +1302,7 @@ The state's page we read does not state the fee. The state shows it when you fil
 ## What happens if the Maryland report is late?
 
 A late filing penalty applies to a late Form 1 (amount not stated on the state's page). A business not in Good Standing that does not fix it is forfeited; a forfeited business cannot legally operate in Maryland. Causes of forfeiture include failing to file a previous-year Form 1 (domestic) or current-year Form 1 (foreign), or not paying a late filing penalty. 
-The official page says: “pay an outstanding late filing penalty resulting from the late filing of a Form 1” ( Maryland Business Express — Maintain Good Standing Status ) 
+The official page says: “pay an outstanding late filing penalty resulting from the late filing of a Form 1” ( Maryland Business Express — Business FAQ (same site) ) 
 
 File online through the state's filing service . 
 
@@ -2450,7 +2452,7 @@ Read on 20 November 2026. Quotations are copied from the page as it read that da
  Oregon annual report due date 
  Rhode Island annual report due date 
  South Carolina annual report due date 
- Texas annual report due date 
+ Tennessee annual report due date 
  All states
 
 ---
@@ -2535,8 +2537,8 @@ Read on 20 November 2026. Quotations are copied from the page as it read that da
  Oregon annual report due date 
  Pennsylvania annual report due date 
  South Carolina annual report due date 
+ Tennessee annual report due date 
  Texas annual report due date 
- Utah annual report due date 
  All states
 
 ---
@@ -2595,6 +2597,68 @@ Read on 20 November 2026. Quotations are copied from the page as it read that da
  Oregon annual report due date 
  Pennsylvania annual report due date 
  Rhode Island annual report due date 
+ Tennessee annual report due date 
+ Texas annual report due date 
+ Utah annual report due date 
+ All states
+
+---
+
+URL: https://obligio.com/annual-report-due-dates/tennessee/
+Updated: 2026-11-20
+
+Tennessee Annual Report Due Date, Fee and Late Penalty 
+
+ Skip to content 
+
+STATE FILING · TENNESSEE 
+
+# Tennessee annual report due date
+
+ Annual report (corporation) : Due on or before the first day of the fourth month after the close of the corporation's fiscal year. If no fiscal-year close month was given in the charter, the Division of Business Services records December by default. 
+
+ This page covers corporations. The Tennessee pages we read do not state when an LLC's annual report is due; check with the Secretary of State. 
+
+From the official Tennessee Secretary of State page, read on 20 November 2026. Your own date depends on when and how your business was formed. 
+
+## Who has to file the Tennessee Annual report (corporation)?
+
+Corporations. 
+The official page says: “requires corporations to file an annual report with the Secretary of State” ( Tennessee Secretary of State — Instructions, Charter For-Profit Corporation (SS-4417) ) 
+
+## When is the Tennessee annual report due?
+
+Due on or before the first day of the fourth month after the close of the corporation's fiscal year. If no fiscal-year close month was given in the charter, the Division of Business Services records December by default. It is filed every year. 
+The official page says: “on or before the first day of the fourth month following the end” ( Tennessee Secretary of State — Instructions, Charter For-Profit Corporation (SS-4417) ) 
+
+## How much does it cost to file in Tennessee?
+
+$20, plus $20 more if the registered agent or registered office changes. 
+The official page says: “The annual report fee for a corporation is $20” ( Tennessee Secretary of State — Business Services FAQs ) 
+
+## What happens if the Tennessee report is late?
+
+A business entity that does not file its annual report on time may be administratively dissolved and placed in inactive status. 
+The official page says: “failed to file its annual report on a timely basis may be administratively dissolved” ( Tennessee Secretary of State — Business Services FAQs ) 
+
+## Put the date in your calendar
+
+Your own due date depends on when and how your business was formed, so the state page is where you confirm it. Once you know it, the renewal reminder calculator works out the reminder dates and gives you a calendar file. 
+
+Obligio keeps dates like this on your phone with reminders 30, 14, 7 and 1 days before. It is free for your first three obligations: download on the App Store or get it on Google Play . 
+
+## Sources
+
+ Tennessee Secretary of State — Instructions, Charter For-Profit Corporation (SS-4417) (page updated 2019-12 (form revision mark 'SS-4417 (12/19)')) 
+ Tennessee Secretary of State — Business Services FAQs 
+
+Read on 20 November 2026. Quotations are copied from the page as it read that day. States change fees and rules; the official page is the authority. Organisational guidance, not legal or tax advice. Check the official page before you file. 
+
+## Other states
+
+ Pennsylvania annual report due date 
+ Rhode Island annual report due date 
+ South Carolina annual report due date 
  Texas annual report due date 
  Utah annual report due date 
  Vermont annual report due date 
@@ -2653,9 +2717,9 @@ Read on 20 November 2026. Quotations are copied from the page as it read that da
 
 ## Other states
 
- Pennsylvania annual report due date 
  Rhode Island annual report due date 
  South Carolina annual report due date 
+ Tennessee annual report due date 
  Utah annual report due date 
  Vermont annual report due date 
  Virginia annual report due date 
@@ -2710,8 +2774,8 @@ Read on 20 November 2026. Quotations are copied from the page as it read that da
 
 ## Other states
 
- Rhode Island annual report due date 
  South Carolina annual report due date 
+ Tennessee annual report due date 
  Texas annual report due date 
  Vermont annual report due date 
  Virginia annual report due date 
@@ -2794,7 +2858,7 @@ Read on 20 November 2026. Quotations are copied from the page as it read that da
 
 ## Other states
 
- South Carolina annual report due date 
+ Tennessee annual report due date 
  Texas annual report due date 
  Utah annual report due date 
  Virginia annual report due date 
@@ -2845,7 +2909,7 @@ The state's page we read does not state a late penalty. Ask the filing office be
 ### Who files it
 
 Domestic LLCs, protected series, and foreign LLCs and foreign protected series registered in Virginia. 
-The official page says: “Every domestic limited liability company, every protected series, every foreign limited liability company registered” ( Code of Virginia § 13.1-775 — Annual report of domestic and foreign corporations (Virginia LIS) ) 
+The official page says: “Every domestic limited liability company, every protected series, every foreign limited liability company registered” ( Code of Virginia § 13.1-1062 — Annual registration fees for limited liability companies (Virginia LIS) ) 
 
 ### When it is due
 
@@ -2855,7 +2919,7 @@ The official page says: “on or before the last day of the twelfth month next s
 ### What it costs
 
 $50 per year. 
-The official page says: “by such date in each year thereafter, an annual registration fee of $50” ( Code of Virginia § 13.1-775 — Annual report of domestic and foreign corporations (Virginia LIS) ) 
+The official page says: “by such date in each year thereafter, an annual registration fee of $50” ( Code of Virginia § 13.1-1062 — Annual registration fees for limited liability companies (Virginia LIS) ) 
 
 ### If it is late
 
@@ -3215,7 +3279,7 @@ Practical guides for small-business owners on keeping licenses, permits, insuran
  Renewal reminder calculator 
  Reminder dates and a calendar file for any due date. 
  Annual report due dates by state 
- 41 states, each from its official page. 
+ 42 states, each from its official page. 
 
 ## Guides
 

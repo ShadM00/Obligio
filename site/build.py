@@ -236,6 +236,8 @@ def state_page(s: dict, states: list[dict]) -> tuple[str, str]:
     labels = label_entries(s)
     answer = [f'<strong>{e(lab)}</strong>: {e(sentence(x["due_rule"]))}' for lab, x in zip(labels, s["entries"])]
     body.append(f'<p class="answer">{"<br>".join(answer)}</p>')
+    if s.get("scope_note"):
+        body.append(f'<p class="note"><strong>{e(s["scope_note"])}</strong></p>')
     body.append(f'<p class="note">From the official {e(src["name"].split(" — ")[0])} page, read on '
                 f'{human_date(s["read_on"])}. Your own date depends on when and how your business was formed.</p>')
     faq = []
@@ -265,8 +267,11 @@ def state_page(s: dict, states: list[dict]) -> tuple[str, str]:
                    (ev.get("late_penalty") or ev.get("consequence")) if late else None)]
             faq_q = [q for q, _, _ in qs]
         tag = "h3" if multi else "h2"
+        where = x.get("evidence_source") or {}
         for (q, a, snip), fq in zip(qs, faq_q):
-            body.append(f"<{tag}>{e(q)}</{tag}><p>{e(a)}</p>{quote(snip, src)}")
+            field = next((k for k, v in ev.items() if v and v == snip), None)
+            fact_src = s["sources"][where.get(field, 0)] if field else src
+            body.append(f"<{tag}>{e(q)}</{tag}><p>{e(a)}</p>{quote(snip, fact_src)}")
             faq.append({"@type": "Question", "name": fq,
                         "acceptedAnswer": {"@type": "Answer", "text": f"{a} Source: {src['name']}, read {human_date(s['read_on'])}."}})
         if x.get("file_url"):

@@ -14,6 +14,12 @@
       "due_rule": "Biennial Reports are due by January 2nd, reports marked after February 1st",
       "late_penalty": "reports marked after February 1st incur late fee penalties"
      },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0
+     },
      "filing_name": "Biennial Report",
      "who_files": "For-profit corporations, professional corporations, limited liability companies and limited liability partnerships",
      "due_rule": "Due by January 2 of every even-numbered year if the entity first filed/registered in an even-numbered year, or of every odd-numbered year if it first filed in an odd-numbered year. The reporting period opens three months before the due date.",
@@ -29,6 +35,12 @@
       "who_files": "Non Profit Corporations, Cooperatives and Religious Corporations:",
       "due_rule": "Biennial Reports are due by July 2nd, reports post marked after August 1st",
       "late_penalty": "reports post marked after August 1st incur late fee penalties"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0
      },
      "filing_name": "Biennial Report",
      "who_files": "Nonprofit corporations, cooperatives and religious corporations",
@@ -48,7 +60,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft broadly matches for corporations/LLCs (January 2, even/odd year by year of formation, opens three months before, late after February 1). Differences: the page also covers professional corporations and limited liability partnerships; it says reports 'marked' after February 1 (not 'filed') incur late fee penalties; and nonprofit corporations, cooperatives and religious corporations follow a separate July 2 / August 1 schedule that the draft omits."
+   "draft_differences": "Draft broadly matches for corporations/LLCs (January 2, even/odd year by year of formation, opens three months before, late after February 1). Differences: the page also covers professional corporations and limited liability partnerships; it says reports 'marked' after February 1 (not 'filed') incur late fee penalties; and nonprofit corporations, cooperatives and religious corporations follow a separate July 2 / August 1 schedule that the draft omits.",
+   "scope_note": null
   },
   {
    "region": "AL",
@@ -61,6 +74,11 @@
       "filing_name": "When is the Alabama Business Privilege Tax return due?",
       "who_files": "For C-corporations with a calendar year or a fiscal year other than June 30",
       "due_rule": "no later than three and a half months after the beginning of a taxpayer’s"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
      },
      "filing_name": "Alabama Business Privilege Tax return (Form CPT)",
      "who_files": "C-corporations with a calendar year or a fiscal year other than June 30",
@@ -77,6 +95,11 @@
       "who_files": "For C-corporations with a fiscal year of June 30",
       "due_rule": "Form CPT would be due on September 15, 2021 for C-corporations"
      },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
+     },
      "filing_name": "Alabama Business Privilege Tax return (Form CPT)",
      "who_files": "C-corporations with a June 30 fiscal year",
      "due_rule": "Due no later than two and a half months after the start of the taxable year (for example, September 15 for a June 30 fiscal-year C-corporation).",
@@ -91,6 +114,11 @@
       "filing_name": "When is the Alabama Business Privilege Tax return due?",
       "who_files": "For Limited Liability Entities, the Alabama business privilege tax return is due",
       "due_rule": "later than two and a half months after the beginning of the taxpayer’s taxable year"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
      },
      "filing_name": "Alabama Business Privilege Tax return (Form PPT)",
      "who_files": "Limited liability entities",
@@ -110,7 +138,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft's due dates and the $100-or-less exemption match the page. NOT supported: the draft's claim that 'Alabama no longer requires a separate Secretary of State annual report'. The page does not say this; its related-FAQ list actually includes 'Where do I file and pay the Alabama Secretary of State Corporation Annual Report (AL-CAR)?', which points the other way. Remove that sentence or verify it separately with the Secretary of State."
+   "draft_differences": "Draft's due dates and the $100-or-less exemption match the page. NOT supported: the draft's claim that 'Alabama no longer requires a separate Secretary of State annual report'. The page does not say this; its related-FAQ list actually includes 'Where do I file and pay the Alabama Secretary of State Corporation Annual Report (AL-CAR)?', which points the other way. Remove that sentence or verify it separately with the Secretary of State.",
+   "scope_note": null
   },
   {
    "region": "AR",
@@ -125,6 +154,13 @@
       "due_rule": "Filing due on or before May 1 to avoid penalties",
       "fee": "Limited Liability Company LLC or PLLC N/A $150 $150",
       "consequence": "or even revocation of the authorization to do business"
+     },
+     "evidence_source": {
+      "filing_name": 1,
+      "who_files": 1,
+      "due_rule": 0,
+      "fee": 1,
+      "consequence": 1
      },
      "filing_name": "Franchise Tax / Annual Report (Arkansas Corporate Franchise Tax Act of 1979)",
      "who_files": "Corporations, LLCs, banks and insurance companies registered in Arkansas",
@@ -149,7 +185,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft says the report is filed 'on or before May 1' and that late filing brings penalties: consistent. Draft says 'Corporations and LLCs'; the official page also names banks and insurance companies. Draft gives no fee; the forms page lists fees by entity type (LLC $150, corporation with stock min. $150, corporation without stock $300). The SOS page does not state a specific late-penalty amount, so none is given."
+   "draft_differences": "Draft says the report is filed 'on or before May 1' and that late filing brings penalties: consistent. Draft says 'Corporations and LLCs'; the official page also names banks and insurance companies. Draft gives no fee; the forms page lists fees by entity type (LLC $150, corporation with stock min. $150, corporation without stock $300). The SOS page does not state a specific late-penalty amount, so none is given.",
+   "scope_note": null
   },
   {
    "region": "AZ",
@@ -165,6 +202,14 @@
       "fee": "fee of $45 and nonprofit corporations have an annual report filing fee of $10",
       "late_penalty": "penalties in the amount of $9.00 per month begin to accrue",
       "consequence": "if the annual report is still not received, the entity will be administratively dissolved"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report (corporations)",
      "who_files": "Corporations (for-profit and nonprofit). Arizona LLCs are not required to file annual reports.",
@@ -184,7 +229,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. The draft matches the page (corporations only, designated due date, up to 90 days early, monthly penalty for for-profit corporations, administrative dissolution, LLCs exempt). The draft omits the fee amounts ($45 / $10), the $9.00 monthly penalty amount, and that nonprofits are not penalised."
+   "draft_differences": "None material. The draft matches the page (corporations only, designated due date, up to 90 days early, monthly penalty for for-profit corporations, administrative dissolution, LLCs exempt). The draft omits the fee amounts ($45 / $10), the $9.00 monthly penalty amount, and that nonprofits are not penalised.",
+   "scope_note": null
   },
   {
    "region": "CA",
@@ -200,6 +246,14 @@
       "fee": "The fee for filing a Statement of Information is $20 or $25.",
       "late_penalty": "Penalties are assessed by the Franchise Tax Board when a business entity has not filed",
       "consequence": "most common reason for suspension/forfeiture by the Secretary of State is failure to file"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Statement of Information (Statement of Information – CA and Out-of-State Corporation)",
      "who_files": "California stock corporations and qualified out-of-state (foreign) corporations; the FAQ also lists cooperative and credit union corporations as annual filers",
@@ -218,6 +272,14 @@
       "fee": "The fee for filing a Statement of Information is $20 or $25.",
       "late_penalty": "Penalties are assessed by the Franchise Tax Board when a business entity has not filed",
       "consequence": "may result in penalties being assessed by the Franchise Tax Board and suspension or forfeiture"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 1
      },
      "filing_name": "Statement of Information (Statement of Information – CA and Out-of-State LLC)",
      "who_files": "California LLCs and qualified out-of-state (foreign) LLCs",
@@ -242,7 +304,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "The draft says a first Statement of Information is due within 90 days of registering; neither page read states that rule, so it is unverified and was left out. The six-month window ending in the registration month, the 60-day period after a delinquency notice, Franchise Tax Board penalties, and suspension/forfeiture all match the pages. The draft says nothing about the fee; the FAQ states \"$20 or $25\" without saying which applies to which entity type."
+   "draft_differences": "The draft says a first Statement of Information is due within 90 days of registering; neither page read states that rule, so it is unverified and was left out. The six-month window ending in the registration month, the 60-day period after a delinquency notice, Franchise Tax Board penalties, and suspension/forfeiture all match the pages. The draft says nothing about the fee; the FAQ states \"$20 or $25\" without saying which applies to which entity type.",
+   "scope_note": null
   },
   {
    "region": "CO",
@@ -258,6 +321,14 @@
       "fee": "Periodic Report $25.00 n/a Periodic Report Late Filing Penalty $50.00",
       "late_penalty": "Periodic Report Late Filing Penalty $50.00",
       "consequence": "The entity’s status will become “Delinquent” if a report is not filed."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 1,
+      "late_penalty": 1,
+      "consequence": 0
      },
      "filing_name": "Periodic Report",
      "who_files": "Reporting entities, including limited liability companies, corporations, nonprofit corporations, foreign entities, cooperatives, limited partnerships formed after July 26, 2009, LLPs and LLLPs",
@@ -282,7 +353,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft says the report is due 'by the last day of the second month after' the periodic report month and gives a 'January month means a March 31 deadline' example; the page only says it can be filed two months before or two months after the month without penalty, and does not state 'last day' or that example. Draft omits the $25 online fee and $50 late filing penalty (from the linked fee schedule). Draft's 'delinquent' consequence matches. Page covers more entity types than corporations and LLCs."
+   "draft_differences": "Draft says the report is due 'by the last day of the second month after' the periodic report month and gives a 'January month means a March 31 deadline' example; the page only says it can be filed two months before or two months after the month without penalty, and does not state 'last day' or that example. Draft omits the $25 online fee and $50 late filing penalty (from the linked fee schedule). Draft's 'delinquent' consequence matches. Page covers more entity types than corporations and LLCs.",
+   "scope_note": null
   },
   {
    "region": "CT",
@@ -297,6 +369,13 @@
       "due_rule": "The report is due each year between Jan. 1st and March 31st",
       "late_penalty": "penalty fee if the report is not filed by its due date? No.",
       "consequence": "the Secretary may administratively dissolve any entity that is more than one year in default"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual report (Limited Liability Company)",
      "who_files": "Limited liability companies (LLCs)",
@@ -313,6 +392,12 @@
       "who_files": "Corporation Annual Reports When is it due?",
       "due_rule": "Reports are due each year by the last day of the anniversary month of formation",
       "consequence": "the Secretary may administratively dissolve any entity that is more than one year in default"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Annual report (Corporation)",
      "who_files": "Corporations (stock and nonstock)",
@@ -332,7 +417,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Substantially matches. Nuance: the 'no additional fee or penalty fee' answer appears only in the LLC section of the FAQ; the page does not state whether corporations face a late fee. The draft presents 'no late fee' as applying to both."
+   "draft_differences": "Substantially matches. Nuance: the 'no additional fee or penalty fee' answer appears only in the LLC section of the FAQ; the page does not state whether corporations face a late fee. The draft presents 'no late fee' as applying to both.",
+   "scope_note": null
   },
   {
    "region": "DC",
@@ -346,6 +432,12 @@
       "who_files": "Every entity registered with Corporations Divisions needs to file periodic BRA-25",
       "due_rule": "first Biennial Report is due by April 1 st the very next calendar year",
       "consequence": "in order to stay in active and good standing status"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "BRA-25 Two-Year Biennial Report for Domestic and Foreign Filing Entities",
      "who_files": "Every domestic and foreign filing entity registered with the DLCP Corporations Division (e.g., corporations, LLCs, partnerships)",
@@ -365,7 +457,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None on the due rule: draft's 'first by April 1 of the year after registering, then by April 1 every two years' matches. Draft says 'Corporations and LLCs'; the page says every entity registered with the Corporations Division files."
+   "draft_differences": "None on the due rule: draft's 'first by April 1 of the year after registering, then by April 1 every two years' matches. Draft says 'Corporations and LLCs'; the page says every entity registered with the Corporations Division files.",
+   "scope_note": null
   },
   {
    "region": "DE",
@@ -380,6 +473,13 @@
       "due_rule": "are due annually on or before March 1st and are required to be filed online",
       "fee": "Exempt Domestic Corporations – $25.00. Non-Exempt Domestic Corporations – $50.00.",
       "late_penalty": "a penalty of $200.00 plus 1.5% interest per month on tax and penalty"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0
      },
      "filing_name": "Annual Report and Franchise Tax (domestic corporations)",
      "who_files": "Active domestic (Delaware) corporations.",
@@ -398,6 +498,13 @@
       "fee": "A $250.00 filing fee is required to be paid.",
       "late_penalty": "a $250.00 penalty will be added to filing fee"
      },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0
+     },
      "filing_name": "Annual Report (foreign corporations)",
      "who_files": "Foreign corporations registered in Delaware.",
      "due_rule": "On or before June 30 each year.",
@@ -414,6 +521,13 @@
       "due_rule": "The annual taxes for the prior year are due on or before June 1st.",
       "fee": "they must pay the $400 yearly tax on or before June 1st",
       "late_penalty": "Failure to pay the required annual taxes will result in a penalty of $200.00"
+     },
+     "evidence_source": {
+      "filing_name": 1,
+      "who_files": 1,
+      "due_rule": 1,
+      "fee": 1,
+      "late_penalty": 1
      },
      "filing_name": "Annual tax for LLCs, LPs and GPs (no annual report)",
      "who_files": "Domestic and foreign LLCs, limited partnerships and general partnerships formed or registered in Delaware. They file no annual report.",
@@ -438,7 +552,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. Dates (March 1, June 1, June 30), the $200 + 1.5% monthly penalty, and LLCs filing no report all match. The draft omits the fee and tax amounts, and the foreign-corporation late penalty ($250)."
+   "draft_differences": "None material. Dates (March 1, June 1, June 30), the $200 + 1.5% monthly penalty, and LLCs filing no report all match. The draft omits the fee and tax amounts, and the foreign-corporation late penalty ($250).",
+   "scope_note": null
   },
   {
    "region": "FL",
@@ -452,6 +567,12 @@
       "who_files": "Each domestic corporation and each foreign corporation authorized to transact business in this state",
       "due_rule": "Subsequent annual reports must be delivered to the department between January 1 and May 1",
       "consequence": "may not prosecute or maintain any action in any court of this state"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Annual report (Fla. Stat. § 607.1622)",
      "who_files": "Domestic corporations and foreign corporations authorized to transact business in Florida",
@@ -468,6 +589,12 @@
       "who_files": "A limited liability company or a registered foreign limited liability company",
       "due_rule": "Subsequent annual reports must be delivered to the department between January 1 and May 1",
       "consequence": "may not maintain or defend any action in a court of this state"
+     },
+     "evidence_source": {
+      "filing_name": 1,
+      "who_files": 1,
+      "due_rule": 0,
+      "consequence": 1
      },
      "filing_name": "Annual report (Fla. Stat. § 605.0212)",
      "who_files": "Florida LLCs and registered foreign LLCs",
@@ -492,7 +619,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "The draft says a report paid after May 1 carries a $400 late charge. Neither statute page read states a late fee or its amount, so this is unverified (not confirmed, not disproved). The draft source (§ 607.1622) covers corporations only; the LLC rule is from § 605.0212, fetched as an extra source on the same domain. Otherwise the draft matches: January 1 to May 1, first report the year after formation, court-access bar, dissolution or cancellation of authority. For LLCs the statute also bars defending a lawsuit, not only maintaining one."
+   "draft_differences": "The draft says a report paid after May 1 carries a $400 late charge. Neither statute page read states a late fee or its amount, so this is unverified (not confirmed, not disproved). The draft source (§ 607.1622) covers corporations only; the LLC rule is from § 605.0212, fetched as an extra source on the same domain. Otherwise the draft matches: January 1 to May 1, first report the year after formation, court-access bar, dissolution or cancellation of authority. For LLCs the statute also bars defending a lawsuit, not only maintaining one.",
+   "scope_note": null
   },
   {
    "region": "GA",
@@ -508,6 +636,14 @@
       "fee": "Annual Registration (Profit Corp., Professional Corp., Benefit Corp., LLC, LP, LLLP, Trust Estate) | $60.00",
       "late_penalty": "Penalty for Late Filing of Annual Registration | $25.00",
       "consequence": "may be subject to administrative dissolution or revocation of their authorization"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Registration",
      "who_files": "Each business entity registered or filed with the Georgia Secretary of State (corporations including profit, nonprofit and professional; LLCs; LPs, LLPs and LLLPs)",
@@ -527,7 +663,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft matches (January 1 to April 1 window, up to three years in advance, $25 late penalty, administrative dissolution/revocation). Minor: page says each registered business entity files (not only corporations and LLCs), and gives fees the draft omits ($60 most entities, $40 nonprofit, $35 foreign LLP). Page says entities 'may be subject to' dissolution/revocation (not certain)."
+   "draft_differences": "Draft matches (January 1 to April 1 window, up to three years in advance, $25 late penalty, administrative dissolution/revocation). Minor: page says each registered business entity files (not only corporations and LLCs), and gives fees the draft omits ($60 most entities, $40 nonprofit, $35 foreign LLP). Page says entities 'may be subject to' dissolution/revocation (not certain).",
+   "scope_note": null
   },
   {
    "region": "HI",
@@ -540,6 +677,11 @@
       "filing_name": "When is my annual report or annual statement filing due",
       "who_files": "Submit annual reports for active business entities online",
       "due_rule": "January 1 and March 31, the annual report or statement is due by March 31"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
      },
      "filing_name": "Annual business report (annual report or annual statement)",
      "who_files": "Business entities registered with the DCCA Business Registration Division",
@@ -559,7 +701,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None. Draft matches the page (quarterly due dates, same-year exemption, no financial information)."
+   "draft_differences": "None. Draft matches the page (quarterly due dates, same-year exemption, no financial information).",
+   "scope_note": null
   },
   {
    "region": "KS",
@@ -574,6 +717,13 @@
       "due_rule": "for profit businesses are due by April 15th of their respective odd or even year",
       "late_penalty": "This is a three-month interval after the due date",
       "consequence": "If the three-month delinquency interval has passed, a business will forfeit."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Information Report",
      "who_files": "For-profit businesses on file with the Kansas Secretary of State",
@@ -591,6 +741,13 @@
       "due_rule": "all not for profit businesses are due by June 15th of their respective",
       "late_penalty": "This is a three-month interval after the due date",
       "consequence": "If the three-month delinquency interval has passed, a business will forfeit."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Information Report",
      "who_files": "Not-for-profit businesses on file with the Kansas Secretary of State",
@@ -610,7 +767,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Matches. Wording: the draft says a delinquent entity 'may forfeit'; the page says that once the three-month interval has passed 'a business will forfeit'."
+   "draft_differences": "Matches. Wording: the draft says a delinquent entity 'may forfeit'; the page says that once the three-month interval has passed 'a business will forfeit'.",
+   "scope_note": null
   },
   {
    "region": "KY",
@@ -625,6 +783,13 @@
       "due_rule": "Reports can be filed any time between January 1 and June 30",
       "fee": "accompanied by a $15 filing fee",
       "consequence": "Domestic entities that fail to file their annual reports by June 30 are administratively dissolved"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "All entities conducting business in Kentucky (domestic and foreign business entities)",
@@ -644,7 +809,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Due rule and domestic dissolution match the draft. The draft omits the $15 fee and that foreign entities that file late have their certificate of authority revoked. The page says 'all entities conducting business' in Kentucky, broader than the draft's 'corporations and LLCs'."
+   "draft_differences": "Due rule and domestic dissolution match the draft. The draft omits the $15 fee and that foreign entities that file late have their certificate of authority revoked. The page says 'all entities conducting business' in Kentucky, broader than the draft's 'corporations and LLCs'.",
+   "scope_note": null
   },
   {
    "region": "MD",
@@ -659,6 +825,13 @@
       "due_rule": "by April 15th if they existed as of January 1st.",
       "late_penalty": "pay an outstanding late filing penalty resulting from the late filing of a Form 1",
       "consequence": "A forfeited business cannot legally operate in Maryland."
+     },
+     "evidence_source": {
+      "filing_name": 1,
+      "who_files": 1,
+      "due_rule": 1,
+      "late_penalty": 1,
+      "consequence": 0
      },
      "filing_name": "Annual Report (SDAT Form 1 — annual report/personal property return)",
      "who_files": "All entities that existed as of January 1 (including LLCs and corporations), whether or not they own property or did business",
@@ -683,7 +856,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft matches (April 15, first filing the year after formation, Personal Property Tax Return may also apply, late penalties, forfeiture). Clarifications: the draft names the Department of Assessments and Taxation and 'every corporation and LLC'; the FAQ says all entities existing on January 1 must file Form 1 even if they own no property. The draft's page alone only gives April 15 through an example; the April 15 rule is stated on the linked Business FAQ."
+   "draft_differences": "Draft matches (April 15, first filing the year after formation, Personal Property Tax Return may also apply, late penalties, forfeiture). Clarifications: the draft names the Department of Assessments and Taxation and 'every corporation and LLC'; the FAQ says all entities existing on January 1 must file Form 1 even if they own no property. The draft's page alone only gives April 15 through an example; the April 15 rule is stated on the linked Business FAQ.",
+   "scope_note": null
   },
   {
    "region": "ME",
@@ -699,6 +873,14 @@
       "fee": "fee is $85 for domestic business entities, $150 for foreign business entities",
       "late_penalty": "there will be a late filing penalty assessed",
       "consequence": "Failure to pay the late filing penalty will result in the administrative dissolution or revocation"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual report",
      "who_files": "Legal entities filed with the Maine Secretary of State (domestic and foreign business entities and nonprofit corporations)",
@@ -718,7 +900,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Matches on timing and consequences. The draft says 'corporations and LLCs'; the page covers any legal entity filed with the office, with fees for domestic and foreign business entities and nonprofit corporations. The draft omits the fees ($85/$150/$35)."
+   "draft_differences": "Matches on timing and consequences. The draft says 'corporations and LLCs'; the page covers any legal entity filed with the office, with fees for domestic and foreign business entities and nonprofit corporations. The draft omits the fees ($85/$150/$35).",
+   "scope_note": null
   },
   {
    "region": "MI",
@@ -734,6 +917,14 @@
       "fee": "LIMITED LIABILITY COMPANIES Fee: $25.00",
       "late_penalty": "Penalty fee of $50.00 if received after the February 15 due date.",
       "consequence": "status of your business after a two-year grace period"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Statement (Limited Liability Companies) / Annual Report and Annual Statement (Professional LLCs)",
      "who_files": "Limited liability companies and professional limited liability companies registered with the Corporations Division",
@@ -753,6 +944,14 @@
       "late_penalty": "Penalties are imposed if reports are not received by the May 15 due date.",
       "consequence": "after a two-year grace period or one year for foreign corporations"
      },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 0
+     },
      "filing_name": "Annual Report for Corporations",
      "who_files": "Profit corporations and professional corporations (nonprofit corporations also file, by October 1, $20 fee)",
      "due_rule": "Due May 15 each year after incorporation/qualification; online filing opens January 15.",
@@ -771,7 +970,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. The draft matches the LLC February 15 rule (and the post-September 30 exception), the corporation May 15 rule, the penalty that rises each month, and the two-year/one-year grace periods. Not in the draft: nonprofit corporations (due October 1, $20), the fees, and the PLLC $50 late fee."
+   "draft_differences": "None material. The draft matches the LLC February 15 rule (and the post-September 30 exception), the corporation May 15 rule, the penalty that rises each month, and the two-year/one-year grace periods. Not in the draft: nonprofit corporations (due October 1, $20), the fees, and the PLLC $50 late fee.",
+   "scope_note": null
   },
   {
    "region": "MN",
@@ -786,6 +986,13 @@
       "due_rule": "The deadline for renewals is December 31, but you can renew at any time",
       "fee": "annual renewals are free (for most entity types), while there is a fee to reinstate",
       "consequence": "If you miss the renewal, your business will be administratively dissolved"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "consequence": 0
      },
      "filing_name": "Annual renewal",
      "who_files": "Most business entities registered in Minnesota; the state's page does not list the entity types",
@@ -805,7 +1012,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. December 31, filing any time in the calendar year, and administrative dissolution all match. The draft says 'corporations and LLCs'; the page says 'most entities' and names no types. The draft omits that renewal is free for most entity types."
+   "draft_differences": "None material. December 31, filing any time in the calendar year, and administrative dissolution all match. The draft says 'corporations and LLCs'; the page says 'most entities' and names no types. The draft omits that renewal is free for most entity types.",
+   "scope_note": null
   },
   {
    "region": "MO",
@@ -820,6 +1028,13 @@
       "due_rule": "annual report is due at the end of the month that the corporation incorporated",
       "late_penalty": "Late reports are subject to an additional fee of $15 for each 30-day period.",
       "consequence": "will result in administrative dissolution of a domestic corporation's charter"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual registration report",
      "who_files": "All corporations doing business in Missouri, domestic and foreign",
@@ -839,7 +1054,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None. The draft matches the page; the page adds the amount the draft left out: $15 for each 30-day period late."
+   "draft_differences": "None. The draft matches the page; the page adds the amount the draft left out: $15 for each 30-day period late.",
+   "scope_note": null
   },
   {
    "region": "MS",
@@ -853,6 +1069,12 @@
       "who_files": "The Annual Report for profit corporations and limited liability companies",
       "due_rule": "on or after January 1st of each year and are due by April 15th",
       "consequence": "Failure to file the Annual Report may result in the administrative dissolution of the organization."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "For-profit corporations and limited liability companies operating in Mississippi",
@@ -869,6 +1091,12 @@
       "who_files": "The Annual Report for nonprofit corporations can be filed any time",
       "due_rule": "on or after January 1st of each year and are due by May 15th",
       "consequence": "Failure to file the Annual Report may result in the administrative dissolution of the organization."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Nonprofit corporations",
@@ -888,7 +1116,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft matches for profit corporations and LLCs (January 1 to April 15, online, corporations administratively dissolved). Draft omits that nonprofit corporations are due May 15. For LLCs the page says failure 'may result in' administrative dissolution (the definite 'will be administratively dissolved' wording is stated only for corporations)."
+   "draft_differences": "Draft matches for profit corporations and LLCs (January 1 to April 15, online, corporations administratively dissolved). Draft omits that nonprofit corporations are due May 15. For LLCs the page says failure 'may result in' administrative dissolution (the definite 'will be administratively dissolved' wording is stated only for corporations).",
+   "scope_note": null
   },
   {
    "region": "MT",
@@ -902,6 +1131,12 @@
       "who_files": "Annual reports are required for all limited liability companies (LLCs) and corporations (profit and nonprofit).",
       "due_rule": "their annual report by November 1st, while domestic entitites must be filed by December 1st.",
       "fee": "After April 15th, the fee is $35."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0
      },
      "filing_name": "Annual report",
      "who_files": "LLCs and corporations (profit and nonprofit)",
@@ -921,7 +1156,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Mostly matches. The draft calls the post-April 15 charge a 'late fee'; the page says only that 'After April 15th, the fee is $35', not that it is a late fee. The page gives no amount for anything labelled a late penalty, and no consequence for missing the November 1 / December 1 deadlines."
+   "draft_differences": "Mostly matches. The draft calls the post-April 15 charge a 'late fee'; the page says only that 'After April 15th, the fee is $35', not that it is a late fee. The page gives no amount for anything labelled a late penalty, and no consequence for missing the November 1 / December 1 deadlines.",
+   "scope_note": null
   },
   {
    "region": "NC",
@@ -935,6 +1171,12 @@
       "who_files": "Business Corporations and Banks",
       "due_rule": "the 15th day of the fourth month following the entity’s fiscal year end",
       "fee": "Online $21.00* Paper $25.00"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0
      },
      "filing_name": "Annual Report (Business Corporations and Banks)",
      "who_files": "Business corporations and banks",
@@ -951,6 +1193,12 @@
       "who_files": "Limited Liability Company (LLC or L3C )",
       "due_rule": "Your report is due on April 15th of each year after the year of creation.",
       "fee": "Online $203.00* Paper $200.00"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0
      },
      "filing_name": "Annual Report (Limited Liability Companies)",
      "who_files": "Limited liability companies (LLC or L3C)",
@@ -970,7 +1218,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Due rules match the draft (LLC April 15 starting the year after creation; corporations 15th day of the 4th month after fiscal year end). The page does NOT mention administrative dissolution or any consequence of not filing, so the draft's claim that a business that does not file can be administratively dissolved is unverified here. The page doesn't say 'April 15 for a calendar year' outright; that follows from the stated rule."
+   "draft_differences": "Due rules match the draft (LLC April 15 starting the year after creation; corporations 15th day of the 4th month after fiscal year end). The page does NOT mention administrative dissolution or any consequence of not filing, so the draft's claim that a business that does not file can be administratively dissolved is unverified here. The page doesn't say 'April 15 for a calendar year' outright; that follows from the stated rule.",
+   "scope_note": null
   },
   {
    "region": "ND",
@@ -985,6 +1234,13 @@
       "due_rule": "August 1 Business Corporation (Domestic) Professional Corporation (Domestic)",
       "late_penalty": "on or before the deadline or incur a late filing fee",
       "consequence": "will be involuntarily terminated if it does not file its past-due annual report"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Domestic business corporations and domestic professional corporations",
@@ -1003,6 +1259,13 @@
       "late_penalty": "on or before the deadline or incur a late filing fee",
       "consequence": "will be involuntarily terminated if it does not file its past-due annual report"
      },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
+     },
      "filing_name": "Annual Report",
      "who_files": "Foreign business corporations and foreign professional corporations",
      "due_rule": "On or before May 15 each year, starting the year after the year of registration.",
@@ -1019,6 +1282,13 @@
       "due_rule": "November 15 Limited Liability Company (LLC) Professional Limited Liability Company (PLLC)",
       "late_penalty": "on or before the deadline or incur a late filing fee",
       "consequence": "will be involuntarily terminated if it does not file its past-due annual report"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Limited liability companies (LLC) and professional limited liability companies (PLLC)",
@@ -1037,6 +1307,13 @@
       "late_penalty": "on or before the deadline or incur a late filing fee",
       "consequence": "will be involuntarily terminated if it does not file its past-due annual report"
      },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
+     },
      "filing_name": "Annual Report",
      "who_files": "Farming or ranching LLCs and corporations, and authorized livestock farm (ALF) LLCs and corporations",
      "due_rule": "On or before April 15 each year, starting the year after the year of registration.",
@@ -1053,6 +1330,13 @@
       "due_rule": "March 31 Limited Partnership (LP) Limited Liability Partnership (LLP)",
       "late_penalty": "on or before the deadline or incur a late filing fee",
       "consequence": "will be involuntarily terminated if it does not file its past-due annual report"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Limited partnerships, limited liability partnerships, limited liability limited partnerships, professional limited liability partnerships, and cooperatives",
@@ -1072,7 +1356,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "The dates match: domestic corporations August 1, foreign corporations May 15, LLCs November 15, farm/ranch/livestock April 15, first report due the year after registration, and Not Good Standing then termination in 6 to 12 months. The draft omits the March 31 deadline for LPs, LLPs, LLLPs, PLLPs and cooperatives, and the late filing fee. The page's LLC row says only 'Limited Liability Company (LLC)' and does not split domestic from foreign."
+   "draft_differences": "The dates match: domestic corporations August 1, foreign corporations May 15, LLCs November 15, farm/ranch/livestock April 15, first report due the year after registration, and Not Good Standing then termination in 6 to 12 months. The draft omits the March 31 deadline for LPs, LLPs, LLLPs, PLLPs and cooperatives, and the late filing fee. The page's LLC row says only 'Limited Liability Company (LLC)' and does not split domestic from foreign.",
+   "scope_note": null
   },
   {
    "region": "NE",
@@ -1086,6 +1371,12 @@
       "who_files": "Domestic and Foreign Business Corporations and Professional Corporations biennial occupation tax reports",
       "due_rule": "tax reports are due in the even numbered years by March 1, delinquent April 15",
       "consequence": "your company will be administratively dissolved or have its authority administratively revoked"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Biennial occupation tax report",
      "who_files": "Domestic and foreign business corporations and professional corporations",
@@ -1102,6 +1393,12 @@
       "who_files": "Domestic and Foreign Limited Liability Companies and Professional Limited Liability Companies biennial reports",
       "due_rule": "biennial reports are due in the odd numbered years by April 1, delinquent June 16",
       "consequence": "your company will be administratively dissolved or have its authority administratively revoked"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Biennial report",
      "who_files": "Domestic and foreign LLCs and professional LLCs",
@@ -1121,7 +1418,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None on dates or consequence. The draft says reports become delinquent \"after\" April 15 / June 16; the page just says \"delinquent April 15\" and \"delinquent June 16\"."
+   "draft_differences": "None on dates or consequence. The draft says reports become delinquent \"after\" April 15 / June 16; the page just says \"delinquent April 15\" and \"delinquent June 16\".",
+   "scope_note": null
   },
   {
    "region": "NH",
@@ -1136,6 +1434,13 @@
       "due_rule": "due by April 1st of each year following the year of registration",
       "late_penalty": "a late fee of $50.00 will be assessed for reports and fees",
       "consequence": "After failing to file for two consecutive years, the business will be “Administratively Dissolved”"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Corporations, professional corporations, benefit corporations, professional benefit corporations, LLCs, professional LLCs, consumer cooperatives and business trusts",
@@ -1155,7 +1460,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft matches (April 1, starting the year after registration, non-waivable late fee, out of good standing, domestic dissolved after two consecutive years, foreign suspended). Draft omits the late fee amount ($50.00). Page adds that benefit corporations also owe an annual benefit report 120 days after fiscal year end, and that investment trusts, LLPs and agricultural cooperatives owe an annual filing fee by April 1."
+   "draft_differences": "Draft matches (April 1, starting the year after registration, non-waivable late fee, out of good standing, domestic dissolved after two consecutive years, foreign suspended). Draft omits the late fee amount ($50.00). Page adds that benefit corporations also owe an annual benefit report 120 days after fiscal year end, and that investment trusts, LLPs and agricultural cooperatives owe an annual filing fee by April 1.",
+   "scope_note": null
   },
   {
    "region": "NJ",
@@ -1170,6 +1476,13 @@
       "due_rule": "last day of the month, in the month in which you completed your business formation",
       "fee": "submitting a $75 filing fee",
       "consequence": "Failure to file can result in the revocation of your business."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "consequence": 0
      },
      "filing_name": "Annual report",
      "who_files": "Every business in New Jersey, including LLCs and corporations",
@@ -1189,7 +1502,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Matches. The draft omits the $75 fee, and the page says 'every business' rather than 'corporations and LLCs'."
+   "draft_differences": "Matches. The draft omits the $75 fee, and the page says 'every business' rather than 'corporations and LLCs'.",
+   "scope_note": null
   },
   {
    "region": "NM",
@@ -1204,6 +1518,13 @@
       "due_rule": "biennially thereafter on or before the fifteenth day of the fourth month",
       "late_penalty": "shall incur a civil penalty of two hundred dollars ($200)",
       "consequence": "the corporation shall have its certificate of incorporation canceled by the secretary"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Corporate Report (Corporate Reports Act, NMSA 1978 § 53-5-2) and supplemental report",
      "who_files": "Domestic and foreign corporations that are not exempted (exemptions listed in § 53-5-4)",
@@ -1228,7 +1549,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. The draft's 30-day first report, biennial due date (15th day of 4th month after the taxable year ends), $200 civil penalty, cancellation 60 days after written notice and 30-day supplemental report all match the statute. Draft omits that some corporations are exempt (§ 53-5-4)."
+   "draft_differences": "None material. The draft's 30-day first report, biennial due date (15th day of 4th month after the taxable year ends), $200 civil penalty, cancellation 60 days after written notice and 30-day supplemental report all match the statute. Draft omits that some corporations are exempt (§ 53-5-4).",
+   "scope_note": null
   },
   {
    "region": "NV",
@@ -1244,6 +1566,14 @@
       "fee": "$500 for Corporations, and $200 for all other business entity types",
       "late_penalty": "shall pay a penalty in the amount of $100 in addition to the annual fee",
       "consequence": "After one year, all default entities go into revoked status."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual List of Officers, filed together with the State Business License renewal",
      "who_files": "Title 7 entities, whose State Business License renewal falls due with the Annual List of Officers (the state's page does not list which entity types are Title 7). Sole proprietors and partnerships renew the license by the expiration date on it instead",
@@ -1263,7 +1593,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. Last day of the anniversary month, filing together with the business license, the $100 late penalty, default, and revocation after one year all match. The draft says 'corporations and LLCs'; the page says 'Title 7 entities' and does not define them. The draft omits the $500 and $200 license fees."
+   "draft_differences": "None material. Last day of the anniversary month, filing together with the business license, the $100 late penalty, default, and revocation after one year all match. The draft says 'corporations and LLCs'; the page says 'Title 7 entities' and does not define them. The draft omits the $500 and $200 license fees.",
+   "scope_note": null
   },
   {
    "region": "NY",
@@ -1278,6 +1609,13 @@
       "due_rule": "The filing period for a business corporation or LLC is the calendar month",
       "fee": "The fee for filing a Biennial Statement for a business corporation or LLC is $9.",
       "consequence": "This may prevent the corporation or LLC from completing certain business transactions."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "consequence": 0
      },
      "filing_name": "Biennial Statement",
      "who_files": "Domestic and foreign business corporations (Business Corporation Law § 408) and domestic and foreign LLCs (LLC Law § 301(e))",
@@ -1297,7 +1635,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None on the due rule. The draft omits the $9 fee and the past-due status on Certificates of Status; both are on the page."
+   "draft_differences": "None on the due rule. The draft omits the $9 fee and the past-due status on Certificates of Status; both are on the page.",
+   "scope_note": null
   },
   {
    "region": "OR",
@@ -1310,6 +1649,11 @@
       "filing_name": "Annual Report or Renewal",
       "who_files": "All other business entity types renew every year.",
       "due_rule": "Your renewal is due on the anniversary date of the original filing."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
      },
      "filing_name": "Annual Report or Renewal",
      "who_files": "All business entity types except assumed business names (which renew every two years)",
@@ -1329,7 +1673,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Matches. The page also says assumed business names renew every two years."
+   "draft_differences": "Matches. The page also says assumed business names renew every two years.",
+   "scope_note": null
   },
   {
    "region": "PA",
@@ -1344,6 +1689,13 @@
       "due_rule": "the deadline is June 30 of each year",
       "fee": "The fee is $7 for business corporations, limited liability companies (LLCs)",
       "consequence": "subject to administrative dissolution/termination/cancellation six months after the due date"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report [DSCB:15-146] — corporations",
      "who_files": "Business and nonprofit corporations, domestic and foreign",
@@ -1361,6 +1713,13 @@
       "due_rule": "Limited liability companies domestic and foreign - Jan. 1 - Sept. 30",
       "fee": "The fee is $7 for business corporations, limited liability companies (LLCs)",
       "consequence": "subject to administrative dissolution/termination/cancellation six months after the due date"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report [DSCB:15-146] — limited liability companies",
      "who_files": "Limited liability companies, domestic and foreign",
@@ -1380,7 +1739,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None on the deadlines: the draft's corporations by June 30, LLCs January 1 to September 30, required since 2025, and dissolution/termination six months after the due date from reports due in 2027 all match. Not in the draft: the $7 fee ($0 for nonprofits), and that LPs, LLPs, business trusts and professional associations must also file, by December 31."
+   "draft_differences": "None on the deadlines: the draft's corporations by June 30, LLCs January 1 to September 30, required since 2025, and dissolution/termination six months after the due date from reports due in 2027 all match. Not in the draft: the $7 fee ($0 for nonprofits), and that LPs, LLPs, business trusts and professional associations must also file, by December 31.",
+   "scope_note": null
   },
   {
    "region": "RI",
@@ -1395,6 +1755,13 @@
       "due_rule": "Limited Liability Company (LLC) February 1 – May 1 File Online Form 632",
       "fee": "Form 632 $50 $50 $2.50 $25 applied June 1",
       "late_penalty": "$25 applied June 1 (Plus $3.00 to file online)"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Limited liability companies, business corporations, and limited partnerships or limited liability partnerships (Forms 632, 630, 634).",
@@ -1412,6 +1779,13 @@
       "due_rule": "Domestic Benefit Corporation Within 120 days of fiscal year end Form 633 $60",
       "fee": "Domestic Benefit Corporation Within 120 days of fiscal year end Form 633 $60",
       "late_penalty": "$25 applied 30 days after end of filing period"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0
      },
      "filing_name": "Annual Report (domestic benefit corporations, Form 633)",
      "who_files": "Domestic benefit corporations.",
@@ -1431,7 +1805,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "The February 1 to May 1 window and the start in the year after registration match. The draft leaves out that LPs and LLPs also file in that window, that domestic benefit corporations file within 120 days of fiscal year end instead, and the amounts: $50 fee, $2.50 online fee, and $25 late penalty from June 1 ($60 fee for benefit corporations)."
+   "draft_differences": "The February 1 to May 1 window and the start in the year after registration match. The draft leaves out that LPs and LLPs also file in that window, that domestic benefit corporations file within 120 days of fiscal year end instead, and the amounts: $50 fee, $2.50 online fee, and $25 late penalty from June 1 ($60 fee for benefit corporations).",
+   "scope_note": null
   },
   {
    "region": "SC",
@@ -1446,6 +1821,13 @@
       "due_rule": "License Fee due each year by the due date of your return",
       "fee": "License Fee rate is 0.1% of the corporation's capital stock and paid-in surplus plus $15.",
       "late_penalty": "may be penalized 5% of the unpaid tax for each month the return is late"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0
      },
      "filing_name": "Annual report (Schedule D of the SC Corporate Tax return)",
      "who_files": "Generally every domestic corporation, every foreign corporation qualified to do business in South Carolina, and any other corporation required to file an SC income tax return. Excluded: LLCs not taxed as corporations, corporations whose only SC contact is Secretary of State registration, tax-exempt nonprofits, banks, savings and loans, insurance companies and certain other bodies. Dormant corporations must still file.",
@@ -1465,7 +1847,55 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None. The draft matches (Schedule D of the corporate return; LLCs not taxed as corporations excluded; dormant corporations still file). The page adds what the draft left out: return due dates by entity type, the License Fee formula and $25 minimum, and the late-filing and late-payment penalties."
+   "draft_differences": "None. The draft matches (Schedule D of the corporate return; LLCs not taxed as corporations excluded; dormant corporations still file). The page adds what the draft left out: return due dates by entity type, the License Fee formula and $25 minimum, and the late-filing and late-payment penalties.",
+   "scope_note": null
+  },
+  {
+   "region": "TN",
+   "state": "Tennessee",
+   "slug": "tennessee",
+   "status": "verified",
+   "entries": [
+    {
+     "evidence": {
+      "filing_name": "requires corporations to file an annual report with the Secretary of State",
+      "who_files": "requires corporations to file an annual report with the Secretary of State",
+      "due_rule": "on or before the first day of the fourth month following the end",
+      "fee": "The annual report fee for a corporation is $20",
+      "consequence": "failed to file its annual report on a timely basis may be administratively dissolved"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 1,
+      "consequence": 1
+     },
+     "filing_name": "Annual report (corporation)",
+     "who_files": "Corporations",
+     "due_rule": "Due on or before the first day of the fourth month after the close of the corporation's fiscal year. If no fiscal-year close month was given in the charter, the Division of Business Services records December by default.",
+     "fee": "$20, plus $20 more if the registered agent or registered office changes",
+     "late_penalty": null,
+     "consequence": "A business entity that does not file its annual report on time may be administratively dissolved and placed in inactive status.",
+     "frequency": "annual",
+     "file_url": null
+    }
+   ],
+   "sources": [
+    {
+     "name": "Tennessee Secretary of State — Instructions, Charter For-Profit Corporation (SS-4417)",
+     "url": "https://sos-tn-gov-files.tnsosfiles.com/forms/ss-4417_0.pdf",
+     "source_updated": "2019-12 (form revision mark 'SS-4417 (12/19)')"
+    },
+    {
+     "name": "Tennessee Secretary of State — Business Services FAQs",
+     "url": "https://sos.tn.gov/businesses/faqs",
+     "source_updated": null
+    }
+   ],
+   "read_on": "2026-11-20",
+   "draft_differences": "The draft applies the 'first day of the fourth month after fiscal year close' rule to corporations AND LLCs, but its source (the for-profit corporation charter instructions, citing T.C.A. § 48-26-203) covers corporations only. Neither page read states the LLC due date. The dissolution consequence is supported (by the FAQ). Fees are absent from the draft: $20 for corporations, $300 to $3,000 for LLCs.",
+   "scope_note": "This page covers corporations. The Tennessee pages we read do not state when an LLC's annual report is due; check with the Secretary of State."
   },
   {
    "region": "TX",
@@ -1480,6 +1910,13 @@
       "due_rule": "falls on a weekend or holiday, the due date will be the next business day.",
       "late_penalty": "A $50 penalty is assessed on each report filed after the due date.",
       "consequence": "Form 05-211, Texas Notice of Intent to Forfeit Right to Transact Business"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Franchise Tax Report, plus Public Information Report (Form 05-102) or Ownership Information Report (Form 05-167)",
      "who_files": "Each taxable entity formed or organized in Texas or doing business in Texas. For report year 2024 and later, entities at or below the No Tax Due Threshold do not file a No Tax Due Report but must file a Public Information Report or Ownership Information Report (qualifying new veteran-owned businesses are exempt from both for their first five years)",
@@ -1504,7 +1941,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. The draft's May 15 or next business day, no No Tax Due Report from 2024 but still a PIR/OIR, a penalty on each late report even when no tax is due, and forfeiture for continued non-filing all match. The draft does not give the $50 amount, the 5%/10% late-payment penalties or the veteran-owned business exemption. The draft's 'forfeiture of the right to do business' is supported only indirectly, by the names of the forfeiture notice forms on the page."
+   "draft_differences": "None material. The draft's May 15 or next business day, no No Tax Due Report from 2024 but still a PIR/OIR, a penalty on each late report even when no tax is due, and forfeiture for continued non-filing all match. The draft does not give the $50 amount, the 5%/10% late-payment penalties or the veteran-owned business exemption. The draft's 'forfeiture of the right to do business' is supported only indirectly, by the names of the forfeiture notice forms on the page.",
+   "scope_note": null
   },
   {
    "region": "UT",
@@ -1517,6 +1955,11 @@
       "filing_name": "16-1a-212. Annual report for division.",
       "who_files": "Each domestic filing entity and registered foreign entity shall file an annual report",
       "due_rule": "each calendar year on the last day of the anniversary month"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
      },
      "filing_name": "Annual report for division",
      "who_files": "Each domestic filing entity and registered foreign entity. The statute does not name entity types such as corporations or LLCs.",
@@ -1536,7 +1979,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "The due rule matches: last day of the anniversary month, up to 60 days early, and the Division may set another period by rule. The draft says 'corporations, LLCs'; the statute says 'domestic filing entity'. The draft's claim that a domestic entity more than 60 days late can be administratively dissolved (§ 16-1a-602) is NOT on this page and was not verified."
+   "draft_differences": "The due rule matches: last day of the anniversary month, up to 60 days early, and the Division may set another period by rule. The draft says 'corporations, LLCs'; the statute says 'domestic filing entity'. The draft's claim that a domestic entity more than 60 days late can be administratively dissolved (§ 16-1a-602) is NOT on this page and was not verified.",
+   "scope_note": null
   },
   {
    "region": "VA",
@@ -1549,6 +1993,11 @@
       "filing_name": "§ 13.1-775 . Annual report of domestic and foreign corporations.",
       "who_files": "Each domestic corporation, and each foreign corporation authorized to transact business in the Commonwealth",
       "due_rule": "on or before the last day of the twelfth month next succeeding the month"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
      },
      "filing_name": "Annual report (Code of Virginia § 13.1-775)",
      "who_files": "Domestic corporations and foreign corporations authorized to transact business in Virginia",
@@ -1565,6 +2014,12 @@
       "who_files": "Every domestic limited liability company, every protected series, every foreign limited liability company registered",
       "due_rule": "on or before the last day of the twelfth month next succeeding the month",
       "fee": "by such date in each year thereafter, an annual registration fee of $50"
+     },
+     "evidence_source": {
+      "filing_name": 1,
+      "who_files": 1,
+      "due_rule": 0,
+      "fee": 1
      },
      "filing_name": "Annual registration fee (Code of Virginia § 13.1-1062), payment only",
      "who_files": "Domestic LLCs, protected series, and foreign LLCs and foreign protected series registered in Virginia",
@@ -1589,7 +2044,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Unverified draft claims: the corporate annual registration fee and its due date, automatic termination of a corporation that has not filed and paid by the end of the fourth month after, and automatic cancellation of an LLC by the end of the third month after. Neither page read states them. Confirmed: due by the last day of the anniversary month, filing allowed up to three months early, and the LLC fee due on the same anniversary-month basis. The draft gives no LLC fee amount; § 13.1-1062 says $50."
+   "draft_differences": "Unverified draft claims: the corporate annual registration fee and its due date, automatic termination of a corporation that has not filed and paid by the end of the fourth month after, and automatic cancellation of an LLC by the end of the third month after. Neither page read states them. Confirmed: due by the last day of the anniversary month, filing allowed up to three months early, and the LLC fee due on the same anniversary-month basis. The draft gives no LLC fee amount; § 13.1-1062 says $50.",
+   "scope_note": null
   },
   {
    "region": "VT",
@@ -1602,6 +2058,11 @@
       "filing_name": "renew your business registration each fiscal year by filing an annual report",
       "who_files": "As a profit corporation, profit cooperative corporation, or a limited liability company",
       "due_rule": "within the first two and a half months (Profit Corps.)"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Profit corporations and profit cooperative corporations",
@@ -1617,6 +2078,11 @@
       "filing_name": "renew your business registration each fiscal year by filing an annual report",
       "who_files": "As a profit corporation, profit cooperative corporation, or a limited liability company",
       "due_rule": "or three months (LLC/PLC/L3C) following the fiscal year end on record"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Limited liability companies (LLC/PLC/L3C)",
@@ -1636,7 +2102,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Draft matches (LLCs within three months, corporations within two and a half months of fiscal year end on record). Page adds profit cooperative corporations and PLC/L3C; LLPs and mutual benefit enterprises file between January 1 and April 1 each calendar year; nonprofit corporations file a biennial report between January 1 and April 1."
+   "draft_differences": "Draft matches (LLCs within three months, corporations within two and a half months of fiscal year end on record). Page adds profit cooperative corporations and PLC/L3C; LLPs and mutual benefit enterprises file between January 1 and April 1 each calendar year; nonprofit corporations file a biennial report between January 1 and April 1.",
+   "scope_note": null
   },
   {
    "region": "WA",
@@ -1650,6 +2117,12 @@
       "who_files": "All domestic and foreign business entities must file an Annual Report yearly",
       "due_rule": "due by the last day of the month in which the business was originally formed",
       "consequence": "results in a delinquent status and may lead to administrative dissolution."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "All domestic and foreign business entities",
@@ -1669,7 +2142,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "Matches. The draft says 'corporations and LLCs'; the page says all domestic and foreign business entities."
+   "draft_differences": "Matches. The draft says 'corporations and LLCs'; the page says all domestic and foreign business entities.",
+   "scope_note": null
   },
   {
    "region": "WI",
@@ -1683,6 +2157,12 @@
       "who_files": "Annual reports are required for the following entity types:",
       "due_rule": "during the calendar year quarter in which the anniversary date of the registration occurs",
       "consequence": "the entity runs the risk of being administratively dissolved"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report (domestic entities)",
      "who_files": "Domestic business corporations (Ch. 180), nonstock corporations (Ch. 181), LLCs (Ch. 183), cooperatives (Ch. 185), LLPs (Ch. 178), LPs (Ch. 179, from 1/1/23), common law trusts (Ch. 226) and agricultural associations (Ch. 100.23)",
@@ -1699,6 +2179,12 @@
       "who_files": "A foreign entity registered to transact business in this state",
       "due_rule": "during the first calendar quarter of each year following the calendar year",
       "consequence": "within four months of the March 31st due date, are subject to having their Certificate"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report (foreign entities)",
      "who_files": "Foreign entities registered to transact business in Wisconsin",
@@ -1718,7 +2204,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. The draft's domestic due in the anniversary quarter from the year after registration, foreign due in Q1 by March 31, delinquency and dissolution risk, and foreign revocation four months after March 31 all match. The page also covers more entity types than corporations and LLCs (LLPs, LPs, cooperatives, nonstock corporations, trusts, agricultural associations)."
+   "draft_differences": "None material. The draft's domestic due in the anniversary quarter from the year after registration, foreign due in Q1 by March 31, delinquency and dissolution risk, and foreign revocation four months after March 31 all match. The page also covers more entity types than corporations and LLCs (LLPs, LPs, cooperatives, nonstock corporations, trusts, agricultural associations).",
+   "scope_note": null
   },
   {
    "region": "WV",
@@ -1734,6 +2221,14 @@
       "fee": "pay the annual report $25.00 filing fee",
       "late_penalty": "Failure to file by the June 30 deadline may result in monetary penalties",
       "consequence": "monetary penalties as well as administrative dissolution or revocation"
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0,
+      "late_penalty": 0,
+      "consequence": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Organizations registered through the West Virginia Secretary of State (most company types). Requirements vary by company type.",
@@ -1753,7 +2248,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "None material. The January 1 to June 30 window, the start in the year after registration, and possible penalties, dissolution or revocation all match. The draft omits the $25.00 fee."
+   "draft_differences": "None material. The January 1 to June 30 window, the start in the year after registration, and possible penalties, dissolution or revocation all match. The draft omits the $25.00 fee.",
+   "scope_note": null
   },
   {
    "region": "WY",
@@ -1767,6 +2263,12 @@
       "who_files": "Annual Reports for corporations, LLCs, LPs, RLLPs and SFs are due",
       "due_rule": "due on the first day of the anniversary month of formation.",
       "fee": "payment card processing fee of 2.4% (minimum $1) of the filing fee."
+     },
+     "evidence_source": {
+      "filing_name": 0,
+      "who_files": 0,
+      "due_rule": 0,
+      "fee": 0
      },
      "filing_name": "Annual Report",
      "who_files": "Corporations, LLCs, LPs, RLLPs and SFs (statutory trusts have their own date)",
@@ -1786,7 +2288,8 @@
     }
    ],
    "read_on": "2026-11-20",
-   "draft_differences": "The draft says an entity that has not paid within 60 days of the due date is subject to dissolution; this page does not say so, so that claim is unverified. The due rule and the May 15 to May 1 example match. The page also covers LPs, RLLPs and SFs and gives statutory trusts a separate January 1 date."
+   "draft_differences": "The draft says an entity that has not paid within 60 days of the due date is subject to dissolution; this page does not say so, so that claim is unverified. The due rule and the May 15 to May 1 example match. The page also covers LPs, RLLPs and SFs and gives statutory trusts a separate January 1 date.",
+   "scope_note": null
   }
  ],
  "not_published": [
@@ -1797,8 +2300,7 @@
   "Louisiana",
   "Massachusetts",
   "Oklahoma",
-  "South Dakota",
-  "Tennessee"
+  "South Dakota"
  ],
  "withheld": {
   "OK": "who files is inferred from an answer about entities that lost good standing, not stated directly; read the Secretary of State's page before publishing"
