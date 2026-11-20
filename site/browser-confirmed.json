@@ -1,0 +1,14 @@
+{
+ "_about": "States whose first read went through Bright Data (sites that refused automated downloads) or WebFetch (a summary, not the page). Each was re-read on 2026-11-20 in a normal browser, with no bot-check bypass; 'all' means every evidence snippet was found on the page as the browser loaded it. site/import_verified.py publishes these states only when the result is 'all'.",
+ "needs_confirmation": ["AK", "GA", "MS", "MI", "MN", "NV", "ID", "NY"],
+ "results": {
+  "AK": {"result": "all", "matched": 7, "total": 7},
+  "GA": {"result": "all", "matched": 6, "total": 6, "note": "two snippets carry a '|' table separator from the first read; the same words and amounts ($60.00, $25.00) are on the page in a table"},
+  "MS": {"result": "all", "matched": 6, "total": 6},
+  "MI": {"result": "all", "matched": 12, "total": 12, "note": "the facts are in expandable sections of the page"},
+  "MN": {"result": "all", "matched": 5, "total": 5},
+  "NV": {"result": "all", "matched": 6, "total": 6},
+  "ID": {"result": "unreadable", "note": "legislature.idaho.gov (Idaho Code 30-21-213) would not load in a normal browser; the SOS FAQ that loads gives no due date"},
+  "NY": {"result": "all", "matched": 5, "total": 5, "note": "the first read was a WebFetch summary; confirmed against the page itself"}
+ }
+}
