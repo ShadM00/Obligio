@@ -41,3 +41,11 @@ and rerun `crawl_audit.py`. Keep pages that earn impressions; look at which quer
     INDEXNOW_KEY=$(cat site/indexnow-key.txt) node ~/.claude/skills/web-excellence/scripts/indexnow.mjs https://obligio.com
 
 Re-check every state's source at least every six months (next: 2027-05-20).
+
+## 2026-11-20 (later): held-back states read in the owner's browser
+
+Tennessee published for corporations (42 states). Still held: Iowa (help pages give January 2 to
+March 30 and January 1 to April 1), Louisiana and South Dakota (no due date stated), Oklahoma (who
+files only implied), Massachusetts (only a 2022 fee schedule), Illinois and Indiana (sites refuse
+the connection even in a normal browser), Idaho (statute site would not load). Quotes now name the
+source page each snippet came from.
