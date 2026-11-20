@@ -1,0 +1,26 @@
+== robots.txt, sitemap, AI files (https://obligio.com)
+   sitemap lists 57 URLs
+   /llms.txt: 200
+   /llms-full.txt: 200
+   /feed.xml: 200
+   /rss.xml: 404
+   /ads.txt: 404
+== AI and search crawler access (page / and sitemap)
+   Googlebot/2.1             200
+   bingbot/2.0               200
+   GPTBot/1.1                200
+   OAI-SearchBot/1.0         200
+   ChatGPT-User/1.0          200
+   ClaudeBot/1.0             200
+   Claude-SearchBot/1.0      200
+   PerplexityBot/1.0         200
+   Google-Extended           200
+   Applebot-Extended         200
+   DNS TXT google-site-verification: present
+== 57 pages
+== internal links
+   checked 62 internal links
+== structured data types in use: Article, BreadcrumbList, CollectionPage, ContactPage, FAQPage, MobileApplication, Organization, WebApplication, WebPage, WebSite
+
+0 FAIL, 1 WARN
+WARN /terms: thin (88 words)
