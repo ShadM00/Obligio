@@ -1,0 +1,34 @@
+== robots.txt, sitemap, AI files (https://obligio.com)
+   sitemap lists 13 URLs
+   /llms.txt: 404
+   /llms-full.txt: 404
+   /feed.xml: 404
+   /rss.xml: 404
+   /ads.txt: 404
+== AI and search crawler access (page / and sitemap)
+   Googlebot/2.1             200
+   bingbot/2.0               200
+   GPTBot/1.1                200
+   OAI-SearchBot/1.0         200
+   ChatGPT-User/1.0          200
+   ClaudeBot/1.0             200
+   Claude-SearchBot/1.0      200
+   PerplexityBot/1.0         200
+   Google-Extended           200
+   Applebot-Extended         200
+   DNS TXT google-site-verification: present
+== 13 pages
+== internal links
+   checked 17 internal links
+== structured data types in use: Article, FAQPage, MobileApplication, Organization, WebSite
+
+0 FAIL, 9 WARN
+WARN sitemap has no <lastmod>
+WARN no /llms.txt (cheap AI-assistant map; unconfirmed that engines read it)
+WARN /privacy: title is 24 chars (aim 30-65): Privacy Policy | Obligio
+WARN /privacy: no structured data
+WARN /terms: no structured data
+WARN /terms: thin (81 words)
+WARN /support: no structured data
+WARN /support: thin (60 words)
+WARN /small-business-compliance-calendar/: description is 168 chars (aim 90-160)

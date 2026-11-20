@@ -1,0 +1,80 @@
+# Obligio
+
+> Obligio is a mobile app (iPhone and Android) that keeps a small business's licences, permits, insurance renewals and filing deadlines in one calendar with reminders. This site has a free reminder calculator, a table of US state annual report due dates taken from each state's official page with the read date, and guides. Organisational guidance, not legal or tax advice.
+
+## Tools
+
+- [Renewal Reminder Calculator: License and Permit Due Dates](https://obligio.com/renewal-reminder-calculator/): Enter a license, permit or filing due date to get reminder dates 30, 14, 7 and 1 days before, plus a calendar file. Free, no sign-up.
+
+## Hubs
+
+- [Annual Report Due Dates by State (2026 Table)](https://obligio.com/annual-report-due-dates/): When each state's annual or biennial report is due for corporations and LLCs, from each state's official page read 20 November 2026.
+- [Business License and Compliance Guides for Small Business](https://obligio.com/guides/): Guides to renewing business licenses, compliance calendars and state filings, plus a free renewal reminder calculator. Sourced from official pages.
+
+## Annual report due dates by state
+
+- [Alabama Annual Report Due Date and Who Files](https://obligio.com/annual-report-due-dates/alabama/): When the Alabama Alabama Business Privilege Tax return (Form CPT) is due, who files it, from the official page read 20 November 2026.
+- [Alaska Annual Report Due Date: Biennial Report](https://obligio.com/annual-report-due-dates/alaska/): When the Alaska Biennial Report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Arizona Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/arizona/): When the Arizona Annual Report (corporations) is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Arkansas Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/arkansas/): When the Arkansas the state's annual report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [California Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/california/): When the California the state's annual report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Colorado Annual Report Due Date: Periodic Report](https://obligio.com/annual-report-due-dates/colorado/): When the Colorado Periodic Report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Connecticut Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/connecticut/): When the Connecticut Annual report (Limited Liability Company) is due and who files it, from the official page read 20 November 2026.
+- [Delaware Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/delaware/): When the Delaware Annual Report and Franchise Tax (domestic corporations) is due and who files it, from the official page read 20 November 2026.
+- [District of Columbia Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/district-of-columbia/): When the District of Columbia the state's annual report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Florida Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/florida/): When the Florida Annual report (Fla. Stat. § 607.1622) is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Georgia Annual Report Due Date: Annual Registration](https://obligio.com/annual-report-due-dates/georgia/): When the Georgia Annual Registration is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Hawaii Annual Report Due Date and Who Files](https://obligio.com/annual-report-due-dates/hawaii/): When the Hawaii Annual business report (annual report or annual statement) is due, who files it, from the official page read 20 November 2026.
+- [Kansas Annual Report Due Date: Information Report](https://obligio.com/annual-report-due-dates/kansas/): When the Kansas Information Report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Kentucky Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/kentucky/): When the Kentucky Annual Report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Maine Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/maine/): When the Maine Annual report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Maryland Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/maryland/): When the Maryland Annual Report (SDAT Form 1 — annual report/personal property return) is due and who files it, from the official page read 20 November 2026.
+- [Michigan Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/michigan/): When the Michigan the state's annual report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Minnesota Annual Report Due Date: Annual renewal](https://obligio.com/annual-report-due-dates/minnesota/): When the Minnesota Annual renewal is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Mississippi Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/mississippi/): When the Mississippi Annual Report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Missouri Annual Report Due Date: Annual registration report](https://obligio.com/annual-report-due-dates/missouri/): When the Missouri Annual registration report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Montana Annual Report Due Date and Fee](https://obligio.com/annual-report-due-dates/montana/): When the Montana Annual report is due, who files it, the fee, from the official page read 20 November 2026.
+- [Nebraska Annual Report Due Date: Biennial occupation tax report](https://obligio.com/annual-report-due-dates/nebraska/): When the Nebraska Biennial occupation tax report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Nevada Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/nevada/): When the Nevada the state's annual report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [New Hampshire Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/new-hampshire/): When the New Hampshire Annual Report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [New Jersey Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/new-jersey/): When the New Jersey Annual report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [New Mexico Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/new-mexico/): When the New Mexico the state's annual report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [New York Annual Report Due Date: Biennial Statement](https://obligio.com/annual-report-due-dates/new-york/): When the New York Biennial Statement is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [North Carolina Annual Report Due Date and Fee](https://obligio.com/annual-report-due-dates/north-carolina/): When the North Carolina Annual Report (Business Corporations and Banks) is due, who files it, the fee, from the official page read 20 November 2026.
+- [North Dakota Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/north-dakota/): When the North Dakota Annual Report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Oregon Annual Report Due Date and Who Files](https://obligio.com/annual-report-due-dates/oregon/): When the Oregon Annual Report or Renewal is due, who files it, from the official page read 20 November 2026.
+- [Pennsylvania Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/pennsylvania/): When the Pennsylvania Annual Report [DSCB:15-146] — corporations is due and who files it, from the official page read 20 November 2026.
+- [Rhode Island Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/rhode-island/): When the Rhode Island Annual Report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [South Carolina Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/south-carolina/): When the South Carolina Annual report (Schedule D of the SC Corporate Tax return) is due and who files it, from the official page read 20 November 2026.
+- [Texas Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/texas/): When the Texas the state's annual report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Utah Annual Report Due Date and Who Files](https://obligio.com/annual-report-due-dates/utah/): When the Utah Annual report for division is due, who files it, from the official page read 20 November 2026.
+- [Vermont Annual Report Due Date and Who Files](https://obligio.com/annual-report-due-dates/vermont/): When the Vermont Annual Report is due, who files it, from the official page read 20 November 2026.
+- [Virginia Annual Report Due Date and Fee](https://obligio.com/annual-report-due-dates/virginia/): When the Virginia Annual report (Code of Virginia § 13.1-775) is due, who files it, the fee, from the official page read 20 November 2026.
+- [Washington Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/washington/): When the Washington Annual Report is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [West Virginia Annual Report Due Date, Fee and Late Penalty](https://obligio.com/annual-report-due-dates/west-virginia/): When the West Virginia Annual Report is due, who files it, the fee and what happens if it is late, from the official page read 20 November 2026.
+- [Wisconsin Annual Report Due Date and Late Penalty](https://obligio.com/annual-report-due-dates/wisconsin/): When the Wisconsin Annual Report (domestic entities) is due, who files it and what happens if it is late, from the official page read 20 November 2026.
+- [Wyoming Annual Report Due Date and Fee](https://obligio.com/annual-report-due-dates/wyoming/): When the Wyoming Annual Report is due, who files it, the fee, from the official page read 20 November 2026.
+
+## Guides
+
+- [ASIC Annual Review Date: Deadlines, Fees and Late Fees](https://obligio.com/asic-annual-review-date/): Your ASIC annual review date is your registration anniversary. The 28-day, 2-month and 12-month deadlines after it, 2026-27 fees and late fees.
+- [Business License Renewal Tracker: Template & Rules](https://obligio.com/business-licence-renewal-tracker/): How to track business license renewals: what to record, how far ahead to set reminders, what commonly expires, and a tracker template you can copy.
+- [Compliance Software for Small Business, Sorted by Job](https://obligio.com/compliance-software-for-small-business/): Compliance software for small business, sorted by job: license trackers, registered agents, payroll, SOC 2. Prices, and when a spreadsheet is enough.
+- [Compliance Tracking Spreadsheet vs Tracker App](https://obligio.com/compliance-tracker-vs-spreadsheet/): A compliance tracking spreadsheet that flags due dates itself: copyable formulas, color rules, an email reminder script, and when to switch to an app.
+- [Contractor License Renewal: Dates, Late Fees, Reminders](https://obligio.com/contractor-license-renewal-reminders/): Contractor license renewal in four states: cycles, board notice dates, late fees, and a reminder plan for the license, bond and insurance. Printable card.
+- [How to Check if a Business License Is Valid](https://obligio.com/how-to-check-if-a-business-license-is-valid/): How to check if a business license is valid: which lookup to use, what Active, Inactive and Delinquent mean, and five checks beyond the status line.
+- [How to Renew a Business License: Steps and Checklist](https://obligio.com/how-to-renew-a-business-license/): How to renew a business license: find the issuing agency, the renewal window, what to send besides the fee, and how early to start. Printable checklist.
+- [Small Business Compliance Calendar: Yearly Template & Dates](https://obligio.com/small-business-compliance-calendar/): A small business compliance calendar for the year: federal filing dates by entity type and headcount, with sources, and a yearly template to copy.
+- [Business License Expired? What Happens and What to Do](https://obligio.com/what-happens-if-a-business-licence-expires/): What happens when a business license expires: late fees, work that counts as unlicensed, and the cutoff after which you must reapply, plus a fix-it plan.
+
+## About the app
+
+- [Obligio | Business Compliance Tracker & Renewal Reminders](https://obligio.com/): Track business licenses, insurance renewals, filing deadlines and documents with Obligio. One compliance calendar for small-business owners.
+- [Obligio Privacy Policy: Account, Documents and Reports](https://obligio.com/privacy): Learn how Obligio handles account information, business records, uploaded documents and subscription data, and how to request account deletion.
+- [Terms of Service](https://obligio.com/terms): Read the terms for using Obligio, the business obligation tracker, including your responsibility to verify deadlines and official requirements.
+- [Support & Account Help](https://obligio.com/support): Get help with Obligio reminders, subscriptions, documents and account deletion. Contact the team for support with your business compliance tracker.
+
+## App
+
+- [Obligio on the App Store](https://apps.apple.com/app/id6808265621)
+- [Obligio on Google Play](https://play.google.com/store/apps/details?id=com.obligio.app)
