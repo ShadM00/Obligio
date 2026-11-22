@@ -1,6 +1,6 @@
 # Obligio: full text of the public guides, tools and state pages
 
-Generated 2026-11-20 from https://obligio.com. Each state section names its official source and the date it was read.
+Generated 2026-11-23 from https://obligio.com. Each state section names its official source and the date it was read.
 
 ---
 
@@ -3262,7 +3262,7 @@ The calculator does date arithmetic only. It does not know your deadline; the is
 ---
 
 URL: https://obligio.com/guides/
-Updated: 2026-11-19
+Updated: 2026-11-23
 
 Business License and Compliance Guides for Small Business 
 
@@ -3297,6 +3297,8 @@ Practical guides for small-business owners on keeping licenses, permits, insuran
  How to check if a business license is valid: which lookup to use, what Active, Inactive and Delinquent mean, and five checks beyond the status line. 
  How to renew a business license: the six steps, and what to have ready 
  How to renew a business license: find the issuing agency, the renewal window, what to send besides the fee, and how early to start. Printable checklist. 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
+ Set license renewal reminders in Google Calendar: the two-event setup, its 4-week and 5-reminder limits, a dated example, and when a tracker fits better. 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  A small business compliance calendar for the year: federal filing dates by entity type and headcount, with sources, and a yearly template to copy. 
  What happens if a business license expires, and what to do today 
@@ -3458,6 +3460,7 @@ If you want these dates on your phone, Obligio is free for your first three obli
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
  How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
  Annual report due dates by state 
@@ -3641,6 +3644,7 @@ If you would rather keep the rows and reminders on your phone, Obligio is free f
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
  How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
  Annual report due dates by state 
@@ -3794,6 +3798,7 @@ If a phone tracker suits your list, Obligio is free for your first three obligat
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
  How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
  Annual report due dates by state 
@@ -3988,6 +3993,7 @@ If you would rather have the reminders on your phone than in a script, Obligio i
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
  How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
  Annual report due dates by state 
@@ -4159,6 +4165,7 @@ If a phone tracker suits you, Obligio is free for your first three obligations: 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  How to check if a business license is valid, and what to read on the result 
  How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
  Annual report due dates by state 
@@ -4346,6 +4353,7 @@ If a phone reminder suits you, Obligio is free for your first three obligations:
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
  Annual report due dates by state 
@@ -4508,6 +4516,173 @@ If you want the next renewal date on your phone, Obligio is free for your first 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
+ Small business compliance calendar: the dates that apply to you, and a yearly template 
+ What happens if a business license expires, and what to do today 
+ Annual report due dates by state 
+ Renewal reminder calculator
+
+---
+
+URL: https://obligio.com/license-renewal-reminder-calendar/
+Updated: 2026-11-23
+
+License Renewal Reminder Calendar in Google Calendar | Obligio 
+
+ Skip to content 
+
+GUIDE 
+
+# License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better
+
+Google Calendar works as a license renewal reminder calendar if you give each license two events, not one. The first is an all-day event on the expiry date, repeating on the license's cycle (every year, every two years), with reminders 4 weeks, 2 weeks, 1 week and 1 day before. The second is a "start the renewal" event 60 to 90 days earlier, because Google allows no reminder more than 4 weeks before an event and no more than five per event. That is enough for a handful of licenses. A calendar does not know whether you renewed. The event repeats either way, and a missed date simply scrolls into the past. Once you hold more than about five dated items, or need the certificate kept beside the date, a tracker does that job better. 
+
+## Set it up in Google Calendar: two events per license
+
+These steps use Google Calendar on a computer, following Google's own help pages for recurring events and notifications . 
+
+### Event 1: the expiry date
+
+Click Create . Title it with the license and number, for example "CSLB license 1234567 expires". 
+
+Tick All day and set the date to the expiry date printed on the license. 
+
+Next to "Does not repeat", open the menu and choose the license's cycle. For a two-year license, choose Custom and set it to repeat every 2 years. 
+
+Under notifications, click Add notification until you have four: 4 weeks, 2 weeks, 1 week and 1 day before, each at a time you will be at work. 
+
+In the description, paste the board's renewal page link and the license number. Click Save . 
+
+### Event 2: start the renewal
+
+Create a second all-day event 60 to 90 days before the expiry date, titled "Start renewal: CSLB 1234567". 
+
+Repeat it on the same cycle as event 1. 
+
+Give it a reminder 1 day before, and list in the description what the renewal needs: fee, continuing education, bond, insurance certificate. 
+
+Ninety days is the start we suggest in our contractor license renewal guide , because continuing-education hours and insurance certificates take weeks to arrange. If your board only needs a fee, 60 days is enough. 
+
+## Worked example: a California contractor license expiring 31 January 2027
+
+The California Contractors State License Board (CSLB) renews an active license every two years and sends the renewal application about 60 days before expiry; if none has arrived 45 days before, you can order one ( CSLB, General renewal information ). Here is how each reminder you would want maps onto Google Calendar: 
+
+ Reminders for an expiry date of 31 January 2027, counted in calendar days 
+
+ Reminder Date Can it go on the expiry event? 
+
+ 90 days: start the renewal 2 November 2026 No: more than 4 weeks ahead. Use event 2 
+
+ 60 days: CSLB application should arrive 2 December 2026 No. Add a note to event 2: "order a form if none by 17 Dec" 
+
+ 4 weeks 3 January 2027 Yes, the earliest the event allows 
+
+ 2 weeks 17 January 2027 Yes 
+
+ 1 week 24 January 2027 Yes 
+
+ 1 day 30 January 2027 Yes (that is four of the five allowed) 
+
+If you renew on 10 December 2026, nothing in the calendar changes. The reminders on 3, 17, 24 and 30 January still fire, and you dismiss them. That is harmless. The risk runs the other way: if you never renew, the calendar shows 31 January 2027 like any other past day, and the next event appears in 2029 as if all were well. 
+
+## Where a calendar stops working
+
+ Google Calendar limits for renewal reminders, and what to add if you need more 
+
+ Need Google Calendar If you need it 
+
+ Warning more than 4 weeks ahead Not on the event itself (maximum 40,320 minutes) A second "start" event 
+
+ More than five reminders Five custom reminders per event Spread them across the two events 
+
+ Knowing a renewal is overdue No status. A past event looks the same done or not done A tracker or spreadsheet with a status column 
+
+ Next date only after you renew The series repeats regardless A tracker that opens the next cycle when you mark it done 
+
+ Certificate kept with the date Up to 25 attachments per event, as Google Drive files Works if you already use Drive 
+
+ A second person reminded Each person sets their own notifications, even on a shared calendar Ask them to set their own notifications on the shared calendar 
+
+Limits from Google's Calendar API reference for events (reminders, attachments) and Change Google Calendar notifications (personal settings). We read them on 23 November 2026 and did not find the 4-week limit stated on Google's consumer help pages. 
+
+## Calendar or tracker: a decision rule
+
+ Up to about five licenses and policies, and you open your calendar every working day: use Google Calendar with the two-event setup. It costs nothing and you already look at it. 
+
+ More than five, or dates on different cycles (annual insurance, two-year license, five-year permit): keep a list with a status column, either the spreadsheet set up this way or a tracker app. The calendar can still carry the expiry events. 
+
+ Someone else needs to see what is overdue, or an inspector or general contractor asks for proof: use a tracker that keeps the document with the date. 
+
+Obligio, our app for iPhone and Android, is one such tracker. It reminds you 30, 14, 7 and 1 days before each date, at 9 am. That schedule is fixed, so it cannot give a 90-day warning either; add a separate "start renewal" item for that. A date that passes without being marked done shows as overdue. With Plus, recurring items open their next cycle only when you mark the current one done, and you can attach the certificate. It does not sync to Google Calendar, does not share with a second person, and does not check any board. 
+
+## If you import a calendar file instead
+
+Our renewal reminder calculator makes a standard .ics calendar file with the reminders built in. After importing it into Google Calendar, open the event and check that the notifications are there. Google's import help page does not say whether imported reminders are kept, and we have not tested every account type. Add them by hand if they are missing. 
+
+### Two-event setup card: one per license
+
+License and number: ______________ Issued by: ______________ 
+
+Expiry date on the license: ___ / ___ / ______ Cycle: 1 / 2 / 3 / 5 years 
+
+Event 1 created on the expiry date, repeating on the cycle 
+
+Reminders on event 1: 4 weeks, 2 weeks, 1 week, 1 day 
+
+Start date (60 or 90 days before): ___ / ___ / ______ Event 2 created 
+
+Renewal needs: fee $______ CE hours ______ bond / insurance certificate 
+
+Board's renewal page pasted in both descriptions 
+
+After renewing: new expiry date ___ / ___ / ______ matches the next event 
+
+Bond and insurance have their own events (they expire on their own dates) 
+
+## When this page does not apply
+
+ The date has already passed. Stop licensed work and read what happens if a business license expires . 
+
+ You need the state's annual report date, not a license. Find it in annual report due dates by state , then add it the same way. 
+
+ You manage licenses for a team or several locations. Compare the options in compliance software for small business . 
+
+ You do not know the renewal steps yet. Start with how to renew a business license . 
+
+## Questions
+
+ How far ahead can Google Calendar remind me about a license renewal? 
+Google's Calendar API reference allows reminders between 0 and 40,320 minutes (4 weeks) before an event, and at most five custom reminders per event. For a 60- or 90-day warning, create a second event on that date called "Start the renewal" and give it its own reminders. 
+ If I share the calendar with my bookkeeper, will they get my reminders? 
+No. Google says notification settings are personal and apply only to your account, even for people you share the calendar with. Each person has to set their own notifications. 
+ What should a repeating renewal event be based on: the expiry date or the day I renewed? 
+The expiry date printed on the license. When the renewed license arrives, check that the next event in the series matches the new expiry date. If it does not, edit that event and choose "This and following events" so the rest of the series moves with it. 
+
+## Sources
+
+ Google for Developers, Calendar API: Events resource (reminders: maximum five overrides, 0 to 40,320 minutes; attachments: at most 25 per event) 
+
+ Google Calendar Help, Change Google Calendar notifications 
+
+ Google Calendar Help, Create a recurring event 
+
+ Google Calendar Help, Import events to Google Calendar 
+
+ California Contractors State License Board, General renewal information 
+
+All sources were read on 23 November 2026. Google changes its products, and the issuing agency is the authority on your dates. This page is organizational guidance, not legal advice. 
+
+If a phone reminder with an overdue view suits you better, Obligio is free for your first three obligations: download on the App Store or get it on Google Play . Questions about the app go to support . 
+
+## Related
+
+ ASIC annual review date: how to find it, and every deadline that follows it 
+ Business license renewal tracker: what to record, when to set reminders 
+ Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
+ Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
+ Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
+ How to check if a business license is valid, and what to read on the result 
+ How to renew a business license: the six steps, and what to have ready 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
  Annual report due dates by state 
@@ -4698,6 +4873,7 @@ If you would rather keep the calendar and its reminders on your phone, Obligio i
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
  How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  What happens if a business license expires, and what to do today 
  Annual report due dates by state 
  Renewal reminder calculator
@@ -4845,6 +5021,7 @@ If you want the reminders and the record on your phone, Obligio is free for your
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
  How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  Annual report due dates by state 
  Renewal reminder calculator
