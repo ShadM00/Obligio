@@ -1,6 +1,6 @@
 # Obligio: full text of the public guides, tools and state pages
 
-Generated 2026-11-23 from https://obligio.com. Each state section names its official source and the date it was read.
+Generated 2026-11-25 from https://obligio.com. Each state section names its official source and the date it was read.
 
 ---
 
@@ -3262,7 +3262,7 @@ The calculator does date arithmetic only. It does not know your deadline; the is
 ---
 
 URL: https://obligio.com/guides/
-Updated: 2026-11-23
+Updated: 2026-11-25
 
 Business License and Compliance Guides for Small Business 
 
@@ -3287,6 +3287,8 @@ Practical guides for small-business owners on keeping licenses, permits, insuran
  Your ASIC annual review date is your registration anniversary. The 28-day, 2-month and 12-month deadlines after it, 2026-27 fees and late fees. 
  Business license renewal tracker: what to record, when to set reminders 
  How to track business license renewals: what to record, how far ahead to set reminders, what commonly expires, and a tracker template you can copy. 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
+ Home-based business license requirements in order: zoning, city license, seller's permit, DBA, EIN, insurance, with three city rule sets and a printable list. 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance software for small business, sorted by job: license trackers, registered agents, payroll, SOC 2. Prices, and when a spreadsheet is enough. 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
@@ -3455,6 +3457,7 @@ If you want these dates on your phone, Obligio is free for your first three obli
 ## Related
 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
@@ -3639,6 +3642,190 @@ If you would rather keep the rows and reminders on your phone, Obligio is free f
 ## Related
 
  ASIC annual review date: how to find it, and every deadline that follows it 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
+ Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
+ Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
+ Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
+ How to check if a business license is valid, and what to read on the result 
+ How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
+ Small business compliance calendar: the dates that apply to you, and a yearly template 
+ What happens if a business license expires, and what to do today 
+ Annual report due dates by state 
+ Renewal reminder calculator
+
+---
+
+URL: https://obligio.com/compliance-checklist-for-home-based-business/
+Updated: 2026-11-25
+
+Home-Based Business License Requirements: Checklist | Obligio 
+
+ Skip to content 
+
+GUIDE 
+
+# Home-based business license requirements: a checklist in the order to do it, and what renews
+
+A business run from home usually needs the same city or county business license as a shop, plus permission to use a house for business. That permission is the zoning part: a home occupation permit, or a zoning check built into the license application. On top of that, add only what your work triggers. Selling goods needs a state seller's permit. Trading under a made-up name needs a DBA (fictitious business name) filing. A regulated trade needs its state license. Employees or an LLC need an EIN. Check your homeowners or renter's insurance too, because it rarely covers business liability. Do zoning first: it is the step that can say no. 
+
+## The checklist, in the order to do it
+
+ What a home-based business may need, who issues it, and whether it renews 
+
+ Step Issued by You need it if Renews? 
+
+ 1. Lease, HOA or deed rules Your landlord or homeowners association You rent, or live where an HOA or deed restricts business use or signs No, but rules can change at each lease 
+
+ 2. Zoning: home occupation permit or sign-off City or county planning or zoning office Almost always; the rules limit visitors, staff, deliveries and signs Sometimes re-checked at every license renewal 
+
+ 3. General business license or tax registration City or county Almost always, even for online-only work Yes, often yearly or every two years 
+
+ 4. DBA / fictitious business name County clerk or state You trade under a name that is not your own legal name Yes in many places (five years in California) 
+
+ 5. State seller's permit State tax agency You sell physical goods that are taxable where you sell Usually no, but returns are due on a schedule 
+
+ 6. State professional or trade license State licensing board Your work is regulated (cosmetology, childcare, contracting, food) Yes, on the board's cycle 
+
+ 7. EIN IRS (free) You hire employees, form an LLC, partnership or corporation, or owe certain federal taxes No 
+
+ 8. Insurance Your insurer You keep stock or equipment at home, or anyone visits for business Yes, yearly 
+
+Sources for each row are named in the sections below and listed at the end. The SBA notes that zoning ordinances "can still apply even to home-based businesses" ( SBA, Launch your business ). 
+
+## What home occupation rules actually say: three cities
+
+Every city writes its own limits. These three show the range. Read your own city's page before you sign a lease or print a sign. 
+
+ Home business rules as published by each city, read 25 November 2026 
+
+ Rule Chicago, IL Los Angeles, CA Columbia, SC 
+
+ License City business license required; listed fee $1,000 Business Tax Registration Certificate from the Office of Finance City business license 
+
+ Non-resident employees working in the home No more than one One Set by zoning on the home occupation form 
+
+ Customers No more than 2 at a time, 10 in 24 hours One client visit per hour, 8 am to 8 pm Set by zoning 
+
+ Deliveries One bulk delivery a day, 8 am to 6 pm; no tractor trailers Two deliveries or pick-ups a day Set by zoning 
+
+ Signs No exterior signage Nothing visible from outside Set by zoning 
+
+ Not allowed at home Food uses, barber shops, massage, medical uses, animal care, vehicle repair and others Mechanized equipment not normal in a home; commercial vehicles parked on site Checked by zoning 
+
+ Renewal Every two years Yearly renewal due January 1, delinquent the first business day of March All licenses expire April 30; home occupation form resubmitted with each renewal 
+
+From City of Chicago, Home Based Business , LA Business Navigator, Home-Based Businesses and City of Columbia, Business License Renewal . The Los Angeles renewal dates are from the Office of Finance, Business Tax Information FAQ . Confirm fees with each city, as they change. 
+
+## The renewal trap: zoning is checked again
+
+Most checklists stop once the license arrives. For a home business, the renewal is where things slip. Columbia, South Carolina, says all business licenses expire on April 30, renewal forms are mailed early in the year, and a home occupation must resubmit its home occupation form with the renewal "for re-validation by zoning". Paying late costs 5%, plus another 5% on the first of each month until paid. Not receiving the form is not a defense. A name or address change must be reported within ten days. 
+
+Los Angeles has a quieter version of the same trap. A business with $100,000 or less in gross receipts may qualify for the city's Small Business Exemption, but the Office of Finance must receive the renewal form on time to grant it. The renewal is due January 1 and delinquent on the first business day of March ( LA Office of Finance FAQ ). Miss the form and a business that owed nothing can owe penalties. 
+
+So the dates to put in a calendar the day each item arrives are: the business license expiry, any DBA expiry, the state license expiry, and the insurance renewal. Each one gets a reminder 30 days ahead, and the business license gets a note to fetch the zoning form too. 
+
+## Worked example: candles sold from a Los Angeles apartment
+
+Maya makes candles at home in Los Angeles. She sells them online, at weekend craft fairs, and to a few customers who collect from her door. She trades as "Maya Lane Candles". 
+
+ Lease. She checks her lease for a business-use clause before anything else. 
+
+ Zoning. Collections fit the city's limit of one client visit per hour between 8 am and 8 pm. She keeps no sign in the window. 
+
+ City. She registers for a Business Tax Registration Certificate, which the city says every business in Los Angeles needs. Her sales are well under $100,000, so she files the yearly renewal by January 1 to keep the Small Business Exemption. 
+
+ Seller's permit. California requires a seller's permit once you make three or more sales of merchandise in 12 months, from home or a store ( CDTFA, Tax Guide for Home-Based Businesses ). Her craft-fair sales are her own, so she needs one even though a marketplace collects tax on its own sales. 
+
+ DBA. "Maya Lane Candles" is not her legal name, so she files a fictitious business name statement with the Los Angeles County Clerk. Filed on 1 December 2026, it expires on 1 December 2031. Renewal costs $26 and needs no newspaper publication ( LA County Registrar-Recorder/County Clerk, Renewals ). 
+
+ EIN. As a sole owner with no employees, she does not need one. The IRS requires an EIN if you have employees or operate an LLC, partnership or corporation ( IRS, Employer identification number ). She can still get one free for banking. 
+
+ Insurance. Her renter's policy is unlikely to cover a customer hurt at her door. She asks about a home business endorsement. 
+
+Her calendar then holds four renewal dates: the city business tax every January 1, the DBA on 1 December 2031, the renter's policy, and her sales tax return dates. 
+
+## Insurance: the gap most home businesses miss
+
+The Insurance Information Institute says a homeowners policy may cover business equipment only up to about $2,500 at home and $250 away from it, and usually does not cover business liability at all, such as a client who falls on your stairs ( Triple-I, Insuring your home business ). It describes three fixes: an endorsement on the home policy, separate business policies, or a small businessowners package. Ask your agent which fits. 
+
+### Home business checklist: print and tick
+
+Lease, HOA or deed checked for business-use and sign rules 
+
+City zoning rules read: staff ___ visitors ___ deliveries ___ signs ___ 
+
+Home occupation permit or zoning sign-off: number ______ date ___ / ___ / ______ 
+
+City or county business license: expires ___ / ___ / ______ 
+
+DBA filed (if trading under another name): expires ___ / ___ / ______ 
+
+State seller's permit (if selling goods): number ______ returns due ______ 
+
+State professional or trade license (if regulated): expires ___ / ___ / ______ 
+
+EIN (if employees or an LLC): ______ 
+
+Insurance asked about home business cover: renews ___ / ___ / ______ 
+
+Each expiry date in a calendar with a 30-day reminder 
+
+Note on the license reminder: resubmit zoning form if the city asks 
+
+## When this page does not apply
+
+ You make food at home to sell. Most home occupation rules exclude it. Look up your state's cottage food rules; Chicago, for example, points to a Cottage Food Registration with its Department of Public Health. 
+
+ You are a contractor working from home. Your state board's license matters most. See contractor license renewal dates and reminders . 
+
+ You already have the license and need to renew it. See how to renew a business license . 
+
+ A date has already passed. Read what happens if a business license expires . 
+
+ You need the state's annual report date for an LLC. Find it in annual report due dates by state . 
+
+## Keeping the dates after the setup
+
+Once the list is done, what remains is four or five dates on different cycles. Our small business compliance calendar adds the federal tax dates, and the business license renewal tracker guide lists what to record for each item. Obligio, our app for iPhone and Android, is one way to hold them: it reminds you 30, 14, 7 and 1 days before each date and shows anything past due as overdue. It does not know your city's rules or check any agency for you. 
+
+## Questions
+
+ Do I need a business license if I only work online from home? 
+Usually yes. Cities and counties license the business, not the shopfront. Chicago, for example, says a City of Chicago business license is required to operate a business out of your home. What working online changes is the zoning side: with no visitors, deliveries or signs, a home office normally fits the home occupation rules easily. 
+ Does my homeowners insurance cover my home business? 
+Often only a little. The Insurance Information Institute says a homeowners policy may cover business equipment only up to about $2,500 in the home and $250 away from it, and usually does not cover business liability at all. Ask your insurer about a home business endorsement or a separate policy. 
+ Do I have to renew a home occupation permit? 
+It depends on the city. Chicago issues home occupation licenses for two years. In Columbia, South Carolina, every business license expires on April 30 and a home business must resubmit its home occupation form with each renewal so zoning can check it again. Put the renewal date in your calendar the day the license arrives. 
+
+## Sources
+
+ City of Chicago, Business Affairs and Consumer Protection: Home Based Business 
+
+ City of Los Angeles, LA Business Navigator: Home-Based Businesses 
+
+ City of Columbia, SC: Business License Renewal 
+
+ California Department of Tax and Fee Administration: Tax Guide for Home-Based Businesses, Getting Started 
+
+ City of Los Angeles Office of Finance: Business Tax Information FAQ 
+
+ Los Angeles County Registrar-Recorder/County Clerk: Fictitious Business Name Renewals 
+
+ Internal Revenue Service: Employer identification number 
+
+ Insurance Information Institute: Insuring your home business 
+
+ U.S. Small Business Administration: Launch your business 
+
+All sources were read on 25 November 2026. Rules differ by city and county; your local licensing and zoning offices are the authority. This page is organizational guidance, not legal advice. 
+
+If you want the renewal dates on your phone with an overdue view, Obligio is free for your first three obligations: download on the App Store or get it on Google Play . Questions about the app go to support . 
+
+## Related
+
+ ASIC annual review date: how to find it, and every deadline that follows it 
+ Business license renewal tracker: what to record, when to set reminders 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
@@ -3794,6 +3981,7 @@ If a phone tracker suits your list, Obligio is free for your first three obligat
 
  ASIC annual review date: how to find it, and every deadline that follows it 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
@@ -3989,6 +4177,7 @@ If you would rather have the reminders on your phone than in a script, Obligio i
 
  ASIC annual review date: how to find it, and every deadline that follows it 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
  How to check if a business license is valid, and what to read on the result 
@@ -4161,6 +4350,7 @@ If a phone tracker suits you, Obligio is free for your first three obligations: 
 
  ASIC annual review date: how to find it, and every deadline that follows it 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  How to check if a business license is valid, and what to read on the result 
@@ -4349,6 +4539,7 @@ If a phone reminder suits you, Obligio is free for your first three obligations:
 
  ASIC annual review date: how to find it, and every deadline that follows it 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
@@ -4512,6 +4703,7 @@ If you want the next renewal date on your phone, Obligio is free for your first 
 
  ASIC annual review date: how to find it, and every deadline that follows it 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
@@ -4678,6 +4870,7 @@ If a phone reminder with an overdue view suits you better, Obligio is free for y
 
  ASIC annual review date: how to find it, and every deadline that follows it 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
@@ -4868,6 +5061,7 @@ If you would rather keep the calendar and its reminders on your phone, Obligio i
 
  ASIC annual review date: how to find it, and every deadline that follows it 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
@@ -5016,6 +5210,7 @@ If you want the reminders and the record on your phone, Obligio is free for your
 
  ASIC annual review date: how to find it, and every deadline that follows it 
  Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
  Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
  Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
  Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
