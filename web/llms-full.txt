@@ -1,6 +1,6 @@
 # Obligio: full text of the public guides, tools and state pages
 
-Generated 2026-11-25 from https://obligio.com. Each state section names its official source and the date it was read.
+Generated 2026-11-26 from https://obligio.com. Each state section names its official source and the date it was read.
 
 ---
 
@@ -3262,7 +3262,7 @@ The calculator does date arithmetic only. It does not know your deadline; the is
 ---
 
 URL: https://obligio.com/guides/
-Updated: 2026-11-25
+Updated: 2026-11-26
 
 Business License and Compliance Guides for Small Business 
 
@@ -3305,6 +3305,8 @@ Practical guides for small-business owners on keeping licenses, permits, insuran
  A small business compliance calendar for the year: federal filing dates by entity type and headcount, with sources, and a yearly template to copy. 
  What happens if a business license expires, and what to do today 
  What happens when a business license expires: late fees, work that counts as unlicensed, and the cutoff after which you must reapply, plus a fix-it plan. 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
+ A certificate of good standing proves your LLC or corporation is current with the state. Who issues it, fees in six states, how recent it must be, what if you fail. 
 
 Obligio keeps dates like this on your phone with reminders 30, 14, 7 and 1 days before. It is free for your first three obligations: download on the App Store or get it on Google Play .
 
@@ -3466,6 +3468,7 @@ If you want these dates on your phone, Obligio is free for your first three obli
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -3651,6 +3654,7 @@ If you would rather keep the rows and reminders on your phone, Obligio is free f
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -3834,6 +3838,7 @@ If you want the renewal dates on your phone with an overdue view, Obligio is fre
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -3989,6 +3994,7 @@ If a phone tracker suits your list, Obligio is free for your first three obligat
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -4185,6 +4191,7 @@ If you would rather have the reminders on your phone than in a script, Obligio i
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -4358,6 +4365,7 @@ If a phone tracker suits you, Obligio is free for your first three obligations: 
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -4547,6 +4555,7 @@ If a phone reminder suits you, Obligio is free for your first three obligations:
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -4711,6 +4720,7 @@ If you want the next renewal date on your phone, Obligio is free for your first 
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -4878,6 +4888,7 @@ If a phone reminder with an overdue view suits you better, Obligio is free for y
  How to renew a business license: the six steps, and what to have ready 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -5069,6 +5080,7 @@ If you would rather keep the calendar and its reminders on your phone, Obligio i
  How to renew a business license: the six steps, and what to have ready 
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  What happens if a business license expires, and what to do today 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
  Annual report due dates by state 
  Renewal reminder calculator
 
@@ -5218,5 +5230,180 @@ If you want the reminders and the record on your phone, Obligio is free for your
  How to renew a business license: the six steps, and what to have ready 
  License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
  Small business compliance calendar: the dates that apply to you, and a yearly template 
+ What is a certificate of good standing? What it proves, what it costs, and how to order one 
+ Annual report due dates by state 
+ Renewal reminder calculator
+
+---
+
+URL: https://obligio.com/what-is-a-certificate-of-good-standing/
+Updated: 2026-11-26
+
+Certificate of Good Standing: What It Is, How to Order | Obligio 
+
+ Skip to content 
+
+GUIDE 
+
+# What is a certificate of good standing? What it proves, what it costs, and how to order one
+
+A certificate of good standing is a one-page document from the state office that holds your company's records, usually the Secretary of State. It says your corporation or LLC exists and is current with that office's filing requirements on the day it is issued. States call it a Certificate of Status, Certificate of Existence or Certificate of Good Standing; they are the same thing. You order it from the state where the company was formed. It costs from nothing (Colorado) to $50 for Delaware's short form, and several states issue it online in minutes, though New York still takes written requests only. Before you order, ask the person who wants it how recent it must be. 
+
+## What it proves, and what it does not
+
+Colorado's Secretary of State puts it plainly: good standing "means that statutory filing requirements have been met with our office." The office does not check what the filings say, and it does not regulate how the business operates ( Colorado SOS, Certificate of Good Standing FAQ ). 
+
+So the certificate proves three things: the entity exists, it is on the state's register, and it has filed what that office requires, such as the annual report. It does not prove your trade or city license is valid, that your taxes with other agencies are paid, or that the business is reputable. A sole proprietor with no state filing has no certificate to order, because there is no entity on the register. 
+
+## Who issues it and what it costs: six states, checked today
+
+ Fees and ordering methods as published by each state office, read 26 November 2026 
+
+ State Document How to order Fee Worth knowing 
+
+ Colorado Certificate of Good Standing Search the entity, choose "Get a Certificate of Good Standing", PDF opens Free Cannot be issued unless the status is Good Standing. The state says paid mailings offering the same certificate are not different from its free one. 
+
+ California Certificate of Status (Secretary of State) and Entity Status Letter (Franchise Tax Board) Certificate on bizfile Online for corporations, LLCs and LPs; letter on the FTB website $5 certificate; letter free The FTB letter covers standing with the FTB only. Certifying it means a field office or ESL@ftb.ca.gov. 
+
+ Delaware Short form Certificate of Status, or Long Form Certificate of Good Standing Document Filing and Certificate Request Service, or a written request by mail $50 short; $175 long The $10 online status check "will not generate an official certificate of good standing". The long form lists every filing and name change. 
+
+ Illinois Certificate of Good Standing Business entity search, buy online, print from the receipt or email $25 corporation or LLC; $5 not-for-profit 
+
+ New York Certificate of Status Written request by mail, hand delivery or email; not online or by phone $25 Expedite: $25 within 24 hours, $75 same day, $150 within 2 hours. 
+
+ Texas Franchise Tax Account Status (Comptroller) Online search by taxpayer number, name or SOS file number; print the result No fee stated on the page The Comptroller says this was "previously referred to as Good Standing". Reinstating or terminating with the Secretary of State needs a separate certificate. 
+
+Each row comes from that state's own page, listed under Sources at the end. Fees change; the state's page is the authority on the day you order. 
+
+## How recent it has to be
+
+The certificate itself usually has no expiry date. Colorado says a certificate "doesn't expire", but it stops being valid if the entity's status changes, and the person accepting it "may require a specific time frame", for example an issue date within 30 or 60 days. 
+
+Some deadlines are written into law. Florida requires a foreign LLC applying to do business there to deliver a certificate of existence from its home state "dated not more than 90 days before the delivery of the application" ( Florida Statutes, section 605.0902(2) ). 
+
+The rule that follows: find out the window first, then order. Order too early and a slipped deal means paying twice. 
+
+## Who asks for one, and what to give them
+
+ A decision table: match the request to the document 
+
+ Who is asking What to give them Check before ordering 
+
+ Another state, because you are registering to do business there The home state's certificate (Florida calls it a certificate of existence) The other state's age limit: 90 days in Florida for an LLC 
+
+ A bank or lender, for a loan or account The Secretary of State certificate. In California, ask whether they also want the FTB letter, which the FTB says certifies outstanding liability that could affect credit, such as at the close of escrow How many days old they accept 
+
+ A buyer, investor or their lawyer Often a long form (Delaware's lists every filing and name change) Short or long form; ask, because the long form costs $175 in Delaware 
+
+ A court matter The state certificate; in California, the FTB letter certifies legal status in court proceedings Whether a certified copy is required 
+
+ A customer, landlord or government contract The standard short form The window, and whether a printout of the free online status will do 
+
+ Someone overseas The certificate plus an apostille Ask the issuing state's apostille office; Colorado's and Delaware's Secretary of State sites both list one 
+
+## Worked example: a Delaware LLC registering in Florida
+
+A two-person LLC formed in Delaware is opening a Florida office and must register there as a foreign LLC. 
+
+ Status first. They confirm on Delaware's entity search that the LLC is active and that this year's annual LLC tax is paid. 
+
+ Order. On 1 December 2026 they request a short form Certificate of Status through Delaware's Document Filing and Certificate Request Service: $50. 
+
+ Count the window. Florida needs the certificate dated not more than 90 days before the application arrives. Day 90 after 1 December 2026 is 1 March 2027. 
+
+ Set two dates. A target to deliver the Florida application by 15 January 2027, and a hard stop of 1 March 2027. Miss the hard stop and they order a new certificate for another $50. 
+
+A California company asked by its bank does the same: $5 for the bizfile certificate, plus the free FTB letter if the bank wants tax standing, ordered once the bank names its window. 
+
+### Certificate request record: print and fill
+
+Who asked ______________ for what ______________ 
+
+Their deadline ___ / ___ / ______ and accepted age ______ days 
+
+Short form or long form? ______ Certified copy needed? ______ 
+
+Entity status checked on the state register: shows ______ 
+
+Annual report filed and state tax paid for this year 
+
+State ______ fee $______ ordered ___ / ___ / ______ 
+
+Issue date on certificate ___ / ___ / ______ confirmation no. ______ 
+
+Last day it is usable for this request ___ / ___ / ______ 
+
+Sent to the requester ___ / ___ / ______ 
+
+## If the state says you are not in good standing
+
+A state will not issue the certificate while the status shows anything else. Colorado says so directly. The usual causes are a missed annual report or unpaid state franchise tax. Work through it in this order: 
+
+ Read the entity record. The state's business search shows the status and often the missing filing. 
+
+ File and pay what is overdue. Find your state's report date and late fee in annual report due dates by state . 
+
+ Move fast if a notice arrived. In Texas, the Comptroller gives at least 45 days after mailing a notice of pending forfeiture. A forfeited entity cannot sue or defend itself in a Texas court, and its officers and directors can become liable for its debts. 
+
+ Reinstate if the entity was dissolved or forfeited, then order a fresh certificate. One issued before the status changed no longer counts. 
+
+Ignore paid mailings that offer to send you a certificate for a large fee. Colorado notes that its own official certificate is free on its website. 
+
+## When this page does not apply
+
+ You need to know whether a trade or city license is valid. That is a different record. See how to check if a business license is valid . 
+
+ A license, not the company, has lapsed. Read what happens if a business license expires . 
+
+ Your company is Australian. ASIC, not a state, holds the record; start with the ASIC annual review date . 
+
+ The status problem involves a dispute, a sale or a dissolved entity. Talk to a business attorney or the state's filing office before you refile anything. 
+
+## Questions
+
+ Does a certificate of good standing expire? 
+Usually not by its own terms. Colorado says its certificate does not expire, but it stops being valid if the entity's status changes, and the person accepting it may want one issued within, for example, 30 or 60 days. Some laws set the window: Florida requires a foreign LLC's home-state certificate to be dated no more than 90 days before its application arrives. 
+ How much does a certificate of good standing cost? 
+It depends on the state. On 26 November 2026: Colorado free, California $5, Illinois $25 for a corporation or LLC, New York $25, Delaware $50 short form or $175 long form. Expediting costs extra. 
+ Is the online status search the same as a certificate? 
+Not always. Delaware says its paid online status check will not generate an official certificate of good standing. Colorado's free PDF from the entity page is the official certificate. Ask the requester which they will accept. 
+
+## Sources
+
+ Colorado Secretary of State: Certificate of Good Standing FAQ 
+
+ California Secretary of State: Business Entities Records (fees) 
+
+ California Secretary of State: Information Requests 
+
+ California Franchise Tax Board: Entity Status Letter 
+
+ Delaware Division of Corporations: Accessing Corporate Information 
+
+ Illinois Secretary of State: Business Search / Certificate of Good Standing 
+
+ New York Department of State: Certificate of Status 
+
+ Texas Comptroller: Franchise Tax Account Status 
+
+ Florida Statutes section 605.0902: Application for certificate of authority 
+
+All sources were read on 26 November 2026. Fees and ordering methods change; the issuing office is the authority. This page is organizational guidance, not legal advice. 
+
+Good standing is lost mostly by missing a once-a-year filing. If you want annual report, tax and license dates on your phone with reminders ahead of each, Obligio is free for your first three obligations (it does not check state status or order certificates): download on the App Store or get it on Google Play . Questions about the app go to support . 
+
+## Related
+
+ ASIC annual review date: how to find it, and every deadline that follows it 
+ Business license renewal tracker: what to record, when to set reminders 
+ Home-based business license requirements: a checklist in the order to do it, and what renews 
+ Compliance software for small business: which kind you need, what it costs, and when a spreadsheet is enough 
+ Compliance tracking spreadsheet or tracker app: make the spreadsheet work, and know when to switch 
+ Contractor license renewal: when the board writes, what late costs, and a reminder plan that covers the bond and insurance too 
+ How to check if a business license is valid, and what to read on the result 
+ How to renew a business license: the six steps, and what to have ready 
+ License renewal reminders in Google Calendar: the setup that works, where it stops, and when a tracker fits better 
+ Small business compliance calendar: the dates that apply to you, and a yearly template 
+ What happens if a business license expires, and what to do today 
  Annual report due dates by state 
  Renewal reminder calculator

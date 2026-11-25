@@ -69,6 +69,7 @@
 - [License Renewal Reminder Calendar in Google Calendar](https://obligio.com/license-renewal-reminder-calendar/): Set license renewal reminders in Google Calendar: the two-event setup, its 4-week and 5-reminder limits, a dated example, and when a tracker fits better.
 - [Small Business Compliance Calendar: Yearly Template & Dates](https://obligio.com/small-business-compliance-calendar/): A small business compliance calendar for the year: federal filing dates by entity type and headcount, with sources, and a yearly template to copy.
 - [Business License Expired? What Happens and What to Do](https://obligio.com/what-happens-if-a-business-licence-expires/): What happens when a business license expires: late fees, work that counts as unlicensed, and the cutoff after which you must reapply, plus a fix-it plan.
+- [Certificate of Good Standing: What It Is, How to Order](https://obligio.com/what-is-a-certificate-of-good-standing/): A certificate of good standing proves your LLC or corporation is current with the state. Who issues it, fees in six states, how recent it must be, what if you fail.
 
 ## About the app
 
