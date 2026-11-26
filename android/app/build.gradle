@@ -68,9 +68,12 @@ react {
 }
 
 /**
- * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
+ * R8 shrinks and obfuscates release bytecode (Play flags DEX optimisation
+ * below 25% otherwise). The mapping file ships inside the .aab for Play, and
+ * the Crashlytics plugin uploads it. Resource shrinking stays off: release JS
+ * images live in res/drawable-* and are looked up by name at run time.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -119,8 +122,8 @@ android {
     applicationId "com.obligio.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 18
-        versionName "1.4"
+        versionCode 19
+        versionName "1.4.1"
     }
     signingConfigs {
         debug {
