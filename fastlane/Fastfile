@@ -1,4 +1,37 @@
+require_relative 'krontelli_release'
+
 default_platform(:ios)
+
+# Krontelli app id (not a secret). The release key is read from ~/.config/krontelli/release-keys/<this id>.
+KRONTELLI_APP_ID = '00ef0fb0-c5eb-405d-917c-d770d4f553b5'
+
+# Tell Krontelli an IPA reached TestFlight, with the version and build read from the IPA itself.
+# Non-fatal, like the helper: a report must never fail a lane.
+def report_testflight_upload!(ipa, source)
+  KrontelliRelease.report(
+    app_id: KRONTELLI_APP_ID, platform: 'ios',
+    version: FastlaneCore::IpaFileAnalyser.fetch_app_version(ipa),
+    build: FastlaneCore::IpaFileAnalyser.fetch_app_build(ipa),
+    track: 'testflight', status: 'uploaded', source: source,
+  )
+rescue => e
+  UI.important("Krontelli release report skipped: #{e.message}")
+end
+
+# Tell Krontelli what `android release` just did on Play, with the version read from android/app/build.gradle (the
+# same values the build and the GlitchTip release use). A draft is only uploaded, a halted release is halted; for a
+# completed or in-progress release the helper works the status out from the track and rollout.
+def report_play_upload!(track, release_status, rollout, source)
+  gradle_file = File.read(File.expand_path('../android/app/build.gradle', __dir__))
+  status = { 'draft' => 'uploaded', 'halted' => 'halted' }[release_status.to_s]
+  KrontelliRelease.report(
+    app_id: KRONTELLI_APP_ID, platform: 'android',
+    version: gradle_file[/versionName\s+"([^"]+)"/, 1], build: gradle_file[/versionCode\s+(\d+)/, 1],
+    track: track, status: status, rollout: rollout, source: source,
+  )
+rescue => e
+  UI.important("Krontelli release report skipped: #{e.message}")
+end
 
 # Authentication uses an App Store Connect API key rather than an Apple ID and
 # password: it is 2FA-proof and non-interactive. The .p8 stays outside the
@@ -10,6 +43,46 @@ def app_store_connect_api_key!
     key_filepath: File.expand_path(ENV.fetch('ASC_KEY_FILEPATH')),
     in_house: false,
   )
+end
+
+# A missing upload costs nothing today and an unreadable crash report later, so it has to be hard to miss.
+def glitchtip_warning(what, detail)
+  UI.important('!' * 78)
+  UI.important("GLITCHTIP: #{what} NOT UPLOADED. The release carries on; this build's crash reports will be unreadable.")
+  UI.important(detail.to_s)
+  UI.important('!' * 78)
+end
+
+# Upload the dSYMs of the archive just built to GlitchTip, so native iOS crashes read properly. The release is read
+# from the archive, because it must be exactly what the Sentry SDK reports: <bundle id>@<version>+<build>.
+# Non-fatal: a GlitchTip outage must never block a store release.
+def upload_glitchtip_dsyms!(archive = lane_context[SharedValues::XCODEBUILD_ARCHIVE])
+  krontelli = File.expand_path('~/Dev/Krontelli')
+  script = File.join(krontelli, 'infra/scripts/upload-native-symbols.py')
+  missing = [script, File.join(krontelli, '.secrets/glitchtip-api-token')].reject { |path| File.exist?(path) }
+  UI.user_error!("Not on this machine: #{missing.join(', ')}") unless missing.empty?
+  info = Dir[File.join(archive.to_s, 'Products/Applications/*.app/Info.plist')].first
+  UI.user_error!("No app in the archive: #{archive}") unless info
+  read = ->(key) { sh('/usr/libexec/PlistBuddy', '-c', "Print :#{key}", info, log: false).strip }
+  release = "#{read.call('CFBundleIdentifier')}@#{read.call('CFBundleShortVersionString')}+#{read.call('CFBundleVersion')}"
+  sh('python3', script, '--slug', 'obligio', '--release', release, '--archive', archive.to_s)
+rescue => e
+  glitchtip_warning('iOS dSYMs', e.message)
+end
+
+# Upload the JS source maps of the build just made to GlitchTip, so errors read properly.
+# The script finds the credentials itself. Non-fatal: a GlitchTip outage must never block a store release.
+def upload_glitchtip_sourcemaps!(platform)
+  script = File.expand_path('../scripts/upload-glitchtip-sourcemaps.sh', __dir__)
+  if platform == :ios
+    sh(script, 'ios', lane_context[SharedValues::XCODEBUILD_ARCHIVE].to_s)
+  else
+    gradle_file = File.read(File.expand_path('../android/app/build.gradle', __dir__))
+    code = gradle_file[/versionCode\s+(\d+)/, 1]
+    sh(script, 'android', "com.obligio.app@#{gradle_file[/versionName\s+"([^"]+)"/, 1]}+#{code}", code)
+  end
+rescue => e
+  glitchtip_warning('JS source maps', e.message)
 end
 
 platform :ios do
@@ -51,6 +124,9 @@ platform :ios do
       },
     )
 
+    upload_glitchtip_sourcemaps!(:ios)
+    upload_glitchtip_dsyms!
+
     # TestFlight, not App Store submission. upload_to_app_store (deliver) is
     # for pushing a listing, and does not accept
     # skip_waiting_for_build_processing; that belongs to this action. Listing
@@ -59,6 +135,7 @@ platform :ios do
       api_key: api_key,
       skip_waiting_for_build_processing: true,
     )
+    report_testflight_upload!(lane_context[SharedValues::IPA_OUTPUT_PATH], 'ios release')
   end
 
   desc 'Upload an already-built IPA to TestFlight, without rebuilding'
@@ -77,6 +154,29 @@ platform :ios do
       api_key: app_store_connect_api_key!,
       ipa: ipa,
       skip_waiting_for_build_processing: true,
+    )
+    report_testflight_upload!(ipa, 'ios upload')
+  end
+
+  desc 'Submit an already-uploaded build for review: fastlane ios submit_existing version:1.4 build:202610311240'
+  lane :submit_existing do |options|
+    upload_to_app_store(
+      api_key: app_store_connect_api_key!,
+      app_version: options[:version],
+      build_number: options[:build].to_s,
+      skip_binary_upload: true,
+      skip_metadata: true,
+      skip_screenshots: true,
+      force: true,
+      submit_for_review: true,
+      automatic_release: false,
+      phased_release: true,
+      precheck_include_in_app_purchases: false,
+      submission_information: { add_id_info_uses_idfa: false, export_compliance_uses_encryption: false },
+    )
+    KrontelliRelease.report(
+      app_id: KRONTELLI_APP_ID, platform: 'ios', version: options[:version], build: options[:build],
+      track: 'app_store', status: 'in_review', source: 'ios submit_existing',
     )
   end
 
@@ -124,20 +224,26 @@ end
 platform :android do
   desc 'Build a signed Android App Bundle and upload it to the chosen Play track'
   lane :release do
-    gradle(task: 'clean', project_dir: 'android')
-    # `bundleRelease` is the release *build type*. An earlier version passed
-    # `flavor: 'Release'`, which Gradle resolves as a product flavour — this
-    # project has none, so that task never existed.
-    gradle(task: 'bundleRelease', project_dir: 'android')
+    unless ENV['USE_BUILT_AAB'] == 'yes'
+      gradle(task: 'clean', project_dir: 'android')
+      # `bundleRelease` is the release *build type*. An earlier version passed
+      # `flavor: 'Release'`, which Gradle resolves as a product flavour — this
+      # project has none, so that task never existed.
+      gradle(task: 'bundleRelease', project_dir: 'android')
+    end
+    upload_glitchtip_sourcemaps!(:android)
 
     upload_to_play_store(
       track: ENV.fetch('PLAY_TRACK', 'internal'),
       aab: 'android/app/build/outputs/bundle/release/app-release.aab',
       release_status: ENV.fetch('PLAY_RELEASE_STATUS', 'draft'),
+      rollout: ENV['PLAY_ROLLOUT'],
       skip_upload_metadata: true,
       skip_upload_images: true,
       skip_upload_screenshots: true,
     )
+    report_play_upload!(ENV.fetch('PLAY_TRACK', 'internal'), ENV.fetch('PLAY_RELEASE_STATUS', 'draft'),
+                        ENV['PLAY_ROLLOUT'], 'android release')
   end
 
   desc 'Push Play listing metadata from fastlane/metadata/android without uploading a build'

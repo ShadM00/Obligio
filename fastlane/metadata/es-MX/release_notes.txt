@@ -1,1 +1,1 @@
-Pequeñas mejoras y correcciones. Si Obligio te ayuda a no perder tus plazos, ahora es posible que te pidamos una valoración.
+Las notificaciones ahora llegan a través de nuestro propio servicio, con mejores informes de errores. Mejoras de fiabilidad.

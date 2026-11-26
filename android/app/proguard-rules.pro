@@ -1,10 +1,17 @@
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in /usr/local/Cellar/android-sdk/24.3.3/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
+# Project keep rules for R8 (release builds).
 #
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# React Native's own consumer rules already keep every NativeModule class with
+# all its members (so ObligioAuth, ObligioWatch and ObligioPreferences keep
+# their @ReactMethod names), and classes named in AndroidManifest.xml
+# (activities, ObligioWatchService) are kept by the build. Libraries ship their
+# own consumer rules. Add a rule here only for a class a release build has been
+# seen to lose, and say which.
 
-# Add any project specific keep options here:
+# Readable native stack traces in Crashlytics.
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
+
+# WorkManager opens its Room database by reflection (WorkDatabase_Impl()).
+# The room-runtime 2.5.0 rule keeps the class but not its constructor, and the
+# first minified build crashed at launch in androidx.startup without this.
+-keep class * extends androidx.room.RoomDatabase { <init>(); }

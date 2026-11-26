@@ -16,8 +16,10 @@ import {
   logPaywallViewed,
   recordError,
 } from '../src/analytics';
+import { setKrontelliSink } from '../src/krontelliEvents';
 
 beforeEach(() => jest.clearAllMocks());
+afterEach(() => setKrontelliSink(null));
 
 describe('what the app reports', () => {
   it('logs an added obligation with only a source and whether it repeats', () => {
@@ -58,6 +60,44 @@ describe('what the app reports', () => {
       ['obligation_added', ['recurring', 'source']],
       ['paywall_viewed', ['reason']],
     ]);
+  });
+});
+
+describe('the Krontelli mirror', () => {
+  it('sends every Firebase event to Krontelli with the same name and parameters', () => {
+    const track = jest.fn();
+    setKrontelliSink({ track });
+
+    logObligationAdded('template', true);
+    logPaywallViewed('free_limit');
+
+    const firebase = (logEvent as jest.Mock).mock.calls.map(
+      ([, name, params]) => [name, params],
+    );
+    expect(track.mock.calls).toEqual(firebase);
+    expect(track.mock.calls).toEqual([
+      ['obligation_added', { source: 'template', recurring: 1 }],
+      ['paywall_viewed', { reason: 'free_limit' }],
+    ]);
+  });
+
+  it('sends nothing before Krontelli has started', () => {
+    // No sink: a debug build, or a release build without a public key.
+    expect(() => logPaywallViewed('banner')).not.toThrow();
+    expect(logEvent).toHaveBeenCalledTimes(1);
+  });
+
+  it('still reports to Firebase when Krontelli throws', () => {
+    setKrontelliSink({
+      track: () => {
+        throw new Error('sdk failure');
+      },
+    });
+
+    expect(() => logPaywallViewed('settings')).not.toThrow();
+    expect(logEvent).toHaveBeenCalledWith(getAnalytics(), 'paywall_viewed', {
+      reason: 'settings',
+    });
   });
 });
 

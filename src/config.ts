@@ -26,16 +26,16 @@ export const revenueCatApiKey: string | null =
     : null;
 
 /**
- * OneSignal app id for push notifications.
+ * Krontelli, our own push server, and GlitchTip, our own error server.
  *
- * An app id identifies the app to OneSignal and ships inside the binary; it is
- * not a secret and cannot send anything by itself (sending needs the REST API
- * key, which never touches this repository). The APNs key and the FCM service
- * account that deliver the pushes are uploaded to OneSignal, not kept here.
- * Dashboard app "Obligio", Royal Nation LLC.
+ * Both ship inside the binary and neither is a secret: the public key can only
+ * register an installation and the DSN can only submit an error report. Sending
+ * needs the server key, which never touches this repository.
  */
-export const ONESIGNAL_APP_ID: string | null =
-  'c47bc000-7f1e-42f5-aa7c-ee57b75c8a89';
+export const KRONTELLI_PUBLIC_KEY: string | null =
+  'kt_pub_tDPhMbZiF-bYlCZOPERVhtGv35qbYAGM';
+export const GLITCHTIP_DSN: string | null =
+  'https://0a0398f8561c4ad0a4eb9568b2327718@errors.krontelli.com/11';
 
 /**
  * Public pages the app links out to.

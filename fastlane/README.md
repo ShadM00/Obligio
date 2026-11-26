@@ -31,6 +31,14 @@ Build a signed App Store archive and upload it to TestFlight
 
 Upload an already-built IPA to TestFlight, without rebuilding
 
+### ios submit_existing
+
+```sh
+[bundle exec] fastlane ios submit_existing
+```
+
+Submit an already-uploaded build for review: fastlane ios submit_existing version:1.4 build:202610311240
+
 ### ios metadata
 
 ```sh

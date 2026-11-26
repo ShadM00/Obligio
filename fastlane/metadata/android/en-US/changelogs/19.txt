@@ -1,0 +1,1 @@
+Optimisations to the Android app under the hood. Reliability improvements.

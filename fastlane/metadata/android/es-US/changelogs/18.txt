@@ -1,0 +1,1 @@
+Las notificaciones ahora llegan a través de nuestro propio servicio, con mejores informes de errores. Mejoras de fiabilidad.

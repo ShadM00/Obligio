@@ -4,6 +4,7 @@ import React_RCTAppDelegate
 import ReactAppDependencyProvider
 import ClerkKit
 import FirebaseCore
+import KrontelliBare
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
+    // Before anything else: iOS hands the tap that launched the app only to a delegate set by now.
+    KrontelliBarePush.shared.start()
     Clerk.configure(publishableKey: "pk_live_Y2xlcmsub2JsaWdpby5jb20k")
     // GoogleService-Info.plist is not in the repository (see
     // docs/analytics-and-privacy.md). Configuring Firebase without it is a
@@ -40,6 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     )
 
     return true
+  }
+
+  func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    KrontelliBarePush.shared.didRegister(deviceToken: deviceToken)
+  }
+
+  func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    KrontelliBarePush.shared.didFailToRegister(error: error)
   }
 }
 

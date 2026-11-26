@@ -1,0 +1,1 @@
+Optimizaciones internas de la app para Android. Mejoras de fiabilidad.
