@@ -1,5 +1,7 @@
 Track every business license, permit, insurance renewal and filing deadline in one place — and never lose a business license to a date you forgot.
 
+Obligio is not a government app. It is made by Royal Nation LLC, a private company, and is not affiliated with, endorsed by or acting for any government agency.
+
 Obligio is a compliance calendar for small business owners. Add each obligation once, set its renewal date, and get reminded 30, 14, 7 and 1 days before it falls due. Attach the certificate or permit as evidence so the proof sits with the deadline it belongs to.
 
 WHY OWNERS USE OBLIGIO
@@ -25,7 +27,15 @@ Renewal paperwork takes longer to gather than a single last-minute alert allows.
 
 SUGGESTED FEDERAL OBLIGATIONS
 
-Start with selected US federal obligations, each linked to its official source and showing when it was last reviewed. Coverage is limited; add your own state, local and industry requirements. You choose what to track and set your own dates, because applicability and deadlines depend on your business and filing history.
+Start with selected US federal obligations, each linked in the app to its official source and showing when it was last reviewed. The government sources we use are:
+
+• IRS small business tax calendar: https://www.irs.gov/businesses/small-businesses-self-employed/online-tax-calendar
+• IRS form pages, for example Form 941: https://www.irs.gov/forms-pubs/about-form-941
+• OSHA injury and illness recordkeeping: https://www.osha.gov/recordkeeping
+• US Department of Labor, workers' compensation: https://www.dol.gov/agencies/owcp/wc
+• FinCEN beneficial ownership information: https://www.fincen.gov/boi
+
+Coverage is limited; add your own state, local and industry requirements. You choose what to track and set your own dates, because applicability and deadlines depend on your business and filing history.
 
 KEEP THE EVIDENCE WITH THE DEADLINE
 
