@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/clerk/clerk-ios",
       "state" : {
-        "revision" : "56fad2e61ffea402bc8b4a5d148af0ba194e3b4f",
-        "version" : "1.5.2"
+        "revision" : "7ca663a635d552082b30c31024611b6c6065ecc3",
+        "version" : "1.6.2"
       }
     },
     {

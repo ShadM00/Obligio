@@ -2,4 +2,6 @@
 module.exports = {
   init: jest.fn(),
   wrap: jest.fn(component => component),
+  getClient: jest.fn(() => undefined),
+  captureException: jest.fn(),
 };

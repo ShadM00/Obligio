@@ -33,3 +33,18 @@ export function initErrors(dsn: string | null = GLITCHTIP_DSN): void {
 export function wrapRoot(Root: React.ComponentType<Record<string, unknown>>) {
   return !GLITCHTIP_DSN || __DEV__ ? Root : Sentry.wrap(Root);
 }
+
+/**
+ * Reports an error the app caught and recovered from. `where` is a fixed label,
+ * never user content. Does nothing when GlitchTip was not set up (debug builds,
+ * no DSN), and never throws.
+ */
+export function reportHandledError(error: unknown, where: string): void {
+  try {
+    if (!Sentry.getClient()) return;
+    const failure = error instanceof Error ? error : new Error(String(error));
+    Sentry.captureException(failure, { tags: { where } });
+  } catch {
+    // Reporting is best-effort.
+  }
+}
